@@ -10,10 +10,13 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros
+#include <iostream>
 
 #define TRUE   1
 #define FALSE  0
 #define PORT 8080
+
+
 
 int main(int argc , char *argv[])
 {
@@ -81,6 +84,7 @@ int main(int argc , char *argv[])
 
     while(TRUE)
     {
+        // TODO CLEAR seulment les fd qui se terminent par un \n
         //clear the socket set
         FD_ZERO(&readfds);
 
@@ -155,6 +159,7 @@ int main(int argc , char *argv[])
         {
             sd = client_socket[i];
 
+            //std::cout << "YO\n";
             if (FD_ISSET( sd , &readfds))
             {
                 //Check if it was for closing , and also read the
@@ -177,9 +182,15 @@ int main(int argc , char *argv[])
                 {
                     //set the string terminating NULL byte on the end
                     //of the data read
-                    buffer[valread] = '\0';
-                    printf("%s",buffer);
+                    //buffer[valread] = '\0';
+                    char * toto = inet_ntoa(address.sin_addr);
+                    int len = strlen(toto);
+                    memcpy(buffer, toto, len);
+                    std::cout << "SOCKETDES " << sd << "\n";
+                    buffer[len] = '\n';
+                    buffer[len+1] = '\0';
                     send(sd , buffer , strlen(buffer) , 0 );
+                    // TODO if buffer contient deja qlqchose -> ajouter a la suite et ne rien faire d'autre
                 }
             }
         }
