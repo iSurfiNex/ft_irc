@@ -12,12 +12,6 @@
 
 #include "IrcServer.hpp"
 
-// IrcServer::IrcServer(void): _port(8080), _password("password")
-// {
-// 	for (int i = 0; i < MAX_CLIENTS; i++)
-//		client_socket[i] = 0;
-// }
-
 IrcServer::IrcServer(const int port, const std::string password)
 {
 	_port = port;

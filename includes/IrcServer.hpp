@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:32:13 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/11 19:52:20 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/12 14:12:03 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 class IrcServer
 {
 	public:
-		// IrcServer(void);
 		IrcServer(const int port, const std::string password);
 		~IrcServer(void);
 		void runServer(void);
