@@ -6,7 +6,7 @@
 #    By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/11 18:09:46 by rsterin           #+#    #+#              #
-#    Updated: 2023/09/11 18:13:24 by rsterin          ###   ########.fr        #
+#    Updated: 2023/09/12 17:49:22 by rsterin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ NAME = ircserv
 SRC = src/main.cpp \
 	src/IrcServer.cpp \
 	src/parsing.cpp \
+	src/Client.cpp \
+	src/Channel.cpp \
 
 HEADERS = includes/IrcServer.hpp \
 

@@ -6,13 +6,13 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:29 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/12 16:36:50 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/12 18:13:43 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Channel.hpp"
+#include "IrcServer.hpp"
 
-Channel::Channel(const std::string cName)
+Channel::Channel(const std::string cName, int socketId)
 {
 	channelname = cName;
 
@@ -24,6 +24,7 @@ Channel::Channel(const std::string cName)
 	_userLimit = -1;
 	_password = "";
 	_topic = "";
+	_socketId = socketId;
 }
 
 Channel::~Channel(void)
@@ -33,7 +34,7 @@ Channel::~Channel(void)
 
 void Channel::addUser(const Client &client)
 {
-	_userList.insert(client);
+	_userList.insert(&client);
 
 	std::string msg = "You have join: ";
 	msg += channelname;
@@ -45,7 +46,7 @@ void Channel::addUser(const Client &client)
 
 void Channel::addMod(const Client &client)
 {
-	_modList.insert(client);
+	_modList.insert(&client);
 
 	std::string msg = "You are now operator of: ";
 	msg += channelname;
@@ -57,9 +58,9 @@ void Channel::addMod(const Client &client)
 
 void Channel::removeUser(const Client &client)
 {
-	if (_userList.find(client) != _userList.end())
+	if (_userList.find(&client) != _userList.end())
 	{
-		_userList.erase(client);
+		_userList.erase(&client);
 
 		std::string msg = "You have been remove of: ";
 		msg += channelname;
@@ -72,9 +73,9 @@ void Channel::removeUser(const Client &client)
 
 void Channel::removeMod(const Client &client)
 {
-	if (_modList.find(client) != _modList.end())
+	if (_modList.find(&client) != _modList.end())
 	{
-		_modList.erase(client);
+		_modList.erase(&client);
 
 		std::string msg = "You have been remove of: ";
 		msg += channelname;
@@ -91,19 +92,19 @@ void Channel::changeRule(const char mode)
 	{
 		case 'i':
 		{
-			_isInviteOnly != _isInviteOnly;
+			_isInviteOnly = !_isInviteOnly;
 			std::cout << "Channel: " << channelname << ", invite-only is now set to " << _isInviteOnly << std::endl;
 			break;
 		}
 		case 't':
 		{
-			_isTopicChangeable != _isTopicChangeable;
+			_isTopicChangeable = !_isTopicChangeable;
 			std::cout << "Channel: " << channelname << ", topic-changeable is now set to " << _isInviteOnly << std::endl;
 			break;
 		}
 		case 'k':
 		{
-			_isRestricted != _isRestricted;
+			_isRestricted = !_isRestricted;
 			std::cout << "Channel: " << channelname << ", restricted-mode is now set to " << _isInviteOnly << std::endl;
 			break;
 		}
@@ -133,14 +134,14 @@ void Channel::changeUserLimit(const int userlimit)
 
 bool Channel::isMod(const Client &client)
 {
-	if (_modList.find(client) != _modList.end())
+	if (_modList.find(&client) != _modList.end())
 		return (true);
 	return (false);
 }
 
 bool Channel::isUserInside(const Client &client)
 {
-	if (_userList.find(client) != _userList.end())
+	if (_userList.find(&client) != _userList.end())
 		return (true);
 	return (false);
 }

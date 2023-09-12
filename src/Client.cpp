@@ -6,13 +6,13 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:14:22 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/12 15:56:19 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/12 17:50:52 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Client.hpp"
+#include "IrcServer.hpp"
 
-Client::Client(const int socketId): _socketId(socketId)
+Client::Client(int socketId): _socketId(socketId)
 {
 	isReady = false;
 }

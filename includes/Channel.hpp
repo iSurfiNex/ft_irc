@@ -6,19 +6,20 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:19 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/12 15:13:18 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/12 18:11:13 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 # include "IrcServer.hpp"
-# include "Client.hpp"
+
+class Client;
 
 class Channel
 {
 	public:
-		Channel(const std::string cName);
+		Channel(const std::string cName, int socketId);
 		~Channel(void);
 
 		void addUser(const Client &client);
@@ -38,8 +39,10 @@ class Channel
 		std::string channelname;
 
 	private:
-		std::set<const Client &> _userList;
-		std::set<const Client &> _modList;
+		const int _socketId;
+
+		std::set<const Client *> _userList;
+		std::set<const Client *> _modList;
 
 		bool _isInviteOnly;
 		bool _isTopicChangeable;
