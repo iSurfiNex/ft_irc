@@ -57,7 +57,7 @@ IrcServer::~IrcServer(void)
 void IrcServer::runServer(void)
 {
 	int max_sd, sd, activity, valread, addrlen, new_socket;
-    const char *welcome_message = "You are now connected. Please enter the password using: PASS <password>.\r\n";
+    const char *welcome_message = "001 You are now connected. Please enter the password using: PASS <password>.\r\n";
 
     char buffer[1025];
 
