@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:32:13 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/12 14:12:03 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/12 15:43:20 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include <unistd.h>
 # include <set>
 
+# include "Channel.hpp"
+# include "Client.hpp"
+
 # define MAX_CLIENTS 30
 
 class IrcServer
@@ -40,6 +43,8 @@ class IrcServer
 		int master_socket;
 		int client_socket[MAX_CLIENTS];
 		struct sockaddr_in address;
+		std::set<Client &> clients;
+		std::set<Channel &> channels;
 
 	private:
 		int	_port;

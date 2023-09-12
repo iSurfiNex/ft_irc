@@ -45,13 +45,19 @@ IrcServer::IrcServer(const int port, const std::string password)
 
 IrcServer::~IrcServer(void)
 {
+	for (std::set<Client &>::iterator it = clients.begin(); clients.end() != it; ++it)
+		delete &it;
+	clients.clear();
 
+	for (std::set<Channel &>::iterator it = channels.begin(); channels.end() != it; ++it)
+		delete &it;
+	channels.clear();
 }
 
 void IrcServer::runServer(void)
 {
 	int max_sd, sd, activity, valread, addrlen, new_socket;
-    const char *welcome_message = "You are now connected.\n";
+    const char *welcome_message = "You are now connected. Please enter the password using: PASS <password>.\r\n";
 
     char buffer[1025];
 
@@ -95,6 +101,8 @@ void IrcServer::runServer(void)
 
 			//inform user of socket number - used in send and receive commands
 			std::cout << "New connection, socket fd: " << new_socket << ", ip: " << inet_ntoa(address.sin_addr) << ", port: " << ntohs(address.sin_port)  << "." << std::endl;
+			Client *tmp = new Client(new_socket);
+			clients.insert(*tmp);
 
 			//send new connection greeting message
 			if (send(new_socket, welcome_message, strlen(welcome_message), 0) != static_cast<ssize_t>(strlen(welcome_message)) )
