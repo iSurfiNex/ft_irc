@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:32:13 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/12 17:44:53 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/12 19:02:39 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ class IrcServer
 		~IrcServer(void);
 		void runServer(void);
 
+		static std::string _password;
 
 		fd_set readfds;
 		int master_socket;
@@ -49,7 +50,6 @@ class IrcServer
 
 	private:
 		int	_port;
-		std::string _password;
 };
 
 std::ostream	&operator <<(std::ostream &o, const IrcServer &irc);

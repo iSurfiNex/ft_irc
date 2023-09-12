@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:46:41 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/12 17:51:25 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/12 19:00:51 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ class Client
 		std::string getNickname(void) const;
 		int getSocketId(void) const;
 
+		bool isAuth;
 		bool isReady;
 
 	private:

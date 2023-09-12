@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:19 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/12 18:11:13 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/12 18:52:16 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ class Channel
 		const int _socketId;
 
 		std::set<const Client *> _userList;
+		std::set<const Client *> _inviteList;
 		std::set<const Client *> _modList;
 
 		bool _isInviteOnly;

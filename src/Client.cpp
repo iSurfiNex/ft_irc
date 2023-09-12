@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:14:22 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/12 17:50:52 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/12 19:00:58 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 Client::Client(int socketId): _socketId(socketId)
 {
 	isReady = false;
+	isAuth = false;
 }
 
 Client::~Client(void)
