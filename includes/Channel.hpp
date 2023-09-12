@@ -6,13 +6,14 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:19 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/12 14:37:18 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/12 15:13:18 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 # include "IrcServer.hpp"
+# include "Client.hpp"
 
 class Channel
 {
@@ -20,23 +21,25 @@ class Channel
 		Channel(const std::string cName);
 		~Channel(void);
 
-		void addUser(const std::string username);
-		void addMod(const std::string username);
+		void addUser(const Client &client);
+		void addMod(const Client &client);
 
-		void removeUser(const std::string username);
-		void removeMod(const std::string username);
+		void removeUser(const Client &client);
+		void removeMod(const Client &client);
 
-		void changeRule(const std::string username, const char mode);
-		void changePassword(const std::string username, const std::string password);
-		void changeUserLimit(const std::string username, const int userlimit);
+		void changeRule(const char mode);
+		void changeTopic(const std::string topic);
+		void changePassword(const std::string password);
+		void changeUserLimit(const int userlimit);
 
-		bool isMod(const std::string username);
+		bool isMod(const Client &client);
+		bool isUserInside(const Client &client);
 
 		std::string channelname;
 
 	private:
-		std::set<std::string> userList;
-		std::set<std::string> modList;
+		std::set<const Client &> _userList;
+		std::set<const Client &> _modList;
 
 		bool _isInviteOnly;
 		bool _isTopicChangeable;

@@ -1,3 +1,4 @@
 - JOIN <channels> (<password>)
 - NICK <nickname>
 - PART <channels>
+- PRIVMSG <user> <msg>

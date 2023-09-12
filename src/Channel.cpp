@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:29 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/12 14:40:20 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/12 15:21:00 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,56 @@ Channel::~Channel(void)
 
 }
 
-void Channel::addUser(const std::string username)
+void Channel::addUser(const Client &client)
 {
-	userList.insert(username);
+	_userList.insert(client);
+
+	std::string msg = "You have join: ";
+	msg += channelname;
+	msg += ".";
+
+	client.sendMessage(msg);
+	std::cout << "New user: " << client.getUsername() << " in channel: " << channelname << std::endl;
 }
 
-void Channel::addMod(const std::string username)
+void Channel::addMod(const Client &client)
 {
-	modList.insert(username);
+	_modList.insert(client);
+
+	std::string msg = "You are now operator of: ";
+	msg += channelname;
+	msg += ".";
+
+	client.sendMessage(msg);
+	std::cout << "New mod: " << client.getUsername() << " in channel: " << channelname << std::endl;
 }
 
-void Channel::removeUser(const std::string username)
+void Channel::removeUser(const Client &client)
 {
-	userList.erase(username);
+	if (_userList.find(client) != _userList.end())
+	{
+		_userList.erase(client);
+
+		std::string msg = "You have been remove of: ";
+		msg += channelname;
+		msg += ".";
+
+		client.sendMessage(msg);
+		std::cout << "User: " << client.getUsername() << " has been removed of: " << channelname << std::endl;
+	}
 }
 
-void Channel::removeMod(const std::string username)
+void Channel::removeMod(const Client &client)
 {
-	if (modList.find(username) != modList.end())
-		modList.erase(username);
+	if (_modList.find(client) != _modList.end())
+	{
+		_modList.erase(client);
+
+		std::string msg = "You have been remove of: ";
+		msg += channelname;
+		msg += " mod list.";
+
+		client.sendMessage(msg);
+		std::cout << "User: " << client.getUsername() << " has been removed of: " << channelname << " mod list." << std::endl;
+	}
 }
