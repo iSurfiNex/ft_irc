@@ -12,10 +12,9 @@
 
 #include "IrcServer.hpp"
 
-IrcServer::IrcServer(const int port, const std::string password)
+IrcServer::IrcServer(const int port, std::string &password): _password(password)
 {
 	_port = port;
-	_password = password;
 
 	std::cout << "PORT: " << port << " | PASSWORD: " << password << std::endl << std::endl;
 
@@ -190,6 +189,11 @@ Client *IrcServer::getClientWithNickname(const std::string &name)
 	return NULL;
 }
 
+
+bool IrcServer::checkPassword(const std::string &pw)
+{
+	return pw == _password;
+}
 std::ostream	&operator <<(std::ostream &o, const IrcServer &irc)
 {
 	(void)irc;

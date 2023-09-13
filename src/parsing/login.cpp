@@ -12,18 +12,18 @@
 
 #include "IrcServer.hpp"
 
-std::string cmdPass(std::set<std::string> &args, Client &origin, IrcServer &server)
+std::string cmdPass(std::vector<std::string> &args, Client &origin, IrcServer &server)
 {
 	if (args.size() != 1)
 		return ("Wrong number of arguments. Usage: PASS <password>.\r\n");
-	else if (args.find(server._password) == args.end())
+	else if (!server.checkPassword(args[0]))
 		return ("Wrong password. Please enter the correct one using: PASS <password>.\r\n");
 
 	origin.isAuth = true;
 	return ("You are now login, please use: USER <username> and NICK <nickname> to authentificate.");
 }
 
-std::string cmdUser(std::set<std::string> &args, Client &origin, IrcServer &server)
+std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &server)
 {
 	if (args.size() != 1)
 		return ("Wrong number of arguments. Usage: USER <username>.\r\n");
@@ -36,7 +36,7 @@ std::string cmdUser(std::set<std::string> &args, Client &origin, IrcServer &serv
 	return ("");
 }
 
-std::string cmdNick(std::set<std::string> &args, Client &origin, IrcServer &server)
+std::string cmdNick(std::vector<std::string> &args, Client &origin, IrcServer &server)
 {
 	if (args.size() != 1)
 		return ("Wrong number of arguments. Usage: NICK <nickname>.\r\n");

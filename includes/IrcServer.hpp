@@ -25,6 +25,7 @@
 # include <arpa/inet.h>
 # include <unistd.h>
 # include <set>
+# include <vector>
 
 # include "Channel.hpp"
 # include "Client.hpp"
@@ -34,11 +35,10 @@
 class IrcServer
 {
 	public:
-		IrcServer(const int port, const std::string password);
+		IrcServer(const int port, std::string &password);
 		~IrcServer(void);
 		void runServer(void);
 
-		static std::string _password;
 
 		fd_set readfds;
 		int master_socket;
@@ -52,17 +52,19 @@ class IrcServer
 		Client *getClientWithUsername(const std::string &name);
 		Client *getClientWithNickname(const std::string &name);
 		Channel *createChannel(const std::string &channelName, Client &mod);
+		bool checkPassword(const std::string &pw);
 
 	private:
 		int	_port;
+		std::string &_password;
 };
 
 std::ostream	&operator <<(std::ostream &o, const IrcServer &irc);
 
 int parsePort(char *av);
 std::string parsePassword(char *av);
-void getCmdArgs(std::string buffer, std::string &cmd, std::set<std::string> &args);
+void getCmdArgs(std::string buffer, std::string &cmd, std::vector<std::string> &args);
 
-std::string cmdPass(std::set<std::string> &args, Client &origin, IrcServer &server);
-std::string cmdUser(std::set<std::string> &args, Client &origin, IrcServer &server);
-std::string cmdNick(std::set<std::string> &args, Client &origin, IrcServer &server);
+std::string cmdPass(std::vector<std::string> &args, Client &origin, IrcServer &server);
+std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &server);
+std::string cmdNick(std::vector<std::string> &args, Client &origin, IrcServer &server);

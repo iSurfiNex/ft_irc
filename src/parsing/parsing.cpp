@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../includes/IrcServer.hpp"
 #include "IrcServer.hpp"
 
 int parsePort(char *av)
@@ -34,7 +35,7 @@ std::string parsePassword(char *av)
 void parsing(Client &origin, IrcServer &server, std::string buffer)
 {
 	std::string cmd;
-	std::set<std::string> args;
+	std::vector<std::string> args;
 
 	std::string response;
 
