@@ -31,7 +31,8 @@ JOIN: F
 	creer un channel si existe pas;
 	si existe -> verifier si isRestricted ||&& isInviteOnly ||&& nbuser + 1 <= userLimit;
 	rejoindre le channel;
-	verifier si alnum ou '-';
+	verifier si alnum;
+	verifier si il y a un '-' et qu'il est bien precede et suivi d'un caractere;
 	verifier si channel commence par #;
 __________________________________________
 
