@@ -44,12 +44,12 @@ void parsing(Client &origin, IrcServer &server, std::string buffer)
 	{
 		if (!origin.isAuth && cmd != "PASS")
 		{
-			std::cerr << "You did not enter the password. Please use: PASS <password> to login.\r\n";
+			std::cerr << "User did not enter the password. Please use: PASS <password> to login.\r\n";
 			return ;
 		}
 		else if (origin.isAuth && (cmd != "USER" || cmd != "NICK"))
 		{
-			std::cerr << "You must set a username and a nickname. Please use: USER <username> and NICK <nickname> to authentificate.\r\n";
+			std::cerr << "User must set a username and a nickname. Please use: USER <username> and NICK <nickname> to authentificate.\r\n";
 			return ;
 		}
 	}

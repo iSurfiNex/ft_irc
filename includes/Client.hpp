@@ -34,7 +34,5 @@ class Client
 
 		std::string username;
 		std::string nickname;
-
-	private:
-		const int _socketId;
+		const int socketId;
 };

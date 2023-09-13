@@ -53,6 +53,7 @@ class IrcServer
 		Client *getClientWithNickname(const std::string &name);
 		Channel *createChannel(const std::string &channelName, Client &mod);
 		bool checkPassword(const std::string &pw);
+		Client *getClientFromSocket(int sd);
 
 	private:
 		int	_port;
@@ -69,3 +70,5 @@ std::string cmdPass(std::vector<std::string> &args, Client &origin, IrcServer &s
 std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &server);
 std::string cmdNick(std::vector<std::string> &args, Client &origin, IrcServer &server);
 const std::string cmdJoin(std::vector<std::string> args, Client &client, IrcServer &server);
+
+void parsing(Client &origin, IrcServer &server, std::string buffer);

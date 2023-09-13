@@ -12,7 +12,7 @@
 
 #include "IrcServer.hpp"
 
-Client::Client(int socketId): _socketId(socketId)
+Client::Client(int socketId): socketId(socketId)
 {
 	isReady = false;
 	isAuth = false;
@@ -47,7 +47,7 @@ void Client::changeUserName(const std::string newUsername)
 
 void Client::sendMessage(const std::string message) const
 {
-	send(_socketId, message.c_str(), message.size(), 0);
+	send(socketId, message.c_str(), message.size(), 0);
 }
 
 std::string Client::getUsername(void) const
@@ -62,5 +62,5 @@ std::string Client::getNickname(void) const
 
 int Client::getSocketId(void) const
 {
-	return (_socketId);
+	return (socketId);
 }
