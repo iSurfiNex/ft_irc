@@ -20,6 +20,7 @@ SRC = src/main.cpp \
 	src/parsing/parseInput.cpp \
 	src/parsing/login.cpp \
 	src/parsing/join.cpp \
+	src/utils.cpp \
 
 HEADERS = includes/IrcServer.hpp \
 
