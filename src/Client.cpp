@@ -29,9 +29,9 @@ void Client::changeNickName(const std::string newNickname)
 
 	if (!(username.empty()) && !(nickname.empty()) && !isReady)
 	{
+		isReady = true;
 		std::cout << "New user: " << *this << std::endl;
 		sendMessage("You are now authentificate.\r\n");
-		isReady = true;
 	}
 }
 
@@ -41,9 +41,9 @@ void Client::changeUserName(const std::string newUsername)
 
 	if (!(username.empty()) && !(nickname.empty()) && !isReady)
 	{
+		isReady = true;
 		std::cout << "New user: " << *this << std::endl;
 		sendMessage("You are now authentificate.\r\n");
-		isReady = true;
 	}
 }
 
