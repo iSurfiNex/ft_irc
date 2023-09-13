@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:19 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/12 18:52:16 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 15:54:06 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ class Client;
 class Channel
 {
 	public:
-		Channel(const std::string cName, int socketId);
+		Channel(const std::string cName);
 		~Channel(void);
 
 		void addUser(const Client &client);
