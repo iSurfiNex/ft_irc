@@ -35,4 +35,5 @@ class Client
 		std::string username;
 		std::string nickname;
 		const int socketId;
+		//std::string partialMsg;
 };
