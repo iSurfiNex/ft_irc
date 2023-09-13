@@ -50,24 +50,28 @@ void parsing(Client &origin, IrcServer &server, std::string buffer)
 			return ;
 		}
 	}
+
 	if (cmd == "PASS")
-		cmdPass(cmd, args, origin, server);
+		resp = cmdPass(cmd, args, origin, server);
 	else if (cmd == "USER")
-		cmdUser(cmd, args, origin, server);
+		resp = cmdUser(cmd, args, origin, server);
 	else if (cmd == "NICK")
-		cmdNick(cmd, args, origin, server);
+		resp = cmdNick(cmd, args, origin, server);
 	else if (cmd == "JOIN")
-		cmdJoin(cmd, args, origin, server);
+		resp = cmdJoin(cmd, args, origin, server);
 	else if (cmd == "PART")
-		cmdPart(cmd, args, origin, server);
+		resp = cmdPart(cmd, args, origin, server);
 	else if (cmd == "PIVMSG")
-		cmdPrivMsg(cmd, args, origin, server);
+		resp = cmdPrivMsg(cmd, args, origin, server);
 	else if (cmd == "KICK")
-		cmdKick(cmd, args, origin, server);
+		resp = cmdKick(cmd, args, origin, server);
 	else if (cmd == "INVITE")
-		cmdInvite(cmd, args, origin, server);
+		resp = cmdInvite(cmd, args, origin, server);
 	else if (cmd == "TOPIC")
-		cmdTopic(cmd, args, origin, server);
+		resp = cmdTopic(cmd, args, origin, server);
 	else if (cmd == "MODE")
-		cmdMode(cmd, args, origin, server);
+		resp = cmdMode(cmd, args, origin, server);
+
+	client.send(resp);
+
 }
