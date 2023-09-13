@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:31:25 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 15:57:12 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 16:33:56 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ std::string parsePassword(char *av)
 {
 	std::string password = av;
 
-	if (password.find_first_of(" \a\b\t\n\v\f\r") != std::string::npos)
+	if (password.find_first_of(" \a\b\t\n\v\f\r") != std::string::npos || password[0] == NULL)
 		return ("");
 	return (password);
 }
