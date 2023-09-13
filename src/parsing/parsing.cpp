@@ -45,19 +45,18 @@ void parsing(Client &origin, IrcServer &server, std::string buffer)
 	getCmdArgs(buffer, cmd, args);
 	if (cmd == "CAP")
 		return;
-	std::cout << "\nCMD" << cmd<<" CLIENT " << origin.socketId <<"IS AUTH" << origin.isAuth ;
 
 	if (!origin.isAuth || !origin.isReady)
 	{
-			if (!origin.isAuth && cmd != "PASS")
+		if (!origin.isAuth && cmd != "PASS")
 		{
-			std::cerr << "User did not enter the password and is trying to send cmd.\r\n";
+			std::cerr << "User did not enter the password and is trying to send cmd.\r\n" << std::endl;
 			origin.sendMessage("You did not enter the password. Please use: PASS <password> to login.\r\n");
 			return ;
 		}
 		else if (origin.isAuth && cmd != "USER" && cmd != "NICK")
 		{
-			std::cerr << "User is not authentificate and is trying to send cmd.\r\n";
+			std::cerr << "User is not authentificate and is trying to send cmd.\r\n" <<std::endl;
 			origin.sendMessage("You must set a username and a nickname. Please use: USER <username> and NICK <nickname> to authentificate..\r\n");
 			return ;
 		}
