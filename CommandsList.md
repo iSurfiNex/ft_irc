@@ -10,6 +10,10 @@ Param: i, t, k, o, l
 
 Utilisateur: doit avoir un user/nick isalnum;
 
+
+Trouver le format pour que HexChat comprenne que tel msg vient de tel salon etc...;
+
+
 PARSING: R  <!-- done -->
 	cmd = determine la cmd;
 	args = trouver les args (gerer les deux points);
@@ -41,7 +45,7 @@ PART: F
 	verifier si channel existe si oui leave + l'enlever des mods;
 __________________________________________
 
-PRIVMSG: R
+PRIVMSG: R <!-- done -->
 	verifier si le channel/user existe;
 	verifier si l'utilisateur est dans le channel;
 	verifier qu'il n'y ai pas plus de 2 args;
