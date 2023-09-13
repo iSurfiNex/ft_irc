@@ -17,7 +17,7 @@ void getCmdArgs(std::string buffer, std::string &cmd, std::vector<std::string> &
 	bool two_points = false;
 	std::string tmp;
 
-	buffer.resize(buffer.size() - 2);
+	buffer.resize(buffer.size());
 
 	char *ptr;
 	ptr = strtok((char *)buffer.c_str(), " ");
