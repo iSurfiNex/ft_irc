@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:14:22 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 15:53:14 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 17:51:34 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void Client::changeNickName(const std::string newNickname)
 {
 	username = newNickname;
 
-	if (!(username.empty()) && !(username.empty()) && !isReady)
+	if (!(username.empty()) && !(nickname.empty()) && !isReady)
 	{
-		std::cout << "New user: " << username << "(" << username << ")" << std::endl;
+		std::cout << "New user: " << nickname << " (" << username << ")" << std::endl;
 		isReady = true;
 	}
 }
@@ -38,9 +38,9 @@ void Client::changeUserName(const std::string newUsername)
 {
 	username = newUsername;
 
-	if (!(username.empty()) && !(username.empty()) && !isReady)
+	if (!(username.empty()) && !(nickname.empty()) && !isReady)
 	{
-		std::cout << "New user: " << username << "(" << username << ")" << std::endl;
+		std::cout << "New user: " << nickname << " (" << username << ")" << std::endl;
 		isReady = true;
 	}
 }
