@@ -75,5 +75,5 @@ void parsing(Client &origin, IrcServer &server, std::string buffer)
 	// else if (cmd == "MODE")
 	// 	response = cmdMode(args, origin, server);
 
-	// client.send(response);
+	origin.sendMessage(response);
 }

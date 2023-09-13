@@ -18,9 +18,9 @@ Channel::Channel(const std::string &cName)
 
 	std::cout << "New channel: " << name << std::endl;
 
-	_isInviteOnly = false;
-	_isTopicChangeable = false;
-	_isRestricted = false;
+	isInviteOnly = false;
+	isTopicChangeable = false;
+	isRestricted = false;
 	_userLimit = -1;
 	_password = "";
 	_topic = "";
@@ -37,6 +37,14 @@ void Channel::addUser(const Client &client)
 
 	std::string msg = "You have join: ";
 	msg += name;
+
+	if (isUserOnInviteList(client))
+	{
+		removeUserFromInviteList(client);
+	    std::cout << "New user" << client.getUsername() << " consumed invitation to join channel: " << name << std::endl;
+		msg += " by consuming your invitation.";
+	}
+
 	msg += ".\r\n";
 
 	client.sendMessage(msg);
@@ -70,6 +78,21 @@ void Channel::removeUser(const Client &client)
 	}
 }
 
+void Channel::removeUserFromInviteList(const Client &client)
+{
+	if (_inviteList.find(&client) != _userList.end())
+	{
+		_inviteList.erase(&client);
+
+		std::string msg = "You have been remove of: ";
+		msg += name;
+		msg += ".\r\n";
+
+		client.sendMessage(msg);
+		std::cout << "User: " << client.getUsername() << ", has been removed of: " << name << std::endl;
+	}
+}
+
 void Channel::removeMod(const Client &client)
 {
 	if (_modList.find(&client) != _modList.end())
@@ -91,20 +114,20 @@ void Channel::changeRule(const char mode)
 	{
 		case 'i':
 		{
-			_isInviteOnly = !_isInviteOnly;
-			std::cout << "Channel: " << name << ", invite-only is now set to " << _isInviteOnly << std::endl;
+			isInviteOnly = !isInviteOnly;
+			std::cout << "Channel: " << name << ", invite-only is now set to " << isInviteOnly << std::endl;
 			break;
 		}
 		case 't':
 		{
-			_isTopicChangeable = !_isTopicChangeable;
-			std::cout << "Channel: " << name << ", topic-changeable is now set to " << _isInviteOnly << std::endl;
+			isTopicChangeable = !isTopicChangeable;
+			std::cout << "Channel: " << name << ", topic-changeable is now set to " << isInviteOnly << std::endl;
 			break;
 		}
 		case 'k':
 		{
-			_isRestricted = !_isRestricted;
-			std::cout << "Channel: " << name << ", restricted-mode is now set to " << _isInviteOnly << std::endl;
+			isRestricted = !isRestricted;
+			std::cout << "Channel: " << name << ", restricted-mode is now set to " << isInviteOnly << std::endl;
 			break;
 		}
 
@@ -143,4 +166,19 @@ bool Channel::isUserInside(const Client &client)
 	if (_userList.find(&client) != _userList.end())
 		return (true);
 	return (false);
+}
+
+bool Channel::hasUser(const Client &client)
+{
+	return _userList.find(&client) != _userList.end();
+}
+
+bool Channel::isUserOnInviteList(const Client &client)
+{
+	return _inviteList.find(&client) != _inviteList.end();
+}
+
+bool Channel::checkPassword(const std::string &pw)
+{
+	return pw == _password;
 }

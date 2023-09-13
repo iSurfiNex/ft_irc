@@ -27,6 +27,7 @@ class Channel
 
 		void removeUser(const Client &client);
 		void removeMod(const Client &client);
+		void removeUserFromInviteList(const Client &client);
 
 		void changeRule(const char mode);
 		void changeTopic(const std::string topic);
@@ -36,16 +37,21 @@ class Channel
 		bool isMod(const Client &client);
 		bool isUserInside(const Client &client);
 
+		bool isUserOnInviteList(const Client &client);
+		bool checkPassword(const std::string &pw);
+
+		bool hasUser(const Client &client);
+
 		std::string name;
 
+		bool isInviteOnly;
+		bool isTopicChangeable;
+		bool isRestricted;
 	private:
 		std::set<const Client *> _userList;
 		std::set<const Client *> _inviteList;
 		std::set<const Client *> _modList;
 
-		bool _isInviteOnly;
-		bool _isTopicChangeable;
-		bool _isRestricted;
 		int _userLimit;
 		std::string _password;
 		std::string _topic;

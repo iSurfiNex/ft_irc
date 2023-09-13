@@ -68,3 +68,4 @@ void getCmdArgs(std::string buffer, std::string &cmd, std::vector<std::string> &
 std::string cmdPass(std::vector<std::string> &args, Client &origin, IrcServer &server);
 std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &server);
 std::string cmdNick(std::vector<std::string> &args, Client &origin, IrcServer &server);
+const std::string cmdJoin(const std::string &cmd, std::vector<std::string> args, Client &client, IrcServer &server);

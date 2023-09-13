@@ -189,11 +189,22 @@ Client *IrcServer::getClientWithNickname(const std::string &name)
 	return NULL;
 }
 
+Channel *IrcServer::createChannel(const std::string &channelName, Client &mod)
+{
+	Channel *channel = new Channel(channelName);
+	channel->addMod(mod);
+	channel->addUser(mod);
+	channels.insert(channel);
+	mod.sendMessage("You have created a channel");
+	std::cout << "Channel " << channelName << " created by " << mod.nickname;
+	return channel;
+}
 
 bool IrcServer::checkPassword(const std::string &pw)
 {
 	return pw == _password;
 }
+
 std::ostream	&operator <<(std::ostream &o, const IrcServer &irc)
 {
 	(void)irc;
