@@ -20,7 +20,7 @@ PARSING: R  <!-- done -->
 
 __________________________________________
 
-PASS/USER/NICK: R
+PASS/USER/NICK: R <!-- done -->
 	verifier bon mdp;
 	verifier user/nick deja pris
 	changer isAuth a true;
