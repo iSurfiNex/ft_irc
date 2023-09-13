@@ -6,13 +6,13 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:35:26 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 15:48:30 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 15:57:29 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "IrcServer.hpp"
 
-std::string cmdPass(std::string &cmd, std::set<std::string> &args, Client &origin, IrcServer &server)
+std::string cmdPass(std::set<std::string> &args, Client &origin, IrcServer &server)
 {
 	if (args.size() != 1)
 		return ("Wrong number of arguments. Usage: PASS <password>.\r\n");
@@ -23,7 +23,7 @@ std::string cmdPass(std::string &cmd, std::set<std::string> &args, Client &origi
 	return ("You are now login, please use: USER <username> and NICK <nickname> to authentificate.");
 }
 
-std::string cmdUser(std::string &cmd, std::set<std::string> &args, Client &origin, IrcServer &server)
+std::string cmdUser(std::set<std::string> &args, Client &origin, IrcServer &server)
 {
 	if (args.size() != 1)
 		return ("Wrong number of arguments. Usage: USER <username>.\r\n");
@@ -36,7 +36,7 @@ std::string cmdUser(std::string &cmd, std::set<std::string> &args, Client &origi
 	return ("");
 }
 
-std::string cmdNick(std::string &cmd, std::set<std::string> &args, Client &origin, IrcServer &server)
+std::string cmdNick(std::set<std::string> &args, Client &origin, IrcServer &server)
 {
 	if (args.size() != 1)
 		return ("Wrong number of arguments. Usage: NICK <nickname>.\r\n");
