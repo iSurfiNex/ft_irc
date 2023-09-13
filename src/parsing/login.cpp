@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:35:26 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 15:57:29 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 18:32:22 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ std::string cmdPass(std::vector<std::string> &args, Client &origin, IrcServer &s
 		return ("Wrong password. Please enter the correct one using: PASS <password>.\r\n");
 
 	origin.isAuth = true;
-	return ("You are now login, please use: USER <username> and NICK <nickname> to authentificate.");
+	return ("You are now login, please use: USER <username> and NICK <nickname> to authentificate.\r\n");
 }
 
 std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &server)
@@ -33,7 +33,7 @@ std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &s
 		return ("Username already in use. Please enter a unique one using: USER <username>.\r\n");
 
 	origin.changeUserName(*args.begin());
-	return ("");
+	return ("Username set.\r\n");
 }
 
 std::string cmdNick(std::vector<std::string> &args, Client &origin, IrcServer &server)
@@ -46,5 +46,5 @@ std::string cmdNick(std::vector<std::string> &args, Client &origin, IrcServer &s
 		return ("Nickname already in use. Please enter a unique one using: NICK <nickname>.\r\n");
 
 	origin.changeNickName(*args.begin());
-	return ("");
+	return ("Nickname set.\r\n");
 }
