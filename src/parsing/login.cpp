@@ -37,7 +37,8 @@ std::string cmdPass(std::vector<std::string> &args, Client &origin, IrcServer &s
 
 std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &server)
 {
-	if (args.size() != 1)
+	// Only consider the first agrument, ignore any remaining, full cmd could be "USER <username> <mode> <unused> :<realname>"
+	if (args.size() < 2)
 	{
 		std::cerr << origin << ": USER: Wrong number of arguments" << std::endl;
 		return ("Wrong number of arguments. Usage: USER <username>.\r\n");
