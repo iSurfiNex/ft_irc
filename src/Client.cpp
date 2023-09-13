@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:14:22 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 17:51:34 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 20:09:32 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ Client::~Client(void)
 
 void Client::changeNickName(const std::string newNickname)
 {
-	username = newNickname;
+	nickname = newNickname;
 
 	if (!(username.empty()) && !(nickname.empty()) && !isReady)
 	{
