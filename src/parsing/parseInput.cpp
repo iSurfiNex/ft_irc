@@ -6,13 +6,13 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:16:54 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 14:51:03 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 14:57:42 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "IrcServer.hpp"
 
-std::string getCmdArgs(std::string buffer, std::string &cmd, std::set<std::string> &args)
+void getCmdArgs(std::string buffer, std::string &cmd, std::set<std::string> &args)
 {
 	bool two_points = false;
 	std::string tmp;

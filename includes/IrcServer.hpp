@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:32:13 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 14:51:12 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 14:57:48 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ std::ostream	&operator <<(std::ostream &o, const IrcServer &irc);
 
 int parsePort(char *av);
 std::string parsePassword(char *av);
-std::string getCmdArgs(std::string buffer, std::string &cmd, std::set<std::string> &args);
+void getCmdArgs(std::string buffer, std::string &cmd, std::set<std::string> &args);
 
+std::string cmdPass(std::string &cmd, std::set<std::string> &args, Client &origin, IrcServer &server);
