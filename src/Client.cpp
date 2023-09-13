@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:14:22 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/12 19:00:58 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 15:53:14 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,22 @@ Client::~Client(void)
 
 void Client::changeNickName(const std::string newNickname)
 {
-	_nickname = newNickname;
+	username = newNickname;
 
-	if (!(_username.empty()) && !(_nickname.empty()) && !isReady)
+	if (!(username.empty()) && !(username.empty()) && !isReady)
 	{
-		std::cout << "New user: " << _nickname << "(" << _username << ")" << std::endl;
+		std::cout << "New user: " << username << "(" << username << ")" << std::endl;
 		isReady = true;
 	}
 }
 
 void Client::changeUserName(const std::string newUsername)
 {
-	_username = newUsername;
+	username = newUsername;
 
-	if (!(_username.empty()) && !(_nickname.empty()) && !isReady)
+	if (!(username.empty()) && !(username.empty()) && !isReady)
 	{
-		std::cout << "New user: " << _nickname << "(" << _username << ")" << std::endl;
+		std::cout << "New user: " << username << "(" << username << ")" << std::endl;
 		isReady = true;
 	}
 }
@@ -52,12 +52,12 @@ void Client::sendMessage(const std::string message) const
 
 std::string Client::getUsername(void) const
 {
-	return (_username);
+	return (username);
 }
 
 std::string Client::getNickname(void) const
 {
-	return (_nickname);
+	return (username);
 }
 
 int Client::getSocketId(void) const

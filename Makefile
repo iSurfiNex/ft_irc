@@ -6,7 +6,7 @@
 #    By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/11 18:09:46 by rsterin           #+#    #+#              #
-#    Updated: 2023/09/13 14:33:51 by rsterin          ###   ########.fr        #
+#    Updated: 2023/09/13 15:49:02 by rsterin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC = src/main.cpp \
 	src/Channel.cpp \
 	src/parsing/parsing.cpp \
 	src/parsing/parseInput.cpp \
+	src/parsing/login.cpp \
 
 HEADERS = includes/IrcServer.hpp \
 
