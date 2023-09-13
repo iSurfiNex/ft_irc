@@ -31,7 +31,7 @@ std::string parsePassword(char *av)
 	return (password);
 }
 
-void parsing(Client &origin, Client &clients, Channel &channels, std::string buffer)
+void parsing(Client &origin, IrcServer &server, std::string buffer)
 {
 	std::string cmd;
 	std::set<std::string> args;
@@ -51,23 +51,23 @@ void parsing(Client &origin, Client &clients, Channel &channels, std::string buf
 		}
 	}
 	if (cmd == "PASS")
-		cmdPass(cmd, args);
+		cmdPass(cmd, args, server);
 	else if (cmd == "USER")
-		cmdUser(cmd, args);
+		cmdUser(cmd, args, server);
 	else if (cmd == "NICK")
-		cmdNick(cmd, args);
+		cmdNick(cmd, args, server);
 	else if (cmd == "JOIN")
-		cmdJoin(cmd, args);
+		cmdJoin(cmd, args, server);
 	else if (cmd == "PART")
-		cmdPart(cmd, args);
+		cmdPart(cmd, args, server);
 	else if (cmd == "PIVMSG")
-		cmdPrivMsg(cmd, args);
+		cmdPrivMsg(cmd, args, server);
 	else if (cmd == "KICK")
-		cmdKick(cmd, args);
+		cmdKick(cmd, args, server);
 	else if (cmd == "INVITE")
-		cmdInvite(cmd, args);
+		cmdInvite(cmd, args, server);
 	else if (cmd == "TOPIC")
-		cmdTopic(cmd, args);
+		cmdTopic(cmd, args, server);
 	else if (cmd == "MODE")
-		cmdMode(cmd, args);
+		cmdMode(cmd, args, server);
 }
