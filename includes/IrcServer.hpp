@@ -30,6 +30,7 @@
 # include "Channel.hpp"
 # include "Client.hpp"
 # include "utils.hpp"
+# include "macros.hpp"
 
 # define MAX_CLIENTS 30
 

@@ -29,7 +29,7 @@ void Client::changeNickName(const std::string newNickname)
 
 	if (!(username.empty()) && !(nickname.empty()) && !isReady)
 	{
-		std::cout << "New user: " << nickname << " (" << username << ")" << std::endl;
+		std::cout << "New user: " << *this << std::endl;
 		sendMessage("You are now authentificate.\r\n");
 		isReady = true;
 	}
@@ -41,7 +41,7 @@ void Client::changeUserName(const std::string newUsername)
 
 	if (!(username.empty()) && !(nickname.empty()) && !isReady)
 	{
-		std::cout << "New user: " << nickname << " (" << username << ")" << std::endl;
+		std::cout << "New user: " << *this << std::endl;
 		sendMessage("You are now authentificate.\r\n");
 		isReady = true;
 	}
@@ -69,9 +69,9 @@ int Client::getSocketId(void) const
 
 std::ostream	&operator <<(std::ostream &os, const Client &client)
 {
-  os << "Client [id:\033[35m" << client.socketId << "\033[0m, nick:\033[35m" << client.nickname << "\033[0m, username:\033[93m"
-     << client.username << "\033[0m, auth:\033[93m"
-     << (client.isAuth ? "Y":"N") << "\033[0m, ready:\033[93m"
-     << (client.isReady ? "Y":"N") << "\033[0m]";
+  os << "Client [id:" GREEN << client.socketId << NC ", nick:" PURPLE << client.nickname << NC ", username:" PURPLE
+     << client.username << NC ", auth:" YELLOW
+     << (client.isAuth ? "Y":"N") << NC ", ready:" YELLOW
+     << (client.isReady ? "Y":"N") << NC "]";
   return os;
 }
