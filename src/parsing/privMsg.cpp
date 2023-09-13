@@ -35,4 +35,5 @@ std::string cmdPrivMsg(std::vector<std::string> &args, Client &origin, IrcServer
 		std::string message = ":" + origin.nickname + " PRIVMSG " + target->nickname + args[1];
 		return (message);
 	}
+	return "";
 }

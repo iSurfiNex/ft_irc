@@ -67,8 +67,8 @@ void parsing(Client &origin, IrcServer &server, std::string buffer)
 		response = cmdNick(args, origin, server);
 	else if (cmd == "PIVMSG")
 		response = cmdPrivMsg(args, origin, server);
-	// else if (cmd == "JOIN")
-	// 	response = cmdJoin(args, origin, server);
+	else if (cmd == "JOIN")
+		response = cmdJoin(args, origin, server);
 	// else if (cmd == "PART")
 	// 	response = cmdPart(args, origin, server);
 	// else if (cmd == "KICK")
