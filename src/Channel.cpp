@@ -12,11 +12,11 @@
 
 #include "IrcServer.hpp"
 
-Channel::Channel(const std::string cName)
+Channel::Channel(const std::string &cName)
 {
-	channelname = cName;
+	name = cName;
 
-	std::cout << "New channel: " << channelname << std::endl;
+	std::cout << "New channel: " << name << std::endl;
 
 	_isInviteOnly = false;
 	_isTopicChangeable = false;
@@ -36,11 +36,11 @@ void Channel::addUser(const Client &client)
 	_userList.insert(&client);
 
 	std::string msg = "You have join: ";
-	msg += channelname;
+	msg += name;
 	msg += ".\r\n";
 
 	client.sendMessage(msg);
-	std::cout << "New user: " << client.getUsername() << ", in channel: " << channelname << std::endl;
+	std::cout << "New user: " << client.getUsername() << ", in channel: " << name << std::endl;
 }
 
 void Channel::addMod(const Client &client)
@@ -48,11 +48,11 @@ void Channel::addMod(const Client &client)
 	_modList.insert(&client);
 
 	std::string msg = "You are now operator of: ";
-	msg += channelname;
+	msg += name;
 	msg += ".\r\n";
 
 	client.sendMessage(msg);
-	std::cout << "New mod: " << client.getUsername() << ", in channel: " << channelname << std::endl;
+	std::cout << "New mod: " << client.getUsername() << ", in channel: " << name << std::endl;
 }
 
 void Channel::removeUser(const Client &client)
@@ -62,11 +62,11 @@ void Channel::removeUser(const Client &client)
 		_userList.erase(&client);
 
 		std::string msg = "You have been remove of: ";
-		msg += channelname;
+		msg += name;
 		msg += ".\r\n";
 
 		client.sendMessage(msg);
-		std::cout << "User: " << client.getUsername() << ", has been removed of: " << channelname << std::endl;
+		std::cout << "User: " << client.getUsername() << ", has been removed of: " << name << std::endl;
 	}
 }
 
@@ -77,11 +77,11 @@ void Channel::removeMod(const Client &client)
 		_modList.erase(&client);
 
 		std::string msg = "You have been remove of: ";
-		msg += channelname;
+		msg += name;
 		msg += " mod list.\r\n";
 
 		client.sendMessage(msg);
-		std::cout << "User: " << client.getUsername() << ", has been removed of: " << channelname << " mod list." << std::endl;
+		std::cout << "User: " << client.getUsername() << ", has been removed of: " << name << " mod list." << std::endl;
 	}
 }
 
@@ -92,19 +92,19 @@ void Channel::changeRule(const char mode)
 		case 'i':
 		{
 			_isInviteOnly = !_isInviteOnly;
-			std::cout << "Channel: " << channelname << ", invite-only is now set to " << _isInviteOnly << std::endl;
+			std::cout << "Channel: " << name << ", invite-only is now set to " << _isInviteOnly << std::endl;
 			break;
 		}
 		case 't':
 		{
 			_isTopicChangeable = !_isTopicChangeable;
-			std::cout << "Channel: " << channelname << ", topic-changeable is now set to " << _isInviteOnly << std::endl;
+			std::cout << "Channel: " << name << ", topic-changeable is now set to " << _isInviteOnly << std::endl;
 			break;
 		}
 		case 'k':
 		{
 			_isRestricted = !_isRestricted;
-			std::cout << "Channel: " << channelname << ", restricted-mode is now set to " << _isInviteOnly << std::endl;
+			std::cout << "Channel: " << name << ", restricted-mode is now set to " << _isInviteOnly << std::endl;
 			break;
 		}
 
@@ -116,19 +116,19 @@ void Channel::changeRule(const char mode)
 void Channel::changeTopic(const std::string topic)
 {
 	_topic = topic;
-	std::cout << "Channel: " << channelname << ", has a new topic: " << _topic << std::endl;
+	std::cout << "Channel: " << name << ", has a new topic: " << _topic << std::endl;
 }
 
 void Channel::changePassword(const std::string password)
 {
 	_password = password;
-	std::cout << "Channel: " << channelname << ", has a new password: " << _password << std::endl;
+	std::cout << "Channel: " << name << ", has a new password: " << _password << std::endl;
 }
 
 void Channel::changeUserLimit(const int userlimit)
 {
 	_userLimit = userlimit;
-	std::cout << "Channel: " << channelname << ", has a new user-limit: " << _userLimit << std::endl;
+	std::cout << "Channel: " << name << ", has a new user-limit: " << _userLimit << std::endl;
 }
 
 bool Channel::isMod(const Client &client)

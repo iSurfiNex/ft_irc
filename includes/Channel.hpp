@@ -36,7 +36,7 @@ class Channel
 		bool isMod(const Client &client);
 		bool isUserInside(const Client &client);
 
-		std::string channelname;
+		std::string name;
 
 	private:
 		const int _socketId;
