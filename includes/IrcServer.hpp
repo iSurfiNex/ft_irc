@@ -48,6 +48,9 @@ class IrcServer
 		std::set<Client *> clients;
 		std::set<Channel *> channels;
 
+		Channel *getChannelWithName(const std::string &channelName);
+		Client *getClientWithName(const std::string &clientName);
+
 	private:
 		int	_port;
 };

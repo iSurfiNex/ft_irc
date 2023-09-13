@@ -157,6 +157,28 @@ void IrcServer::runServer(void)
 	}
 }
 
+Channel *IrcServer::getChannelWithName(const std::string &channelName)
+{
+	for (std::set<Channel *>::iterator it = channels.begin(); channels.end() != it; ++it)
+	{
+		Channel *channel = *it;
+		if (channel->name == channelName)
+			return channel;
+	}
+	return NULL;
+}
+
+Client *IrcServer::getClientWithName(const std::string &clientName)
+{
+	for (std::set<Client *>::iterator it = clients.begin(); clients.end() != it; ++it)
+	{
+		Client *client = *it;
+		if (client->name == clientName)
+			return client;
+	}
+	return NULL;
+}
+
 
 std::ostream	&operator <<(std::ostream &o, const IrcServer &irc)
 {
