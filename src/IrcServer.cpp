@@ -168,17 +168,27 @@ Channel *IrcServer::getChannelWithName(const std::string &channelName)
 	return NULL;
 }
 
-Client *IrcServer::getClientWithName(const std::string &clientName)
+Client *IrcServer::getClientWithUsername(const std::string &name)
 {
 	for (std::set<Client *>::iterator it = clients.begin(); clients.end() != it; ++it)
 	{
 		Client *client = *it;
-		if (client->name == clientName)
+		if (client->username == name)
 			return client;
 	}
 	return NULL;
 }
 
+Client *IrcServer::getClientWithNickname(const std::string &name)
+{
+	for (std::set<Client *>::iterator it = clients.begin(); clients.end() != it; ++it)
+	{
+		Client *client = *it;
+		if (client->nickname == name)
+			return client;
+	}
+	return NULL;
+}
 
 std::ostream	&operator <<(std::ostream &o, const IrcServer &irc)
 {

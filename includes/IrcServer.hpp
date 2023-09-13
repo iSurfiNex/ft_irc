@@ -48,8 +48,10 @@ class IrcServer
 		std::set<Client *> clients;
 		std::set<Channel *> channels;
 
-		Channel *getChannelWithName(const std::string &channelName);
-		Client *getClientWithName(const std::string &clientName);
+		Channel *getChannelWithName(const std::string &name);
+		Client *getClientWithUsername(const std::string &name);
+		Client *getClientWithNickname(const std::string &name);
+		Channel *createChannel(const std::string &channelName, Client &mod);
 
 	private:
 		int	_port;

@@ -32,9 +32,9 @@ class Client
 		bool isAuth;
 		bool isReady;
 
+		std::string username;
+		std::string nickname;
+
 	private:
 		const int _socketId;
-
-		std::string _username;
-		std::string _nickname;
 };
