@@ -12,7 +12,7 @@
 
 #include "IrcServer.hpp"
 
-Channel::Channel(const std::string cName, int socketId)
+Channel::Channel(const std::string cName)
 {
 	channelname = cName;
 
@@ -24,7 +24,6 @@ Channel::Channel(const std::string cName, int socketId)
 	_userLimit = -1;
 	_password = "";
 	_topic = "";
-	_socketId = socketId;
 }
 
 Channel::~Channel(void)
