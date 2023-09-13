@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:35:26 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 18:32:22 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 19:03:32 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &s
 	if (args.size() != 1)
 		return ("Wrong number of arguments. Usage: USER <username>.\r\n");
 
-	Client *tmp = server.getClientWithUsername(*args.begin());
+	Client *tmp = server.getClientWithUsername(args[0]);
 	if (tmp != NULL)
 		return ("Username already in use. Please enter a unique one using: USER <username>.\r\n");
+	else if (!str_alnum(args[0]))
+		return ("Username must contain only alpha-numeric character. Please enter a right one using: USER <username>.\r\n");
 
-	origin.changeUserName(*args.begin());
+	origin.changeUserName(args[0]);
 	return ("Username set.\r\n");
 }
 
@@ -41,10 +43,12 @@ std::string cmdNick(std::vector<std::string> &args, Client &origin, IrcServer &s
 	if (args.size() != 1)
 		return ("Wrong number of arguments. Usage: NICK <nickname>.\r\n");
 
-	Client *tmp = server.getClientWithNickname(*args.begin());
+	Client *tmp = server.getClientWithNickname(args[0]);
 	if (tmp != NULL)
 		return ("Nickname already in use. Please enter a unique one using: NICK <nickname>.\r\n");
+	else if (!str_alnum(args[0]))
+		return ("Nickname must contain only alpha-numeric character. Please enter a right one using: NICK <nickname>.\r\n");
 
-	origin.changeNickName(*args.begin());
+	origin.changeNickName(args[0]);
 	return ("Nickname set.\r\n");
 }

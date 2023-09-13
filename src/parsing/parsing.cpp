@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:31:25 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 18:31:06 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 19:12:26 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int parsePort(char *av)
 	std::stringstream tmp(av);
 	int port;
 
-	if (!(tmp >> port) || !tmp.eof())
+	if (av[0] == '\0' || !(tmp >> port) || !tmp.eof())
+		return (-1);
+
+	if (port < 1024 || port > 49151)
 		return (-1);
 	return (port);
 }
@@ -62,12 +65,12 @@ void parsing(Client &origin, IrcServer &server, std::string buffer)
 		response = cmdUser(args, origin, server);
 	else if (cmd == "NICK")
 		response = cmdNick(args, origin, server);
+	else if (cmd == "PIVMSG")
+		response = cmdPrivMsg(args, origin, server);
 	// else if (cmd == "JOIN")
 	// 	response = cmdJoin(args, origin, server);
 	// else if (cmd == "PART")
 	// 	response = cmdPart(args, origin, server);
-	// else if (cmd == "PIVMSG")
-	// 	response = cmdPrivMsg(args, origin, server);
 	// else if (cmd == "KICK")
 	// 	response = cmdKick(args, origin, server);
 	// else if (cmd == "INVITE")
