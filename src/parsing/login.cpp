@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:35:26 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 20:10:35 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 20:18:02 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &s
 		return ("Username must contain only alpha-numeric character. Please enter a right one using: USER <username>.\r\n");
 
 	origin.changeUserName(args[0]);
-	return ("Username set.\r\n");
+	return ("");
 }
 
 std::string cmdNick(std::vector<std::string> &args, Client &origin, IrcServer &server)
@@ -52,5 +52,5 @@ std::string cmdNick(std::vector<std::string> &args, Client &origin, IrcServer &s
 		return ("Nickname must contain only alpha-numeric character. Please enter a right one using: NICK <nickname>.\r\n");
 
 	origin.changeNickName(args[0]);
-	return ("Nickname set.\r\n");
+	return ("");
 }
