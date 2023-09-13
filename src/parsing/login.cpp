@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:35:26 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 15:43:26 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 15:48:30 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ std::string cmdUser(std::string &cmd, std::set<std::string> &args, Client &origi
 	if (tmp != NULL)
 		return ("Username already in use. Please enter a unique one using: USER <username>.\r\n");
 
+	origin.changeUserName(*args.begin());
 	return ("");
 }
 
@@ -44,5 +45,6 @@ std::string cmdNick(std::string &cmd, std::set<std::string> &args, Client &origi
 	if (tmp != NULL)
 		return ("Nickname already in use. Please enter a unique one using: NICK <nickname>.\r\n");
 
+	origin.changeNickName(*args.begin());
 	return ("");
 }
