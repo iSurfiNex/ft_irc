@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:19 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 15:55:15 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 17:53:02 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ class Channel
 
 		bool isUserOnInviteList(const Client &client);
 		bool checkPassword(const std::string &pw);
-
-		bool hasUser(const Client &client);
 
 		std::string name;
 
