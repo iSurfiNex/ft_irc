@@ -168,11 +168,6 @@ bool Channel::isUserInside(const Client &client)
 	return (false);
 }
 
-bool Channel::hasUser(const Client &client)
-{
-	return _userList.find(&client) != _userList.end();
-}
-
 bool Channel::isUserOnInviteList(const Client &client)
 {
 	return _inviteList.find(&client) != _inviteList.end();
