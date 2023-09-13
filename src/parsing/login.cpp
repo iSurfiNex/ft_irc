@@ -16,22 +16,22 @@ std::string cmdPass(std::vector<std::string> &args, Client &origin, IrcServer &s
 {
 	if (origin.isAuth)
 	{
-		std::cerr << origin << ": PASS: already logged in";
+		std::cerr << origin << ": PASS: already logged in" << std::endl;
 		return ("You are already logged in.\r\n");
 	}
 	if (args.size() != 1)
 	{
-		std::cerr << origin << ": PASS: Wrong number of arguments";
+		std::cerr << origin << ": PASS: Wrong number of arguments" << std::endl;
 		return ("Wrong number of arguments. Usage: PASS <password>.\r\n");
 	}
 	else if (!server.checkPassword(args[0]))
 	{
-		std::cerr << origin << ": PASS: Wrong password";
+		std::cerr << origin << ": PASS: Wrong password" << std::endl;
 		return ("Wrong password. Please enter the correct one using: PASS <password>.\r\n");
 	}
 
 	origin.isAuth = true;
-	std::cout << origin << ": PASS: Now logged in";
+	std::cout << origin << ": PASS: Now logged in" << std::endl;
 	return ("You are now login, please use: USER <username> and NICK <nickname> to authentificate.\r\n");
 }
 
@@ -39,19 +39,19 @@ std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &s
 {
 	if (args.size() != 1)
 	{
-		std::cerr << origin << ": USER: Wrong number of arguments";
+		std::cerr << origin << ": USER: Wrong number of arguments" << std::endl;
 		return ("Wrong number of arguments. Usage: USER <username>.\r\n");
 	}
 
 	Client *tmp = server.getClientWithUsername(args[0]);
 	if (tmp != NULL)
 	{
-		std::cerr << origin << ": USER: Username already in use";
+		std::cerr << origin << ": USER: Username already in use" << std::endl;
 		return ("Username already in use. Please enter a unique one using: USER <username>.\r\n");
 	}
 	else if (!str_alnum(args[0]))
 	{
-		std::cerr << origin << ": USER: Username must contain only alpha-numeric character";
+		std::cerr << origin << ": USER: Username must contain only alpha-numeric character" << std::endl;
 		return ("Username must contain only alpha-numeric character. Please enter a right one using: USER <username>.\r\n");
 	}
 
@@ -62,13 +62,22 @@ std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &s
 std::string cmdNick(std::vector<std::string> &args, Client &origin, IrcServer &server)
 {
 	if (args.size() != 1)
+	{
+		std::cerr << origin << ": NICK: Wrong number of arguments" << std::endl;
 		return ("Wrong number of arguments. Usage: NICK <nickname>.\r\n");
+	}
 
 	Client *tmp = server.getClientWithNickname(args[0]);
 	if (tmp != NULL)
+	{
+		std::cerr << origin << ": NICK: Nickname already in use" << std::endl;
 		return ("Nickname already in use. Please enter a unique one using: NICK <nickname>.\r\n");
+	}
 	else if (!str_alnum(args[0]))
+	{
+		std::cerr << origin << ": NICK: Nickname must contain only alpha-numeric character" << std::endl;
 		return ("Nickname must contain only alpha-numeric character. Please enter a right one using: NICK <nickname>.\r\n");
+	}
 
 	origin.changeNickName(args[0]);
 	return ("");

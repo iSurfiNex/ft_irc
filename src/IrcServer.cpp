@@ -148,10 +148,9 @@ void IrcServer::runServer(void)
 					//set the string terminating NULL byte on the end
 					//of the data read
 					buffer[valread] = '\0';
-					std::cout << "MSG received " << buffer;
 					Client *client= getClientFromSocket(sd);
 					if (!client)
-						std::cout << "No client for socket " << sd << std::endl;
+						std::cerr << "No client for socket " << sd << std::endl;
 					else {
 						//std::string str_msg = client->partialMsg + buffer;
 						std::string str_msg = buffer;
@@ -160,7 +159,6 @@ void IrcServer::runServer(void)
 						while (true)
 						{
 							end_pos = str_msg.find("\r\n", start_pos);
-							std::cout << "ENDPOS" << end_pos << std::endl;
 							if (end_pos == std::string::npos)
 							{
 								//client->partialMsg = str_msg.substr(start_pos, std::string::npos);
