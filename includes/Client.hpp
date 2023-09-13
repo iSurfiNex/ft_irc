@@ -37,3 +37,5 @@ class Client
 		const int socketId;
 		//std::string partialMsg;
 };
+
+std::ostream &operator<<(std::ostream &os, const Client &client);
