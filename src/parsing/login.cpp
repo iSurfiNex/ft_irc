@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:35:26 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 19:03:32 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 20:10:35 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 std::string cmdPass(std::vector<std::string> &args, Client &origin, IrcServer &server)
 {
+	if (origin.isAuth)
+		return ("You are already logged in.\r\n");
 	if (args.size() != 1)
 		return ("Wrong number of arguments. Usage: PASS <password>.\r\n");
 	else if (!server.checkPassword(args[0]))
