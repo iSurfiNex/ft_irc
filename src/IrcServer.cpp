@@ -45,11 +45,11 @@ IrcServer::IrcServer(const int port, std::string &password): _password(password)
 IrcServer::~IrcServer(void)
 {
 	for (std::set<Client *>::iterator it = clients.begin(); clients.end() != it; ++it)
-		delete &it;
+		delete *it;
 	clients.clear();
 
 	for (std::set<Channel *>::iterator it = channels.begin(); channels.end() != it; ++it)
-		delete &it;
+		delete *it;
 	channels.clear();
 }
 
