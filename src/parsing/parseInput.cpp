@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_input.cpp                                    :+:      :+:    :+:   */
+/*   parseInput.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:16:54 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 14:29:33 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/13 14:51:03 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "IrcServer.hpp"
 
-void getCmdArgs(std::string buffer, std::string &cmd, std::set<std::string> &args)
+std::string getCmdArgs(std::string buffer, std::string &cmd, std::set<std::string> &args)
 {
 	bool two_points = false;
 	std::string tmp;
