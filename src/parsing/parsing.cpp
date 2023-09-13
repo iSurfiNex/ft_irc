@@ -35,6 +35,20 @@ std::string parsePassword(char *av)
 	return (password);
 }
 
+static void _printCmd(std::string fullStr, std::string cmd, std::vector<std::string> args)
+{
+
+	std::cout <<" >> " << cmd << "[";
+	for (std::vector<std::string>::iterator it = args.begin(); args.end() != it;)
+	{
+		std::cout << *it ;
+		++it;
+		if(args.end() != it)
+			std::cout << ", ";
+	}
+	std::cout << "] <= \""<<fullStr <<"\""<<std::endl;
+}
+
 void parsing(Client &origin, IrcServer &server, std::string buffer)
 {
 	std::string cmd;
@@ -43,6 +57,8 @@ void parsing(Client &origin, IrcServer &server, std::string buffer)
 	std::string response;
 
 	getCmdArgs(buffer, cmd, args);
+
+	_printCmd(buffer, cmd, args);
 	if (cmd == "CAP")
 		return;
 

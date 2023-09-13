@@ -166,8 +166,6 @@ void IrcServer::runServer(void)
 							}
 							std::string cmd_str = str_msg.substr(start_pos, end_pos - start_pos);
 
-							std::cout << "CMD_STR " << cmd_str <<std::endl;
-
 							parsing(*client, *this, cmd_str);
 
 							start_pos = end_pos +2;
