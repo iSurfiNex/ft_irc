@@ -15,26 +15,45 @@
 std::string cmdPass(std::vector<std::string> &args, Client &origin, IrcServer &server)
 {
 	if (origin.isAuth)
+	{
+		std::cerr << origin << ": PASS: already logged in";
 		return ("You are already logged in.\r\n");
+	}
 	if (args.size() != 1)
+	{
+		std::cerr << origin << ": PASS: Wrong number of arguments";
 		return ("Wrong number of arguments. Usage: PASS <password>.\r\n");
+	}
 	else if (!server.checkPassword(args[0]))
+	{
+		std::cerr << origin << ": PASS: Wrong password";
 		return ("Wrong password. Please enter the correct one using: PASS <password>.\r\n");
+	}
 
 	origin.isAuth = true;
+	std::cout << origin << ": PASS: Now logged in";
 	return ("You are now login, please use: USER <username> and NICK <nickname> to authentificate.\r\n");
 }
 
 std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &server)
 {
 	if (args.size() != 1)
+	{
+		std::cerr << origin << ": USER: Wrong number of arguments";
 		return ("Wrong number of arguments. Usage: USER <username>.\r\n");
+	}
 
 	Client *tmp = server.getClientWithUsername(args[0]);
 	if (tmp != NULL)
+	{
+		std::cerr << origin << ": USER: Username already in use";
 		return ("Username already in use. Please enter a unique one using: USER <username>.\r\n");
+	}
 	else if (!str_alnum(args[0]))
+	{
+		std::cerr << origin << ": USER: Username must contain only alpha-numeric character";
 		return ("Username must contain only alpha-numeric character. Please enter a right one using: USER <username>.\r\n");
+	}
 
 	origin.changeUserName(args[0]);
 	return ("");
