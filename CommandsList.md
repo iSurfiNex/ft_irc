@@ -10,7 +10,7 @@ Param: i, t, k, o, l
 
 Utilisateur: doit avoir un user/nick isalnum;
 
-PARSING: R
+PARSING: R  <!-- done -->
 	cmd = determine la cmd;
 	args = trouver les args (gerer les deux points);
 
