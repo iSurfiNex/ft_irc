@@ -6,7 +6,7 @@
 #    By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/11 18:09:46 by rsterin           #+#    #+#              #
-#    Updated: 2023/09/14 18:48:40 by rsterin          ###   ########.fr        #
+#    Updated: 2023/09/14 19:42:33 by rsterin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC = src/main.cpp \
 	src/parsing/topic.cpp \
 	src/parsing/kick.cpp \
 	src/parsing/invite.cpp \
+	src/parsing/mode.cpp \
 	src/utils.cpp \
 
 HEADERS = includes/IrcServer.hpp \
