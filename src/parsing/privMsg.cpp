@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:58:52 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 15:31:42 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 15:58:28 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ std::string cmdPrivMsg(std::vector<std::string> &args, Client &origin, IrcServer
 		channel = server.getChannelWithName(args[0]);
 		if (!channel || !channel->isUserInside(origin))
 			return ("Channel not found. Please enter a valid channel using: PRIVMSG <channel/nickname> : <msg>.\r\n");
-		// channel->sendMessage(origin, args[1]);
+
+		std::string messageToChannel = ":" + origin.nickname + " PRIVMSG " + channel->name + " :" + args[1];
+		std::cout << origin << " send: \"" << messageToChannel << "\" to " << channel->name << std::endl;
+		messageToChannel += "\r\n";
+		channel->sendMessage(messageToChannel);
 	}
 	else
 	{
@@ -36,7 +40,6 @@ std::string cmdPrivMsg(std::vector<std::string> &args, Client &origin, IrcServer
 		std::cout << origin << " send: \"" << messageToTarget << "\" to " << *target << std::endl;
 		messageToTarget += "\r\n";
 		target->sendMessage(messageToTarget);
-		return ("");
 	}
 	return ("");
 }
