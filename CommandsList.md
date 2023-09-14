@@ -52,7 +52,7 @@ PRIVMSG: R <!-- done -->
 	envoyer l'arg 2 a la target;
 __________________________________________
 
-KICK: F
+KICK: F <!-- done -->
 	verifier si le channel existe;
 	verifier si la target existe;
 	verifier si la target est deja dans le channel;
