@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:29 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/12 18:13:43 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 16:07:15 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,4 +176,13 @@ bool Channel::isUserOnInviteList(const Client &client)
 bool Channel::checkPassword(const std::string &pw)
 {
 	return pw == _password;
+}
+
+void Channel::sendMessage(const std::string message) const
+{
+	for (std::set<const Client *>::iterator it = _userList.begin(); _userList.end() != it; ++it)
+	{
+		const Client *client = *it;
+		send(client->socketId, message.c_str(), message.size(), 0);
+	}
 }
