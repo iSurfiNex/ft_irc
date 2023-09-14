@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 18:20:31 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 18:26:04 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 18:47:58 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ std::string cmdTopic(std::vector<std::string> &args, Client &origin, IrcServer &
 	else
 		return ("You cant change the topic.\r\n");
 
-	origin.sendMessage("Channel's topic has been changed.\r\n");
+	return ("Channel's topic has been changed.\r\n");
 }

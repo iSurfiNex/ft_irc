@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 18:04:59 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 18:21:06 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 18:48:50 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ std::string cmdInvite(std::vector<std::string> &args, Client &origin, IrcServer 
 		return ("User is already on the invite-list.\r\n");
 
 	channel->addUserInviteList(*target);
+	return ("");
 }

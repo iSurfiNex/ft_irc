@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:31:25 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 18:27:51 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 18:47:14 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void parsing(Client &origin, IrcServer &server, std::string buffer)
 		response = cmdInvite(args, origin, server);
 	else if (cmd == "TOPIC")
 		response = cmdTopic(args, origin, server);
-	// else if (cmd == "KICK")
-	// 	response = cmdKick(args, origin, server);
+	else if (cmd == "KICK")
+		response = cmdKick(args, origin, server);
 	// else if (cmd == "MODE")
 	// 	response = cmdMode(args, origin, server);
 

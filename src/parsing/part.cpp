@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 17:20:30 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 18:03:27 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 18:47:46 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ std::string cmdPart(std::vector<std::string> &args, Client &origin, IrcServer &s
 	channel->removeMod(origin);
 	channel->removeUser(origin);
 	channel->sendMessage(messageToChannel);
+	return ("");
 }
