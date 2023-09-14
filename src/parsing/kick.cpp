@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 18:38:10 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 18:48:27 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 18:50:47 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ std::string cmdKick(std::vector<std::string> &args, Client &origin, IrcServer &s
 		return ("Wrong number of arguments. Usage: KICK <channel> <nickname> (<reason>).\r\n");
 
 	Channel *channel;
-	channel = server.getChannelWithName(args[1]);
+	channel = server.getChannelWithName(args[0]);
 	if (!channel || !channel->isUserInside(origin))
 		return ("Channel not found. Please enter a valid channel using: INVITE <nickname> <channel>.\r\n");
 
