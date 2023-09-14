@@ -147,6 +147,7 @@ void IrcServer::runServer(void)
 				{
 					//set the string terminating NULL byte on the end
 					//of the data read
+					int skipCount = 2;
 					buffer[valread] = '\0';
 					Client *client= getClientFromSocket(sd);
 					if (!client)
@@ -161,6 +162,12 @@ void IrcServer::runServer(void)
 							end_pos = str_msg.find("\r\n", start_pos);
 							if (end_pos == std::string::npos)
 							{
+								end_pos = str_msg.find("\n", start_pos);
+								skipCount = 1;
+							}
+
+							if (end_pos == std::string::npos)
+							{
 								//client->partialMsg = str_msg.substr(start_pos, std::string::npos);
 								break;
 							}
@@ -168,7 +175,7 @@ void IrcServer::runServer(void)
 
 							parsing(*client, *this, cmd_str);
 
-							start_pos = end_pos +2;
+							start_pos = end_pos + skipCount;
 						}
 					}
 				}
