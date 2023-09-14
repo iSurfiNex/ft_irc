@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:14:22 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 20:15:06 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:59:21 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void Client::changeNickName(const std::string newNickname)
 	if (!(username.empty()) && !(nickname.empty()) && !isReady)
 	{
 		isReady = true;
-		std::cout << "New user: " << *this << std::endl;
+		std::cout << "New user authentificate: " << *this << std::endl;
 		sendMessage("You are now authentificate.\r\n");
 	}
 }
@@ -42,7 +42,7 @@ void Client::changeUserName(const std::string newUsername)
 	if (!(username.empty()) && !(nickname.empty()) && !isReady)
 	{
 		isReady = true;
-		std::cout << "New user: " << *this << std::endl;
+		std::cout << "New user authentificate: " << *this << std::endl;
 		sendMessage("You are now authentificate.\r\n");
 	}
 }
