@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 17:20:30 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 18:47:46 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 19:48:56 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 std::string cmdPart(std::vector<std::string> &args, Client &origin, IrcServer &server)
 {
-	if (args.size() != 1)
+	if (args.size() < 1)
 		return ("Wrong number of arguments. Usage: PART <channel>.\r\n");
 
 	Channel *channel;
