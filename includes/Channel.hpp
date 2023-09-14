@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:19 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 16:07:23 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 18:14:00 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ class Channel
 		~Channel(void);
 
 		void addUser(const Client &client);
+		void addUserInviteList(const Client &client);
 		void addMod(const Client &client);
 
 		void removeUser(const Client &client);

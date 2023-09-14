@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:29 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 16:07:15 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 18:16:31 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,25 @@ void Channel::addUser(const Client &client)
 	{
 		removeUserFromInviteList(client);
 	    std::cout << "New user" << client.getUsername() << " consumed invitation to join channel: " << name << std::endl;
-		msg += " by consuming your invitation.";
+		msg += " by consuming your invitation";
 	}
 
 	msg += ".\r\n";
 
 	client.sendMessage(msg);
 	std::cout << "New user: " << client.getUsername() << ", in channel: " << name << std::endl;
+}
+
+void Channel::addUserInviteList(const Client &client)
+{
+	_inviteList.insert(&client);
+
+	std::string msg = "You have been invited to: ";
+	msg += name;
+	msg += ".\r\n";
+
+	client.sendMessage(msg);
+	std::cout << "New user: " << client.getUsername() << ", on channel's invite-list: " << name << std::endl;
 }
 
 void Channel::addMod(const Client &client)

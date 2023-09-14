@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:31:25 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 20:15:56 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 18:19:29 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,12 @@ void parsing(Client &origin, IrcServer &server, std::string buffer)
 		response = cmdPrivMsg(args, origin, server);
 	else if (cmd == "JOIN")
 		response = cmdJoin(args, origin, server);
-	// else if (cmd == "PART")
-	// 	response = cmdPart(args, origin, server);
+	else if (cmd == "PART")
+		response = cmdPart(args, origin, server);
+	else if (cmd == "INVITE")
+		response = cmdInvite(args, origin, server);
 	// else if (cmd == "KICK")
 	// 	response = cmdKick(args, origin, server);
-	// else if (cmd == "INVITE")
-	// 	response = cmdInvite(args, origin, server);
 	// else if (cmd == "TOPIC")
 	// 	response = cmdTopic(args, origin, server);
 	// else if (cmd == "MODE")
