@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:35:26 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 20:18:02 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:58:14 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ std::string cmdPass(std::vector<std::string> &args, Client &origin, IrcServer &s
 std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &server)
 {
 	// Only consider the first agrument, ignore any remaining, full cmd could be "USER <username> <mode> <unused> :<realname>"
-	if (args.size() < 2)
+	if (args.size() < 1)
 	{
 		std::cerr << origin << ": USER: Wrong number of arguments" << std::endl;
 		return ("Wrong number of arguments. Usage: USER <username>.\r\n");
