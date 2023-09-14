@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:58:52 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/13 19:58:30 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 15:18:23 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ std::string cmdPrivMsg(std::vector<std::string> &args, Client &origin, IrcServer
 		if (!target)
 			return ("User not found. Please enter a valid user using: PRIVMSG <channel/nickname> : <msg>.\r\n");
 
-		std::string message = ":" + origin.nickname + " PRIVMSG " + target->nickname + args[1];
+		std::cout << args[1] << std::endl;
+		std::string message = ":" + origin.nickname + " PRIVMSG " + target->nickname + " :" + args[1] + "\r\n";
+		std::cout << origin << " send: \"" << message << "\" to " << *target << std::endl;
+		target->sendMessage(message);
 		return (message);
 	}
 	return ("");
