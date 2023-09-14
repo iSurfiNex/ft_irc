@@ -69,7 +69,6 @@ INVITE: R
 	verifier si la target existe;
 	verifier si la target n'est pas deja dans le channel;
 	verifier si la target n'est pas l'auteur de la cmd;
-	verifier que l'utilisateur soit mod;
 	verifier si l'utilisateur est dans le channel;
 	verifier qu'il n'y ai pas plus de 2 args;
 	invite la target dans le channel;
