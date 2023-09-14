@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:32:13 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 18:26:11 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 18:47:21 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ std::string cmdPrivMsg(std::vector<std::string> &args, Client &origin, IrcServer
 std::string cmdPart(std::vector<std::string> &args, Client &origin, IrcServer &server);
 std::string cmdInvite(std::vector<std::string> &args, Client &origin, IrcServer &server);
 std::string cmdTopic(std::vector<std::string> &args, Client &origin, IrcServer &server);
+std::string cmdKick(std::vector<std::string> &args, Client &origin, IrcServer &server);
 const std::string cmdJoin(std::vector<std::string> args, Client &client, IrcServer &server);
 
 void parsing(Client &origin, IrcServer &server, std::string buffer);
