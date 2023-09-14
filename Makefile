@@ -6,7 +6,7 @@
 #    By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/11 18:09:46 by rsterin           #+#    #+#              #
-#    Updated: 2023/09/13 15:49:02 by rsterin          ###   ########.fr        #
+#    Updated: 2023/09/14 17:21:38 by rsterin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC = src/main.cpp \
 	src/parsing/parseInput.cpp \
 	src/parsing/login.cpp \
 	src/parsing/join.cpp \
+	src/parsing/part.cpp \
 	src/parsing/privMsg.cpp \
 	src/utils.cpp \
 
