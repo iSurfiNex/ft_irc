@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:16:54 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 15:19:41 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 15:29:56 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ void getCmdArgs(std::string buffer, std::string &cmd, std::vector<std::string> &
 		if (cmd.empty())
 			cmd = ptr;
 		else if (ptr[0] == ':' && !two_points)
+		{
+			tmp.append(ptr);
+			tmp.erase(0, 1);
+			tmp += " ";
 			two_points = true;
+		}
 		else if (two_points)
 		{
 			tmp.append(ptr);
