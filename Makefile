@@ -6,7 +6,7 @@
 #    By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/11 18:09:46 by rsterin           #+#    #+#              #
-#    Updated: 2023/09/14 17:21:38 by rsterin          ###   ########.fr        #
+#    Updated: 2023/09/14 18:26:17 by rsterin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC = src/main.cpp \
 	src/parsing/join.cpp \
 	src/parsing/part.cpp \
 	src/parsing/privMsg.cpp \
+	src/parsing/topic.cpp \
 	src/utils.cpp \
 
 HEADERS = includes/IrcServer.hpp \
