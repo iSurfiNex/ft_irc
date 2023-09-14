@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:31:25 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 19:44:30 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 19:46:04 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ std::string parsePassword(char *av)
 	return (password);
 }
 
-static void _printCmd(std::string fullStr, std::string cmd, std::vector<std::string> args)
+static void _printCmd(Client &origin, std::string fullStr, std::string cmd, std::vector<std::string> args)
 {
 
-	std::cout <<" >> " << cmd << "[";
+	std::cout << origin << " >> " << cmd << "[";
 	for (std::vector<std::string>::iterator it = args.begin(); args.end() != it;)
 	{
 		std::cout << *it ;
@@ -58,7 +58,7 @@ void parsing(Client &origin, IrcServer &server, std::string buffer)
 
 	getCmdArgs(buffer, cmd, args);
 
-	_printCmd(buffer, cmd, args);
+	_printCmd(origin, buffer, cmd, args);
 	if (cmd == "CAP")
 		return;
 
