@@ -40,7 +40,7 @@ JOIN: F
 	verifier si channel commence par #;
 __________________________________________
 
-PART: F
+PART: F <!-- done -->
 	verifier qu'il n'y ai pas plus de 1 args;
 	verifier si channel existe si oui leave + l'enlever des mods;
 __________________________________________
