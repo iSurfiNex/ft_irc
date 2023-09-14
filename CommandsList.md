@@ -64,7 +64,7 @@ KICK: F
 	removeUser la target du channel + envoyer
 __________________________________________
 
-INVITE: R
+INVITE: R <!-- done -->
 	verifier si le channel existe;
 	verifier si la target existe;
 	verifier si la target n'est pas deja dans le channel;
@@ -74,7 +74,7 @@ INVITE: R
 	invite la target dans le channel;
 __________________________________________
 
-TOPIC: F
+TOPIC: F <!-- done -->
 	verifier si le channel existe;
 	verifier si l'utilisateur est dans le channel;
 	verifier que l'utilisateur soit mod seulement is isTopicChangeable = false;
