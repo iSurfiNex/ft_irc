@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 18:04:59 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 18:18:57 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/14 18:21:06 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 std::string cmdInvite(std::vector<std::string> &args, Client &origin, IrcServer &server)
 {
-	if (args.size() != 1)
+	if (args.size() != 2)
 		return ("Wrong number of arguments. Usage: INVITE <nickname> <channel>.\r\n");
 
 	Client *target;
