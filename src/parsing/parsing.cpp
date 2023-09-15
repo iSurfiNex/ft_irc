@@ -38,7 +38,7 @@ std::string parsePassword(char *av)
 static void _printCmd(Client &origin, std::string fullStr, std::string cmd, strVec_t args)
 {
 
-	std::cout << origin << " >> " << cmd << "[";
+	std::cout << " >> " << cmd << "[";
 	for (strVec_t::iterator it = args.begin(); args.end() != it;)
 	{
 		std::cout << *it ;
@@ -46,7 +46,7 @@ static void _printCmd(Client &origin, std::string fullStr, std::string cmd, strV
 		if(args.end() != it)
 			std::cout << ", ";
 	}
-	std::cout << "] " GRAY "<= \"" << fullStr << "\"" NC << std::endl;
+	std::cout << "] " GRAY "<= \"" << fullStr << "\"" NC " " << origin << std::endl;
 }
 
 void parsing(Client &origin, IrcServer &server, std::string buffer)

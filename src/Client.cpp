@@ -98,7 +98,7 @@ void Client::msg(msgCode_e code, ...) const
 
 std::ostream	&operator <<(std::ostream &os, const Client &client)
 {
-  os << "Client [id:" GREEN << client.socketId << NC ", nick:" PURPLE << client.nickname << NC ", username:" PURPLE
+  os << "Client[id:" GREEN << client.socketId << NC ", nick:" PURPLE << client.nickname << NC ", username:" PURPLE
      << client.username << NC ", auth:" YELLOW
      << (client.isAuth ? "Y":"N") << NC ", ready:" YELLOW
      << (client.isReady ? "Y":"N") << NC "]";
