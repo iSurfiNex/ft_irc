@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:19 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/15 17:58:54 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/15 18:46:20 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ class Client;
 class Channel
 {
 	public:
-		Channel(const std::string &cName);
+		Channel(const std::string &_name, const std::string &key, Client &mod);
 		~Channel(void);
 
-		void addUser(const Client &client);
+		void _addUser(const Client &client);
 		void addUserInviteList(const Client &client);
 		void addMod(const Client &client);
 
@@ -52,7 +52,8 @@ class Channel
 		static bool isValidKey(const std::string &key);
 		static bool isValidName(const std::string &name);
 		std::string serverName;
-		void msg(msgCode_e code, ...);
+		void msg(msgCode_e code, ...) const;
+		void tryEnter(Client &client, const std::string& password);
 	private:
 
 		static bool _isValidBaseName(const std::string &name);
@@ -62,11 +63,14 @@ class Channel
 		static const std::string _forbiddenNameChars;
 		static const int _nameMaxLen;
 
+		std::string _getUserListStr(void) const;
+
 		std::set<const Client *> _userList;
 		std::set<const Client *> _inviteList;
 		std::set<const Client *> _modList;
 
 		int _userLimit;
 		std::string _password;
+		std::string _symbol;
 
 };

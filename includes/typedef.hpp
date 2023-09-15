@@ -4,7 +4,6 @@ typedef std::vector<std::string> strVec_t;
 typedef std::string str_t;
 
 enum msgCode_e {
-  ERR_YO = 123,
   RPL_NOTOPIC = 331,
   RPL_TOPIC = 332,
   RPL_NAMREPLY = 353,
@@ -18,7 +17,6 @@ enum msgCode_e {
   ERR_ERRONEUSNICKNAME = 432,
   ERR_NICKNAMEINUSE = 433,
   ERR_USERNOTINCHANNEL = 441,
-  ERR_YA = 444,
   ERR_NEEDMOREPARAMS = 461,
   ERR_ALREADYREGISTERED = 462,
   ERR_PASSWDMISMATCH = 464,
@@ -27,4 +25,5 @@ enum msgCode_e {
   ERR_BADCHANNELKEY = 475,
   ERR_BADCHANNELMASK = 476,
   ERR_CHANOPRIVSNEEDED = 482,
+  MSG_JOIN = 1000,
 };

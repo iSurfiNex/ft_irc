@@ -30,7 +30,7 @@ class Client
 		std::string getUsername(void) const;
 		std::string getNickname(void) const;
 		int getSocketId(void) const;
-		void msg(msgCode_e code, ...);
+		void msg(msgCode_e code, ...) const;
 
 		bool isAuth;
 		bool isReady;

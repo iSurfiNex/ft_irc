@@ -37,7 +37,7 @@ void IrcServer::_initializeMsgFormats(void) {
 	m[ERR_NOSUCHNICK] = "<server> <code> <client> <nickname> :No such nick/channel";
 	m[ERR_CHANOPRIVSNEEDED] = "<server> <code> <client> <channel> :You're not channel operator";
 	m[ERR_USERNOTINCHANNEL] = "<server> <code> <client> <nick> <channel> :They aren't on that channel";
-
+	m[MSG_JOIN] = "<client> JOIN <channel>";
 	msgFormats = m;
 }
 
@@ -236,14 +236,10 @@ Client *IrcServer::getClientWithNickname(const std::string &name)
 	return NULL;
 }
 
-Channel *IrcServer::createChannel(const std::string &channelName, Client &mod)
+Channel *IrcServer::createChannel(Client &mod, const std::string &channelName, const std::string& key)
 {
-	Channel *channel = new Channel(channelName);
-	channel->addMod(mod);
-	channel->addUser(mod);
+	Channel *channel = new Channel(channelName, key, mod);
 	channels.insert(channel);
-	mod.sendMessage("You have created a channel");
-	std::cout << "Channel " << channelName << " created by " << mod.nickname;
 	return channel;
 }
 
@@ -293,18 +289,9 @@ std::string IrcServer::formatMsg(const std::string &format, std::map<std::string
 		std::string key = eval.substr(repl_start, repl_len);
 		std::string repl_str;
 		if (presets.find(key) != presets.end())
-		{
-				repl_str = presets[key];
-		}
-		else {
-			const char *arg = va_arg(args, const char*);
-			if (!arg)
-			{
-				std::cerr << "InternalError: Not enought args. Can't find value for " YELLOW << key << NC " in format string " YELLOW << format << NC << std::endl;
-			    break;
-			}
-			repl_str = arg;
-		}
+			repl_str = presets[key];
+		else
+			repl_str = va_arg(args, std::string);
 
 		eval.replace(repl_start, repl_len, repl_str);
 		repl_start = repl_end;
