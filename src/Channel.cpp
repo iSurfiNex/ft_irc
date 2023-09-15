@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:29 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/15 18:47:42 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/15 18:49:13 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ Channel::Channel(const std::string &_name, const std::string &key, Client &mod)
 	isTopicChangeable = false;
 	isRestricted = false;
 	_userLimit = -1;
-	_password = "";
+	_password = key;
 	topic = "";
 	_symbol = "=";
 	serverName = ":myserver";

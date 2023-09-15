@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:35:26 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/15 17:56:28 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/15 18:49:43 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void cmdUser(strVec_t &args, Client &origin, IrcServer &server)
 		else
 			origin.changeUserName(args[0]);
 	}
+	(void)server;
 }
 
 void cmdNick(strVec_t &args, Client &origin, IrcServer &server)

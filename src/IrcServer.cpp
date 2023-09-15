@@ -37,7 +37,12 @@ void IrcServer::_initializeMsgFormats(void) {
 	m[ERR_NOSUCHNICK] = "<server> <code> <client> <nickname> :No such nick/channel";
 	m[ERR_CHANOPRIVSNEEDED] = "<server> <code> <client> <channel> :You're not channel operator";
 	m[ERR_USERNOTINCHANNEL] = "<server> <code> <client> <nick> <channel> :They aren't on that channel";
+	m[ERR_NOTONCHANNEL] = "<server> <code> <client> <channel> :They aren't on that channel";
+	m[ERR_USERONCHANNEL] = "<server> <code> <client> <nick> <channel> :is already on channel";
+	m[RPL_INVITING] = "<server> <code> <client> <nick> <channel>";
 	m[MSG_JOIN] = "<client> JOIN <channel>";
+	m[MSG_ADDINVITELIST] = "<server> <code> <client> <nick> <channel> :invite you";
+	m[MSG_NEWTOPIC] = "<server> <code> <channel> :\"<topic>\" is the new topic of this channel";
 	msgFormats = m;
 }
 

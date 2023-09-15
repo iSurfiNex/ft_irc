@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 18:20:31 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/15 18:34:42 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/15 19:07:50 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ void cmdTopic(strVec_t &args, Client &origin, IrcServer &server)
 			else
 				origin.msg(RPL_TOPIC, args[0], channel->topic);
 		}
-		else if (channel->isMod(origin))
+		else if (channel->isMod(origin) || channel->isTopicChangeable)
+		{
+			channel->msg(MSG_NEWTOPIC, channel->topic);
 			channel->changeTopic(args[1]);
-		else if (channel->isTopicChangeable)
-			channel->changeTopic(args[1]);
+		}
 		else
 			origin.msg(ERR_CHANOPRIVSNEEDED, channel->name);
 	}

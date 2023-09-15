@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 18:38:10 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/15 18:44:32 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/15 18:50:01 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void cmdKick(strVec_t &args, Client &origin, IrcServer &server)
 			origin.msg(ERR_CHANOPRIVSNEEDED, channel->name);
 		else
 		{
-			for (int i = 1; args.size() > i; i++)
+			for (size_t i = 1; args.size() > i; i++)
 			{
 				Client *target;
 				target = server.getClientWithNickname(args[i]);

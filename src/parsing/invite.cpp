@@ -6,33 +6,38 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 18:04:59 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 18:48:50 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/15 19:04:53 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "IrcServer.hpp"
 
-std::string cmdInvite(strVec_t &args, Client &origin, IrcServer &server)
+void cmdInvite(strVec_t &args, Client &origin, IrcServer &server)
 {
-	if (args.size() != 2)
-		return ("Wrong number of arguments. Usage: INVITE <nickname> <channel>.\r\n");
-
-	Client *target;
-	target = server.getClientWithNickname(args[0]);
-	if (!target)
-		return ("User not found . Please enter a valid target using: INVITE <nickname> <channel>.\r\n");
-
-	Channel *channel;
-	channel = server.getChannelWithName(args[1]);
-	if (!channel || !channel->isUserInside(origin))
-		return ("Channel not found. Please enter a valid channel using: INVITE <nickname> <channel>.\r\n");
-
-	if (channel->isUserInside(*target))
-		return ("User is already in targeted channel.\r\n");
-
-	if (channel->isUserOnInviteList(*target))
-		return ("User is already on the invite-list.\r\n");
-
-	channel->addUserInviteList(*target);
-	return ("");
+	if (args.size() < 2)
+		origin.msg(ERR_NEEDMOREPARAMS, "INVITE");
+	else
+	{
+		Client *target;
+		target = server.getClientWithNickname(args[0]);
+		if (!target)
+			origin.msg(ERR_NOSUCHNICK, args[0]);
+		else
+		{
+			Channel *channel;
+			channel = server.getChannelWithName(args[1]);
+			if (!channel || !channel->isUserInside(origin))
+				origin.msg(ERR_NOSUCHCHANNEL, args[1]);
+			else if (channel->isMod(origin))
+				origin.msg(ERR_CHANOPRIVSNEEDED, channel->name);
+			else if (channel->isUserInside(*target))
+				origin.msg(ERR_USERONCHANNEL, target->nickname, channel->name);
+			else
+			{
+				channel->addUserInviteList(*target);
+				origin.msg(RPL_INVITING, target->nickname, channel->name);
+				target->msg(MSG_ADDINVITELIST, origin.nickname, channel->name);
+			}
+		}
+	}
 }
