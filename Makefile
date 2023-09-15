@@ -30,8 +30,12 @@ SRC = src/main.cpp \
 
 HEADERS = includes/IrcServer.hpp \
 
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
-CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -ggdb
+ifdef san
+   CPPFLAGS += -fsanitize=address,leak,undefined -fno-omit-frame-pointer
+endif
+
 
 CXX = c++
 RM = rm
