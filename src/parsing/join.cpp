@@ -19,7 +19,7 @@ void cmdJoin(strVec_t args, Client &client, IrcServer &server) {
         }
         chans.push_back(entry);
     }else if (Channel::isValidKey(entry))
-        chans.push_back(entry);
+        keys.push_back(entry);
      else
          client.msg(ERR_BADCHANNELMASK, entry, "Bad Channel Mask");
   }
