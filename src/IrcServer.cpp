@@ -83,9 +83,23 @@ IrcServer::~IrcServer(void)
 		delete *it;
 	clients.clear();
 
-	for (std::set<Channel *>::iterator it = channels.begin(); channels.end() != it; ++it)
+	for (chanSet_t::iterator it = channels.begin(); channels.end() != it; ++it)
 		delete *it;
 	channels.clear();
+}
+
+
+/* Returns the channels list which client is part of. */
+chanSet_t IrcServer::getUserChans(const Client &client) const
+{
+	chanSet_t userChans;
+	foreach(chanSet_t, channels)
+	{
+		Channel *chan = *it;
+		if (chan->isUserInside(client))
+			userChans.insert(chan);
+	}
+	return userChans;
 }
 
 void IrcServer::runServer(void)
@@ -136,7 +150,7 @@ void IrcServer::runServer(void)
 
 			//inform user of socket number - used in send and receive commands
 			std::cout << "New connection, socket fd: " << new_socket << ", ip: " << inet_ntoa(address.sin_addr) << ", port: " << ntohs(address.sin_port)  << "." << std::endl;
-			Client *tmp = new Client(new_socket);
+			Client *tmp = new Client(new_socket, *this);
 			clients.insert(tmp);
 
 			//send new connection greeting message
@@ -161,7 +175,15 @@ void IrcServer::runServer(void)
 		for (int i = 0; i < MAX_CLIENTS; i++)
 		{
 			sd = client_socket[i];
+			if (!sd)
+				continue;
 
+			Client *client= getClientFromSocket(sd);
+			if (!client)
+			{
+				std::cerr << "No client for socket " << sd << std::endl;
+				break;
+			}
 			if (FD_ISSET(sd, &readfds))
 			{
 				//Check if it was for closing , and also read the
@@ -171,6 +193,8 @@ void IrcServer::runServer(void)
 					//Somebody disconnected , get his details and print
 					getpeername(sd, (struct sockaddr*)&address, (socklen_t*)&addrlen);
 					std::cout << "Client disconnected, ip: " << inet_ntoa(address.sin_addr) << ", port: " << ntohs(address.sin_port) << "." << std::endl;
+					clients.erase(client);
+					delete client;
 
 					//Close the socket and mark as 0 in list for reuse
 					close (sd);
@@ -180,38 +204,31 @@ void IrcServer::runServer(void)
 				//Echo back the message that came in
 				else
 				{
-					//set the string terminating NULL byte on the end
-					//of the data read
 					int skipCount = 2;
 					buffer[valread] = '\0';
-					Client *client= getClientFromSocket(sd);
-					if (!client)
-						std::cerr << "No client for socket " << sd << std::endl;
-					else {
-						//std::string str_msg = client->partialMsg + buffer;
-						std::string str_msg = buffer;
-						long unsigned int start_pos = 0;
-						long unsigned int end_pos = 0;
-						while (true)
+					//std::string str_msg = client->partialMsg + buffer;
+					std::string str_msg = buffer;
+					long unsigned int start_pos = 0;
+					long unsigned int end_pos = 0;
+					while (true)
+					{
+						end_pos = str_msg.find("\r\n", start_pos);
+						if (end_pos == std::string::npos)
 						{
-							end_pos = str_msg.find("\r\n", start_pos);
-							if (end_pos == std::string::npos)
-							{
-								end_pos = str_msg.find("\n", start_pos);
-								skipCount = 1;
-							}
-
-							if (end_pos == std::string::npos)
-							{
-								//client->partialMsg = str_msg.substr(start_pos, std::string::npos);
-								break;
-							}
-							std::string cmd_str = str_msg.substr(start_pos, end_pos - start_pos);
-
-							parsing(*client, *this, cmd_str);
-
-							start_pos = end_pos + skipCount;
+							end_pos = str_msg.find("\n", start_pos);
+							skipCount = 1;
 						}
+
+						if (end_pos == std::string::npos)
+						{
+							//client->partialMsg = str_msg.substr(start_pos, std::string::npos);
+							break;
+						}
+						std::string cmd_str = str_msg.substr(start_pos, end_pos - start_pos);
+
+						parsing(*client, *this, cmd_str);
+
+						start_pos = end_pos + skipCount;
 					}
 				}
 			}
@@ -221,11 +238,23 @@ void IrcServer::runServer(void)
 
 Channel *IrcServer::getChannelWithName(const std::string &channelName)
 {
-	for (std::set<Channel *>::iterator it = channels.begin(); channels.end() != it; ++it)
+	for (chanSet_t::iterator it = channels.begin(); channels.end() != it; ++it)
 	{
 		Channel *channel = *it;
 		if (channel->name == channelName)
 			return channel;
+	}
+	return NULL;
+}
+
+
+Client *IrcServer::getClientWithUsername(const std::string &name)
+{
+	for (std::set<Client *>::iterator it = clients.begin(); clients.end() != it; ++it)
+	{
+		Client *client = *it;
+		if (client->username == name)
+			return client;
 	}
 	return NULL;
 }

@@ -15,11 +15,13 @@
 # include "IrcServer.hpp"
 # include <cstdarg>
 
+class IrcServer;
+
 class Client
 {
 	public:
 
-		Client(int socketId);
+		Client(int socketId, const IrcServer &server);
 		~Client(void);
 
 		void changeUserName(const std::string newUsername);
@@ -39,6 +41,7 @@ class Client
 		std::string nickname;
 		const int socketId;
 		std::string serverName;
+		const IrcServer &server;
 };
 
 std::ostream &operator<<(std::ostream &os, const Client &client);

@@ -12,7 +12,7 @@
 
 #include "IrcServer.hpp"
 
-Client::Client(int socketId): socketId(socketId)
+Client::Client(int socketId, const IrcServer &_server): socketId(socketId), server(_server)
 {
 	isReady = false;
 	isAuth = false;
@@ -24,7 +24,14 @@ Client::Client(int socketId): socketId(socketId)
 
 Client::~Client(void)
 {
-
+	chanSet_t userChans = server.getUserChans(*this);
+	foreach(chanSet_t, userChans)
+	{
+		Channel *chan = *it;
+		chan->removeUser(*this);
+		chan->removeUserFromInviteList(*this);
+		chan->removeMod(*this);
+	}
 }
 
 void Client::changeNickName(const std::string newNickname)

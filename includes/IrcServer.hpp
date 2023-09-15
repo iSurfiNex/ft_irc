@@ -51,14 +51,16 @@ class IrcServer
 		int client_socket[MAX_CLIENTS];
 		struct sockaddr_in address;
 
-		std::set<Client *> clients;
-		std::set<Channel *> channels;
+		clientSet_t clients;
+		chanSet_t channels;
 
 		Channel *getChannelWithName(const std::string &name);
 		Client *getClientWithNickname(const std::string &name);
 		Channel *createChannel(Client &mod, const std::string &channelName, const std::string& key);
 		bool checkPassword(const std::string &pw);
 		Client *getClientFromSocket(int sd);
+
+		chanSet_t getUserChans(const Client &client) const;
 
 		static msgMap_t msgFormats;
 		static std::string formatCode(msgCode_e code, std::map<std::string, std::string> presets, va_list args);

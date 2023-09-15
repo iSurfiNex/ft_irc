@@ -1,6 +1,11 @@
 #pragma once
 
+class Channel;
+class Client;
+
 typedef std::vector<std::string> strVec_t;
+typedef std::set<Channel *> chanSet_t;
+typedef std::set<Client *> clientSet_t;
 typedef std::string str_t;
 
 enum msgCode_e {
