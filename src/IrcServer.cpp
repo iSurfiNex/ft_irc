@@ -11,9 +11,27 @@
 /* ************************************************************************** */
 
 #include "IrcServer.hpp"
+IrcServer::msgMap_t IrcServer::msgFormats;
+
+void IrcServer::_initializeMsgFormats(void) {
+
+	msgMap_t m;
+	m[ERR_NOSUCHCHANNEL] = "<server> <code> <client> <channel> :No such channel";
+	m[ERR_TOOMANYCHANNELS] = "<server> <code> <client> <channel> :You have joined too many channels";
+	m[ERR_BADCHANNELKEY] = "<server> <code> <client> <channel> :Cannot join channel (+k)";
+	m[ERR_BADCHANNELMASK] = "<server> <code> <client> :<reason>";
+	m[ERR_CHANNELISFULL] = "<server> <code> <client> <channel> :Cannot join channel (+l)";
+	m[ERR_INVITEONLYCHAN] = "<server> <code> <client> <channel> :Cannot join channel (+i)";
+	m[ERR_NEEDMOREPARAMS] = "<server> <code> <client> <command> :Not enough parameters";
+	m[RPL_TOPIC] = "<server> <code> <client> <channel> :<topic>";
+	m[RPL_ENDOFNAMES] = "<server> <code> <client> <channel> :End of /NAMES list";
+	m[RPL_NAMREPLY] = "<server> <code> <client> <symbol> <channel> :<nick>";
+	msgFormats = m;
+}
 
 IrcServer::IrcServer(const int port, std::string &password): _password(password)
 {
+	_initializeMsgFormats();
 	_port = port;
 
 	std::cout << "PORT: " << port << " | PASSWORD: " << password << std::endl << std::endl;
@@ -248,4 +266,48 @@ Client *IrcServer::getClientFromSocket(int sd)
 			return client;
 	}
 	return NULL;
+}
+
+
+std::string IrcServer::formatCode(msgCode_e code, std::map<std::string, std::string> presets, va_list args)
+{
+	const std::string& format = IrcServer::msgFormats[code];
+	return IrcServer::formatMsg(format, presets, args);
+}
+
+std::string IrcServer::formatMsg(const std::string &format, std::map<std::string, std::string> presets, va_list args)
+{
+	std::string eval = format;
+
+	while(true)
+	{
+		size_t repl_start = eval.find("<");
+		if (repl_start == std::string::npos)
+			break;
+		size_t repl_end = eval.find(">", repl_start);
+		if (repl_end == std::string::npos)
+			break;
+		size_t repl_len = repl_end - repl_start + 1;
+
+		std::string key = eval.substr(repl_start, repl_len);
+		std::string repl_str;
+		if (presets.find(key) != presets.end())
+		{
+				repl_str = presets[key];
+		}
+		else {
+			const char *arg = va_arg(args, const char*);
+			if (!arg)
+			{
+				std::cerr << "InternalError: Not enought args. Can't find value for " YELLOW << key << NC " in format string " YELLOW << format << NC << std::endl;
+			    break;
+			}
+			repl_str = arg;
+		}
+
+		eval.replace(repl_start, repl_len, repl_str);
+		repl_start = repl_end;
+	}
+
+	return eval;
 }

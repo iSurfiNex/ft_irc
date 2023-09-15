@@ -1,42 +1,54 @@
 #include "IrcServer.hpp"
 
-#define USAGE "JOIN <channel> (<password>)"
-#define ARGC_ERR "JOIN arg count error: " USAGE
-#define CHANNEL_NAME_MAX_SIZE 50
-#define ERR_CHANNEL_MAX_SIZE "The channel name max size is ##CHANNEL_NAME_MAX_SIZE"
+void cmdJoin(std::vector<std::string> args, Client &client, IrcServer &server) {
+  int argc = args.size();
+  if (argc == 0)
+    client.msg(ERR_NEEDMOREPARAMS, "JOIN");
+  std::vector<std::string> chans;
+  std::vector<std::string> keys;
+  for (std::vector<std::string>::iterator it = args.begin(); it != args.end(); it++) {
+    std::string entry = *it;
 
-const std::string cmdJoin(std::vector<std::string> args, Client &client, IrcServer &server) {
-    int argc = args.size();
-    if (argc == 0 || argc > 2)
-       return ARGC_ERR;
-
-    std::string channelName = args[0];
-    int channelNameSize = channelName.size();
-    if (channelNameSize == 0 || channelName == "#")
-        return "The channel name provided is empty.\r\n";
-    if (channelName[0] != '#')
-        return "The channel name must start with a '#'.\r\n";
-    std::string nameBase = channelName;
-    nameBase.erase(0, 1);
-    if (!str_alnum(nameBase))
-        return "The channel name must be alphanumeric.\r\n";
-    if (channelName.size() > CHANNEL_NAME_MAX_SIZE)
-        return ERR_CHANNEL_MAX_SIZE ".\r\n";
-
-    bool pwProvided = argc == 2;
-    Channel *channel = server.getChannelWithName(channelName);
-    if (!channel)
-        server.createChannel(channelName, client);
-    else if (channel->isInviteOnly && !channel->isUserOnInviteList(client))
-        return "You need an invitation to join channel " + channelName +"\r\n";
-    else if (channel->isRestricted)
+    if (Channel::isValidName(entry))
     {
-        if( !pwProvided)
-            return "Channel " + channelName + "requires a password"+"\r\n";
-        std::string &pw = args[1];
-        if (!channel->checkPassword(pw))
-            return "Wrong password for Channel " + channelName +"\r\n";
+        if (std::find(chans.begin(), chans.end(), entry) != chans.end())
+        {
+            client.msg(ERR_BADCHANNELMASK, entry, "Bad Channel Mask, same channel provided multiple times");
+            return;
+        }
+        chans.push_back(entry);
+    }else if (Channel::isValidKey(entry))
+        chans.push_back(entry);
+     else
+         client.msg(ERR_BADCHANNELMASK, entry, "Bad Channel Mask");
+  }
+
+    if (chans.size() < keys.size())
+    {
+        std::string erroredEntry = keys[chans.size()];
+        client.msg(ERR_BADCHANNELMASK, erroredEntry, "Bad Channel Mask");
     }
-    channel->addUser(client);
-    return "You have join channel "  + channelName+"\r\n";
+    (void)server;
+
+    //for (std::vector<std::string>::iterator it = chans.begin(); it != chans.end();
+    //{
+    //    std::string chanName = *it;
+    //    server.createChannel();
+    //}
+
+
+  // Channel *channel = server.getChannelWithName(channelName);
+  // if (!channel)
+  //   server.createChannel(channelName, client);
+  // else if (channel->isInviteOnly && !channel->isUserOnInviteList(client))
+  //   return "You need an invitation to join channel " + channelName + "\r\n";
+  // else if (channel->isRestricted) {
+  //   if (!pwProvided)
+  //     return "Channel " + channelName + "requires a password" + "\r\n";
+  //   std::string &pw = args[1];
+  //   if (!channel->checkPassword(pw))
+  //     return "Wrong password for Channel " + channelName + "\r\n";
+  // }
+  // channel->addUser(client);
+  // return "You have join channel " + channelName + "\r\n";
 }

@@ -1,5 +1,6 @@
 #include "utils.hpp"
 
+// TODO add namespace
 bool str_alnum(std::string &str)
 {
     for (std::string::iterator it = str.begin(); it != str.end(); it++)
@@ -10,3 +11,13 @@ bool str_alnum(std::string &str)
     }
     return true;
 }
+
+std::string itoa(int num)
+{
+    std::stringstream ss;
+    ss << num;
+    const std::string result = ss.str();
+    return result;
+}
+
+

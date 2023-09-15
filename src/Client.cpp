@@ -16,6 +16,8 @@ Client::Client(int socketId): socketId(socketId)
 {
 	isReady = false;
 	isAuth = false;
+
+	serverName = ":myserver";
 }
 
 Client::~Client(void)
@@ -47,9 +49,11 @@ void Client::changeUserName(const std::string newUsername)
 	}
 }
 
-void Client::sendMessage(const std::string message) const
+// TODO private
+void Client::sendMessage(const std::string &message) const
 {
-	send(socketId, message.c_str(), message.size(), 0);
+	std::string msgStr = message + "\r\n"; // TODO truncate 512 char
+	send(socketId, msgStr.c_str(), msgStr.size(), 0);
 }
 
 std::string Client::getUsername(void) const
@@ -65,6 +69,22 @@ std::string Client::getNickname(void) const
 int Client::getSocketId(void) const
 {
 	return (socketId);
+}
+
+void Client::msg(msgCode_e code, ...)
+{
+	std::map<std::string, std::string> presets;
+	presets["<code>"] = itoa(code);
+	presets["<client>"] = nickname;
+	presets["<server>"] = serverName;
+
+	va_list args;
+    va_start(args, code);
+
+	std::string msgStr = IrcServer::formatCode(code, presets, args);
+	std::cout << msgStr << std::endl;
+	sendMessage(msgStr + "\r\n"); //TODO rename sendStr after rebase
+	va_end(args);
 }
 
 std::ostream	&operator <<(std::ostream &os, const Client &client)

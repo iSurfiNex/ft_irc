@@ -26,7 +26,10 @@
 # include <unistd.h>
 # include <set>
 # include <vector>
+# include <map>
+# include <algorithm> // For std::find
 
+# include "typedef.hpp"
 # include "Channel.hpp"
 # include "Client.hpp"
 # include "utils.hpp"
@@ -37,6 +40,7 @@
 class IrcServer
 {
 	public:
+		typedef std::map<msgCode_e, std::string> msgMap_t;
 		IrcServer(const int port, std::string &password);
 		~IrcServer(void);
 		void runServer(void);
@@ -57,9 +61,13 @@ class IrcServer
 		bool checkPassword(const std::string &pw);
 		Client *getClientFromSocket(int sd);
 
+		static msgMap_t msgFormats;
+		static std::string formatCode(msgCode_e code, std::map<std::string, std::string> presets, va_list args);
+		static std::string formatMsg(const std::string &format, std::map<std::string, std::string> presets, va_list args);
 	private:
 		int	_port;
 		std::string &_password;
+		void _initializeMsgFormats(void);
 };
 
 std::ostream	&operator <<(std::ostream &o, const IrcServer &irc);
@@ -77,6 +85,6 @@ std::string cmdInvite(std::vector<std::string> &args, Client &origin, IrcServer 
 std::string cmdTopic(std::vector<std::string> &args, Client &origin, IrcServer &server);
 std::string cmdKick(std::vector<std::string> &args, Client &origin, IrcServer &server);
 std::string cmdMode(std::vector<std::string> &args, Client &origin, IrcServer &server);
-const std::string cmdJoin(std::vector<std::string> args, Client &client, IrcServer &server);
+void cmdJoin(std::vector<std::string> args, Client &client, IrcServer &server);
 
 void parsing(Client &origin, IrcServer &server, std::string buffer);

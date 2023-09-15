@@ -48,7 +48,19 @@ class Channel
 		bool isInviteOnly;
 		bool isTopicChangeable;
 		bool isRestricted;
+		static bool isValidKey(const std::string &key);
+		static bool isValidName(const std::string &name);
+		std::string serverName;
+		void msg(msgCode_e code, ...);
 	private:
+
+		static bool _isValidBaseName(const std::string &name);
+		static bool _isValidNamePrefix(char c);
+
+		static const std::string _allowedNamePrefix;
+		static const std::string _forbiddenNameChars;
+		static const int _nameMaxLen;
+
 		std::set<const Client *> _userList;
 		std::set<const Client *> _inviteList;
 		std::set<const Client *> _modList;
@@ -56,4 +68,5 @@ class Channel
 		int _userLimit;
 		std::string _password;
 		std::string _topic;
+
 };

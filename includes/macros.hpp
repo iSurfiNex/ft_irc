@@ -1,3 +1,5 @@
+#pragma once
+
 #define NC "\e[0m"
 #define GRAY "\e[90m"
 #define GREEN "\e[32m"

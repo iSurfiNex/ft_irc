@@ -12,6 +12,11 @@
 
 #include "IrcServer.hpp"
 
+
+const std::string Channel::_allowedNamePrefix = "&#+!";
+const std::string Channel::_forbiddenNameChars = " \a,";
+const int Channel::_nameMaxLen = 50;
+
 Channel::Channel(const std::string &cName)
 {
 	name = cName;
@@ -24,6 +29,7 @@ Channel::Channel(const std::string &cName)
 	_userLimit = -1;
 	_password = "";
 	_topic = "";
+	serverName = ":myserver";
 }
 
 Channel::~Channel(void)
@@ -197,4 +203,56 @@ void Channel::sendMessage(const std::string message) const
 		const Client *client = *it;
 		send(client->socketId, message.c_str(), message.size(), 0);
 	}
+}
+
+void Channel::msg(msgCode_e code, ...)
+{
+	std::map<std::string, std::string> presets;
+	presets["<code>"] = itoa(code);
+	presets["<channel>"] = name;
+	presets["<server>"] = serverName;
+
+	va_list args;
+    va_start(args, code);
+
+	std::string msgStr = IrcServer::formatCode(code, presets, args);
+	std::cout << msgStr << std::endl;
+	sendMessage(msgStr); //TODO rename sendStr after rebase
+	va_end(args);
+}
+
+bool Channel::isValidKey(const std::string &key)
+{
+	return _isValidBaseName(key);
+}
+
+bool Channel::_isValidNamePrefix(char c)
+{
+	return _allowedNamePrefix.find(c) != std::string::npos;
+}
+
+bool Channel::_isValidBaseName(const std::string &name)
+{
+	return name.find_first_of(_forbiddenNameChars) != std::string::npos;
+}
+
+bool Channel::isValidName(const std::string &name)
+{
+    int channelNameSize = name.size();
+
+	if (channelNameSize < 2)
+		return false;
+
+	if (channelNameSize > _nameMaxLen)
+		return false;
+
+    if (!_isValidNamePrefix(name[0]))
+		return false;
+
+    std::string baseName = name;
+    baseName.erase(0, 1);
+	if (!_isValidBaseName(baseName))
+		return false;
+
+	return true;
 }

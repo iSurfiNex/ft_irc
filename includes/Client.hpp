@@ -13,21 +13,24 @@
 #pragma once
 
 # include "IrcServer.hpp"
+# include <cstdarg>
 
 class Client
 {
 	public:
+
 		Client(int socketId);
 		~Client(void);
 
 		void changeUserName(const std::string newUsername);
 		void changeNickName(const std::string newNickname);
 
-		void sendMessage(const std::string message) const;
+		void sendMessage(const std::string &message) const;
 
 		std::string getUsername(void) const;
 		std::string getNickname(void) const;
 		int getSocketId(void) const;
+		void msg(msgCode_e code, ...);
 
 		bool isAuth;
 		bool isReady;
@@ -35,7 +38,7 @@ class Client
 		std::string username;
 		std::string nickname;
 		const int socketId;
-		//std::string partialMsg;
+		std::string serverName;
 };
 
 std::ostream &operator<<(std::ostream &os, const Client &client);
