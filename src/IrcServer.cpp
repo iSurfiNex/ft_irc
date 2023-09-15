@@ -19,10 +19,10 @@ void IrcServer::_initializeMsgFormats(void) {
 	m[ERR_NOSUCHCHANNEL] = "<server> <code> <client> <channel> :No such channel";
 	m[ERR_TOOMANYCHANNELS] = "<server> <code> <client> <channel> :You have joined too many channels";
 	m[ERR_BADCHANNELKEY] = "<server> <code> <client> <channel> :Cannot join channel (+k)";
-	m[ERR_BADCHANNELMASK] = "<server> <code> <client> :<reason>";
+	m[ERR_BADCHANNELMASK] = "<server> <code> <channel> :<reason_cstr>";
 	m[ERR_CHANNELISFULL] = "<server> <code> <client> <channel> :Cannot join channel (+l)";
 	m[ERR_INVITEONLYCHAN] = "<server> <code> <client> <channel> :Cannot join channel (+i)";
-	m[ERR_NEEDMOREPARAMS] = "<server> <code> <client> <command> :Not enough parameters";
+	m[ERR_NEEDMOREPARAMS] = "<server> <code> <client> <command_cstr> :Not enough parameters";
 	m[RPL_TOPIC] = "<server> <code> <client> <channel> :<topic>";
 	m[RPL_NOTOPIC] = "<server> <code> <client> <channel> :No topic is set";
 	m[RPL_ENDOFNAMES] = "<server> <code> <client> <channel> :End of /NAMES list";
@@ -325,6 +325,8 @@ std::string IrcServer::formatMsg(const std::string &format, std::map<std::string
 		std::string repl_str;
 		if (presets.find(key) != presets.end())
 			repl_str = presets[key];
+		else if (key.find("cstr") != std::string::npos)
+			repl_str = std::string(va_arg(args, const char *));
 		else
 			repl_str = va_arg(args, std::string);
 

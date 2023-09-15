@@ -20,4 +20,13 @@ std::string itoa(int num)
     return result;
 }
 
+char toLower(char c) {
+    return std::tolower(static_cast<unsigned char>(c));
+}
 
+std::string tolowerStr(const std::string& str)
+{
+    std::string lower = str;
+    std::transform(lower.begin(), lower.end(), lower.begin(), toLower);
+    return lower;
+}

@@ -12,12 +12,13 @@ void cmdJoin(strVec_t args, Client &client, IrcServer &server) {
 
     if (Channel::isValidName(entry))
     {
-        if (std::find(chans.begin(), chans.end(), entry) != chans.end())
+        std::string entryLower = tolowerStr(entry);
+        if (std::find(chans.begin(), chans.end(), entryLower) != chans.end())
         {
-            client.msg(ERR_BADCHANNELMASK, entry, "Bad Channel Mask, same channel provided multiple times");
+            client.msg(ERR_BADCHANNELMASK, entry, "Bad Channel Mask, same channel name provided multiple times");
             return;
         }
-        chans.push_back(entry);
+        chans.push_back(entryLower);
     }else if (Channel::isValidKey(entry))
         keys.push_back(entry);
      else

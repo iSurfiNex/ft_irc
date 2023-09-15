@@ -93,7 +93,7 @@ void Client::msg(msgCode_e code, ...) const
 
 	std::string msgStr = IrcServer::formatCode(code, presets, args);
 	std::cout << msgStr << std::endl;
-	sendMessage(msgStr + "\r\n"); //TODO rename sendStr after rebase
+	sendMessage(msgStr + "\r\n");
 	va_end(args);
 }
 
