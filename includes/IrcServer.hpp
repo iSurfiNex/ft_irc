@@ -57,7 +57,7 @@ class IrcServer
 		Channel *getChannelWithName(const std::string &name);
 		Client *getClientWithUsername(const std::string &name);
 		Client *getClientWithNickname(const std::string &name);
-		Channel *createChannel(const std::string &channelName, Client &mod);
+		Channel *createChannel(Client &mod, const std::string &channelName, const std::string& key);
 		bool checkPassword(const std::string &pw);
 		Client *getClientFromSocket(int sd);
 

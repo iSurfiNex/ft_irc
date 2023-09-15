@@ -6,7 +6,8 @@ void cmdJoin(strVec_t args, Client &client, IrcServer &server) {
     client.msg(ERR_NEEDMOREPARAMS, "JOIN");
   strVec_t chans;
   strVec_t keys;
-  for (strVec_t::iterator it = args.begin(); it != args.end(); it++) {
+  foreach(strVec_t, args)
+  {
     std::string entry = *it;
 
     if (Channel::isValidName(entry))
@@ -28,27 +29,19 @@ void cmdJoin(strVec_t args, Client &client, IrcServer &server) {
         std::string erroredEntry = keys[chans.size()];
         client.msg(ERR_BADCHANNELMASK, erroredEntry, "Bad Channel Mask");
     }
-    (void)server;
 
-    //for (strVec_t::iterator it = chans.begin(); it != chans.end();
-    //{
-    //    std::string chanName = *it;
-    //    server.createChannel();
-    //}
-
-
-  // Channel *channel = server.getChannelWithName(channelName);
-  // if (!channel)
-  //   server.createChannel(channelName, client);
-  // else if (channel->isInviteOnly && !channel->isUserOnInviteList(client))
-  //   return "You need an invitation to join channel " + channelName + "\r\n";
-  // else if (channel->isRestricted) {
-  //   if (!pwProvided)
-  //     return "Channel " + channelName + "requires a password" + "\r\n";
-  //   std::string &pw = args[1];
-  //   if (!channel->checkPassword(pw))
-  //     return "Wrong password for Channel " + channelName + "\r\n";
-  // }
-  // channel->addUser(client);
-  // return "You have join channel " + channelName + "\r\n";
+    size_t i = 0;
+    foreach(strVec_t, chans)
+    {
+        std::string chanName = *it;
+        Channel *channel = server.getChannelWithName(chanName);
+        std::string key = "";
+        if (i < keys.size())
+          key = keys[i];
+        if (!channel)
+          server.createChannel(client, chanName, key);
+        else
+          channel->tryEnter(client, key);
+        i++;
+    }
 }

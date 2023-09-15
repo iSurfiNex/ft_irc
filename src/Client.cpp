@@ -18,6 +18,8 @@ Client::Client(int socketId): socketId(socketId)
 	isAuth = false;
 
 	serverName = ":myserver";
+	nickname = "";
+	username = "";
 }
 
 Client::~Client(void)
@@ -52,7 +54,7 @@ void Client::changeUserName(const std::string newUsername)
 // TODO private
 void Client::sendMessage(const std::string &message) const
 {
-	std::string msgStr = message + "\r\n"; // TODO truncate 512 char
+	std::string msgStr = message; // TODO truncate 512 char
 	send(socketId, msgStr.c_str(), msgStr.size(), 0);
 }
 
@@ -71,7 +73,7 @@ int Client::getSocketId(void) const
 	return (socketId);
 }
 
-void Client::msg(msgCode_e code, ...)
+void Client::msg(msgCode_e code, ...) const
 {
 	std::map<std::string, std::string> presets;
 	presets["<code>"] = itoa(code);

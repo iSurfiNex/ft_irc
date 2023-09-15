@@ -17,19 +17,20 @@ const std::string Channel::_allowedNamePrefix = "&#+!";
 const std::string Channel::_forbiddenNameChars = " \a,";
 const int Channel::_nameMaxLen = 50;
 
-Channel::Channel(const std::string &cName)
+Channel::Channel(const std::string &_name, const std::string &key, Client &mod)
 {
-	name = cName;
-
-	std::cout << "New channel: " << name << std::endl;
+	name = _name;
 
 	isInviteOnly = false;
 	isTopicChangeable = false;
 	isRestricted = false;
 	_userLimit = -1;
-	_password = "";
+	_password = key;
 	_topic = "";
+	_symbol = "=";
 	serverName = ":myserver";
+	_addUser(mod);
+	addMod(mod);
 }
 
 Channel::~Channel(void)
@@ -37,24 +38,38 @@ Channel::~Channel(void)
 
 }
 
-void Channel::addUser(const Client &client)
+void Channel::_addUser(const Client &client)
 {
 	_userList.insert(&client);
+	msg(MSG_JOIN, client.nickname);
+	client.msg(RPL_TOPIC, name, _topic);
+	client.msg(RPL_NAMREPLY, _symbol, name, _getUserListStr());
+	client.msg(RPL_ENDOFNAMES, name);
+}
 
-	std::string msg = "You have join: ";
-	msg += name;
+void Channel::tryEnter(Client &client, const std::string& key)
+{
+    if (isInviteOnly && !isUserOnInviteList(client))
+      client.msg(ERR_INVITEONLYCHAN, name);
+    else if (isRestricted && !checkPassword(key))
+      client.msg(ERR_BADCHANNELKEY, name);
+	else
+	  _addUser(client);
+}
 
-	if (isUserOnInviteList(client))
-	{
-		removeUserFromInviteList(client);
-	    std::cout << "New user" << client.getUsername() << " consumed invitation to join channel: " << name << std::endl;
-		msg += " by consuming your invitation";
-	}
+std::string Channel::_getUserListStr(void) const
+{
+	std::string result;
 
-	msg += ".\r\n";
+    foreach(std::set<const Client *>, _userList) {
+		const Client * client = *it;
+        if (!result.empty()) {
+            result += " ";
+        }
+        result += client->nickname;
+    }
 
-	client.sendMessage(msg);
-	std::cout << "New user: " << client.getUsername() << ", in channel: " << name << std::endl;
+    return result;
 }
 
 void Channel::addUserInviteList(const Client &client)
@@ -205,7 +220,7 @@ void Channel::sendMessage(const std::string message) const
 	}
 }
 
-void Channel::msg(msgCode_e code, ...)
+void Channel::msg(msgCode_e code, ...) const
 {
 	std::map<std::string, std::string> presets;
 	presets["<code>"] = itoa(code);
@@ -233,7 +248,7 @@ bool Channel::_isValidNamePrefix(char c)
 
 bool Channel::_isValidBaseName(const std::string &name)
 {
-	return name.find_first_of(_forbiddenNameChars) != std::string::npos;
+	return name.find_first_of(_forbiddenNameChars) == std::string::npos;
 }
 
 bool Channel::isValidName(const std::string &name)
