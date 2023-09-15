@@ -12,7 +12,7 @@
 
 #include "IrcServer.hpp"
 
-void getCmdArgs(std::string buffer, std::string &cmd, std::vector<std::string> &args)
+void getCmdArgs(std::string buffer, std::string &cmd, strVec_t &args)
 {
 	bool two_points = false;
 	std::string tmp;

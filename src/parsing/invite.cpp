@@ -12,7 +12,7 @@
 
 #include "IrcServer.hpp"
 
-std::string cmdInvite(std::vector<std::string> &args, Client &origin, IrcServer &server)
+std::string cmdInvite(strVec_t &args, Client &origin, IrcServer &server)
 {
 	if (args.size() != 2)
 		return ("Wrong number of arguments. Usage: INVITE <nickname> <channel>.\r\n");

@@ -12,7 +12,7 @@
 
 #include "IrcServer.hpp"
 
-std::string cmdPart(std::vector<std::string> &args, Client &origin, IrcServer &server)
+std::string cmdPart(strVec_t &args, Client &origin, IrcServer &server)
 {
 	if (args.size() < 1)
 		return ("Wrong number of arguments. Usage: PART <channel>.\r\n");

@@ -12,7 +12,7 @@
 
 #include "IrcServer.hpp"
 
-std::string cmdPass(std::vector<std::string> &args, Client &origin, IrcServer &server)
+std::string cmdPass(strVec_t &args, Client &origin, IrcServer &server)
 {
 	if (origin.isAuth)
 	{
@@ -35,7 +35,7 @@ std::string cmdPass(std::vector<std::string> &args, Client &origin, IrcServer &s
 	return ("You are now login, please use: USER <username> and NICK <nickname> to authentificate.\r\n");
 }
 
-std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &server)
+std::string cmdUser(strVec_t &args, Client &origin, IrcServer &server)
 {
 	// Only consider the first agrument, ignore any remaining, full cmd could be "USER <username> <mode> <unused> :<realname>"
 	if (args.size() < 1)
@@ -60,7 +60,7 @@ std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &s
 	return ("");
 }
 
-std::string cmdNick(std::vector<std::string> &args, Client &origin, IrcServer &server)
+std::string cmdNick(strVec_t &args, Client &origin, IrcServer &server)
 {
 	if (args.size() != 1)
 	{

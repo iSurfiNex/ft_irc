@@ -12,7 +12,7 @@
 
 #include "IrcServer.hpp"
 
-std::string cmdTopic(std::vector<std::string> &args, Client &origin, IrcServer &server)
+std::string cmdTopic(strVec_t &args, Client &origin, IrcServer &server)
 {
 	if (args.size() != 2)
 		return ("Wrong number of arguments. Usage: TOPIC <channel> :<msg>.\r\n");

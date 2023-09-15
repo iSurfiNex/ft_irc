@@ -12,7 +12,7 @@
 
 #include "IrcServer.hpp"
 
-std::string cmdMode(std::vector<std::string> &args, Client &origin, IrcServer &server)
+std::string cmdMode(strVec_t &args, Client &origin, IrcServer &server)
 {
 	if (args.size() != 2 || args.size() != 3)
 		return ("Wrong number of arguments. Usage: MODE <channel> <param> (<msg>).\r\n");

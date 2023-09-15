@@ -74,17 +74,17 @@ std::ostream	&operator <<(std::ostream &o, const IrcServer &irc);
 
 int parsePort(char *av);
 std::string parsePassword(char *av);
-void getCmdArgs(std::string buffer, std::string &cmd, std::vector<std::string> &args);
+void getCmdArgs(std::string buffer, std::string &cmd, strVec_t &args);
 
-std::string cmdPass(std::vector<std::string> &args, Client &origin, IrcServer &server);
-std::string cmdUser(std::vector<std::string> &args, Client &origin, IrcServer &server);
-std::string cmdNick(std::vector<std::string> &args, Client &origin, IrcServer &server);
-std::string cmdPrivMsg(std::vector<std::string> &args, Client &origin, IrcServer &server);
-std::string cmdPart(std::vector<std::string> &args, Client &origin, IrcServer &server);
-std::string cmdInvite(std::vector<std::string> &args, Client &origin, IrcServer &server);
-std::string cmdTopic(std::vector<std::string> &args, Client &origin, IrcServer &server);
-std::string cmdKick(std::vector<std::string> &args, Client &origin, IrcServer &server);
-std::string cmdMode(std::vector<std::string> &args, Client &origin, IrcServer &server);
-void cmdJoin(std::vector<std::string> args, Client &client, IrcServer &server);
+std::string cmdPass(strVec_t &args, Client &origin, IrcServer &server);
+std::string cmdUser(strVec_t &args, Client &origin, IrcServer &server);
+std::string cmdNick(strVec_t &args, Client &origin, IrcServer &server);
+std::string cmdPrivMsg(strVec_t &args, Client &origin, IrcServer &server);
+std::string cmdPart(strVec_t &args, Client &origin, IrcServer &server);
+std::string cmdInvite(strVec_t &args, Client &origin, IrcServer &server);
+std::string cmdTopic(strVec_t &args, Client &origin, IrcServer &server);
+std::string cmdKick(strVec_t &args, Client &origin, IrcServer &server);
+std::string cmdMode(strVec_t &args, Client &origin, IrcServer &server);
+void cmdJoin(strVec_t args, Client &client, IrcServer &server);
 
 void parsing(Client &origin, IrcServer &server, std::string buffer);

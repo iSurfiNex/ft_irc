@@ -1,12 +1,12 @@
 #include "IrcServer.hpp"
 
-void cmdJoin(std::vector<std::string> args, Client &client, IrcServer &server) {
+void cmdJoin(strVec_t args, Client &client, IrcServer &server) {
   int argc = args.size();
   if (argc == 0)
     client.msg(ERR_NEEDMOREPARAMS, "JOIN");
-  std::vector<std::string> chans;
-  std::vector<std::string> keys;
-  for (std::vector<std::string>::iterator it = args.begin(); it != args.end(); it++) {
+  strVec_t chans;
+  strVec_t keys;
+  for (strVec_t::iterator it = args.begin(); it != args.end(); it++) {
     std::string entry = *it;
 
     if (Channel::isValidName(entry))
@@ -30,7 +30,7 @@ void cmdJoin(std::vector<std::string> args, Client &client, IrcServer &server) {
     }
     (void)server;
 
-    //for (std::vector<std::string>::iterator it = chans.begin(); it != chans.end();
+    //for (strVec_t::iterator it = chans.begin(); it != chans.end();
     //{
     //    std::string chanName = *it;
     //    server.createChannel();

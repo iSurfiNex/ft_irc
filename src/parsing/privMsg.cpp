@@ -12,7 +12,7 @@
 
 #include "IrcServer.hpp"
 
-std::string cmdPrivMsg(std::vector<std::string> &args, Client &origin, IrcServer &server)
+std::string cmdPrivMsg(strVec_t &args, Client &origin, IrcServer &server)
 {
 	if (args.size() != 2)
 		return ("Wrong number of arguments. Usage: PRIVMSG <channel/nickname> :<msg>.\r\n");
