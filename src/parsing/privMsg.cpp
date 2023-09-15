@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:58:52 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/15 19:10:01 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/15 19:15:12 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ void cmdPrivMsg(strVec_t &args, Client &origin, IrcServer &server)
 		channel = server.getChannelWithName(args[0]);
 		if (!channel || !channel->isUserInside(origin))
 			origin.msg(ERR_NOSUCHNICK, args[0]);
-
-		std::string messageToChannel = ":" + origin.nickname + " PRIVMSG " + channel->name + " :" + args[1];
-		std::cout << origin << " send: \"" << messageToChannel << "\" to " << channel->name << std::endl;
-		messageToChannel += "\r\n";
-		channel->sendMessage(messageToChannel);
+		else
+		{
+			std::string messageToChannel = ":" + origin.nickname + " PRIVMSG " + channel->name + " :" + args[1];
+			std::cout << origin << " send: \"" << messageToChannel << "\" to " << channel->name << std::endl;
+			messageToChannel += "\r\n";
+			channel->sendMessage(messageToChannel);
+		}
 	}
 	else
 	{
@@ -36,10 +38,12 @@ void cmdPrivMsg(strVec_t &args, Client &origin, IrcServer &server)
 		target = server.getClientWithNickname(args[0]);
 		if (!target)
 			origin.msg(ERR_NOSUCHNICK, args[0]);
-
-		std::string messageToTarget = ":" + origin.nickname + " PRIVMSG " + target->nickname + " :" + args[1];
-		std::cout << origin << " send: \"" << messageToTarget << "\" to " << *target << std::endl;
-		messageToTarget += "\r\n";
-		target->sendMessage(messageToTarget);
+		else
+		{
+			std::string messageToTarget = ":" + origin.nickname + " PRIVMSG " + target->nickname + " :" + args[1];
+			std::cout << origin << " send: \"" << messageToTarget << "\" to " << *target << std::endl;
+			messageToTarget += "\r\n";
+			target->sendMessage(messageToTarget);
+		}
 	}
 }
