@@ -46,7 +46,7 @@ static void _printCmd(Client &origin, std::string fullStr, std::string cmd, strV
 		if(args.end() != it)
 			std::cout << ", ";
 	}
-	std::cout << "] " GRAY "<= \"" << fullStr << "\"" NC " " << origin << std::endl;
+	std::cout << "] " GRAY "<= \"" NC << fullStr << GRAY "\"" NC " " << origin << std::endl;
 }
 
 void parsing(Client &origin, IrcServer &server, std::string buffer)

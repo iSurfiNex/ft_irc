@@ -206,8 +206,7 @@ void IrcServer::runServer(void)
 				{
 					int skipCount = 2;
 					buffer[valread] = '\0';
-					//std::string str_msg = client->partialMsg + buffer;
-					std::string str_msg = buffer;
+					std::string str_msg = client->partialMsg + buffer;
 					long unsigned int start_pos = 0;
 					long unsigned int end_pos = 0;
 					while (true)
@@ -221,7 +220,9 @@ void IrcServer::runServer(void)
 
 						if (end_pos == std::string::npos)
 						{
-							//client->partialMsg = str_msg.substr(start_pos, std::string::npos);
+							client->partialMsg = str_msg.substr(start_pos, std::string::npos);
+							if (!client->partialMsg.empty())
+								std::cout <<  GRAY " >> Partial message \"" NC << client->partialMsg << GRAY "\" from " NC << *client << std::endl;
 							break;
 						}
 						std::string cmd_str = str_msg.substr(start_pos, end_pos - start_pos);

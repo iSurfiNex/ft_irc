@@ -20,6 +20,7 @@ Client::Client(int socketId, const IrcServer &_server): socketId(socketId), serv
 	serverName = ":myserver";
 	nickname = "";
 	username = "";
+	partialMsg = "";
 }
 
 Client::~Client(void)

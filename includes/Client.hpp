@@ -41,6 +41,7 @@ class Client
 		std::string nickname;
 		const int socketId;
 		std::string serverName;
+		std::string partialMsg;
 		const IrcServer &server;
 };
 
