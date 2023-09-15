@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:29 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 18:16:31 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/15 18:36:06 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ Channel::Channel(const std::string &cName)
 	isRestricted = false;
 	_userLimit = -1;
 	_password = "";
-	_topic = "";
+	topic = "";
 	serverName = ":myserver";
 }
 
@@ -154,10 +154,10 @@ void Channel::changeRule(const char mode)
 	}
 }
 
-void Channel::changeTopic(const std::string topic)
+void Channel::changeTopic(const std::string tmpTopic)
 {
-	_topic = topic;
-	std::cout << "Channel: " << name << ", has a new topic: " << _topic << std::endl;
+	topic = tmpTopic;
+	std::cout << "Channel: " << name << ", has a new topic: " << topic << std::endl;
 }
 
 void Channel::changePassword(const std::string password)
@@ -233,7 +233,7 @@ bool Channel::_isValidNamePrefix(char c)
 
 bool Channel::_isValidBaseName(const std::string &name)
 {
-	return name.find_first_of(_forbiddenNameChars) != std::string::npos;
+	return name.find_first_of(_forbiddenNameChars) == std::string::npos;
 }
 
 bool Channel::isValidName(const std::string &name)

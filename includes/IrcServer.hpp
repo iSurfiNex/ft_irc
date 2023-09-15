@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:32:13 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 19:42:42 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/15 15:58:00 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ class IrcServer
 		std::set<Channel *> channels;
 
 		Channel *getChannelWithName(const std::string &name);
-		Client *getClientWithUsername(const std::string &name);
 		Client *getClientWithNickname(const std::string &name);
 		Channel *createChannel(const std::string &channelName, Client &mod);
 		bool checkPassword(const std::string &pw);
@@ -76,15 +75,15 @@ int parsePort(char *av);
 std::string parsePassword(char *av);
 void getCmdArgs(std::string buffer, std::string &cmd, strVec_t &args);
 
-std::string cmdPass(strVec_t &args, Client &origin, IrcServer &server);
-std::string cmdUser(strVec_t &args, Client &origin, IrcServer &server);
-std::string cmdNick(strVec_t &args, Client &origin, IrcServer &server);
-std::string cmdPrivMsg(strVec_t &args, Client &origin, IrcServer &server);
-std::string cmdPart(strVec_t &args, Client &origin, IrcServer &server);
-std::string cmdInvite(strVec_t &args, Client &origin, IrcServer &server);
-std::string cmdTopic(strVec_t &args, Client &origin, IrcServer &server);
-std::string cmdKick(strVec_t &args, Client &origin, IrcServer &server);
-std::string cmdMode(strVec_t &args, Client &origin, IrcServer &server);
+void cmdPass(strVec_t &args, Client &origin, IrcServer &server);
+void cmdUser(strVec_t &args, Client &origin, IrcServer &server);
+void cmdNick(strVec_t &args, Client &origin, IrcServer &server);
+void cmdPrivMsg(strVec_t &args, Client &origin, IrcServer &server);
+void cmdPart(strVec_t &args, Client &origin, IrcServer &server);
+void cmdInvite(strVec_t &args, Client &origin, IrcServer &server);
+void cmdTopic(strVec_t &args, Client &origin, IrcServer &server);
+void cmdKick(strVec_t &args, Client &origin, IrcServer &server);
+void cmdMode(strVec_t &args, Client &origin, IrcServer &server);
 void cmdJoin(strVec_t args, Client &client, IrcServer &server);
 
 void parsing(Client &origin, IrcServer &server, std::string buffer);

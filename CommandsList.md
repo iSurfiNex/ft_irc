@@ -19,6 +19,7 @@ PARSING: R  <!-- done -->
 	args = trouver les args (gerer les deux points);
 
 	remplir switch case et creer les fonctions pour chaque commande;
+	split sur la virgule aussi
 
 	verif si le user isReady return si non;
 

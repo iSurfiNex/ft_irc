@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:31:25 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 19:46:04 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/15 15:50:49 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ void parsing(Client &origin, IrcServer &server, std::string buffer)
 	std::string cmd;
 	strVec_t args;
 
-	std::string response;
-
 	getCmdArgs(buffer, cmd, args);
 
 	_printCmd(origin, buffer, cmd, args);
@@ -79,25 +77,23 @@ void parsing(Client &origin, IrcServer &server, std::string buffer)
 	}
 
 	if (cmd == "PASS")
-		response = cmdPass(args, origin, server);
+		cmdPass(args, origin, server);
 	else if (cmd == "USER")
-		response = cmdUser(args, origin, server);
+		cmdUser(args, origin, server);
 	else if (cmd == "NICK")
-		response = cmdNick(args, origin, server);
+		cmdNick(args, origin, server);
 	else if (cmd == "PRIVMSG")
-		response = cmdPrivMsg(args, origin, server);
+		cmdPrivMsg(args, origin, server);
 	else if (cmd == "JOIN")
 		cmdJoin(args, origin, server);
 	else if (cmd == "PART")
-		response = cmdPart(args, origin, server);
+		cmdPart(args, origin, server);
 	else if (cmd == "INVITE")
-		response = cmdInvite(args, origin, server);
+		cmdInvite(args, origin, server);
 	else if (cmd == "TOPIC")
-		response = cmdTopic(args, origin, server);
+		cmdTopic(args, origin, server);
 	else if (cmd == "KICK")
-		response = cmdKick(args, origin, server);
+		cmdKick(args, origin, server);
 	else if (cmd == "MODE")
-		response = cmdMode(args, origin, server);
-
-	origin.sendMessage(response);
+		cmdMode(args, origin, server);
 }

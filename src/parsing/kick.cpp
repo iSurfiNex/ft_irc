@@ -6,41 +6,40 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 18:38:10 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 18:50:47 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/15 18:44:32 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "IrcServer.hpp"
 
-std::string cmdKick(strVec_t &args, Client &origin, IrcServer &server)
+void cmdKick(strVec_t &args, Client &origin, IrcServer &server)
 {
-	if (args.size() != 2 || args.size() != 3)
-		return ("Wrong number of arguments. Usage: KICK <channel> <nickname> (<reason>).\r\n");
-
-	Channel *channel;
-	channel = server.getChannelWithName(args[0]);
-	if (!channel || !channel->isUserInside(origin))
-		return ("Channel not found. Please enter a valid channel using: INVITE <nickname> <channel>.\r\n");
-
-	if (channel->isMod(origin))
-		return ("You are not a mod of the channel.\r\n");
-
-	Client *target;
-	target = server.getClientWithNickname(args[1]);
-	if (!target)
-		return ("User not found . Please enter a valid target using: INVITE <nickname> <channel>.\r\n");
-
-	if (target->nickname == origin.nickname)
-		return ("You can't kick yourself. Please enter a valid target using: INVITE <nickname> <channel>.\r\n");
-
-	if (!channel->isUserInside(*target))
-		return ("User is not in targeted channel.\r\n");
-
-	if (channel->isMod(*target))
-		return ("User is a mod of the targeted channel.\r\n");
-
-	channel->removeUser(*target);
-	std::string messageToOrigin = "You have successfully kicked " + target->nickname + " from the channel: " + channel->name + ".\r\n";
-	std::cout << origin << " has kicked " << target << " from " << channel->name << std::endl;
-	return (messageToOrigin);
+	if (args.size() < 2)
+		origin.msg(ERR_NEEDMOREPARAMS, "KICK");
+	else
+	{
+		Channel *channel;
+		channel = server.getChannelWithName(args[0]);
+		if (!channel || !channel->isUserInside(origin))
+			origin.msg(ERR_NOSUCHCHANNEL, args[0]);
+		else if (channel->isMod(origin))
+			origin.msg(ERR_CHANOPRIVSNEEDED, channel->name);
+		else
+		{
+			for (int i = 1; args.size() > i; i++)
+			{
+				Client *target;
+				target = server.getClientWithNickname(args[i]);
+				if (!target || !channel->isUserInside(*target))
+					origin.msg(ERR_USERNOTINCHANNEL, args[i], channel->name);
+				else
+				{
+					channel->removeUser(*target);
+					std::string messageToOrigin = "You have successfully kicked " + target->nickname + " from the channel: " + channel->name + ".\r\n";
+					std::cout << origin << " has kicked " << target << " from " << channel->name << std::endl;
+					origin.sendMessage(messageToOrigin);
+				}
+			}
+		}
+	}
 }

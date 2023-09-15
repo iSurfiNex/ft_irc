@@ -24,8 +24,20 @@ void IrcServer::_initializeMsgFormats(void) {
 	m[ERR_INVITEONLYCHAN] = "<server> <code> <client> <channel> :Cannot join channel (+i)";
 	m[ERR_NEEDMOREPARAMS] = "<server> <code> <client> <command> :Not enough parameters";
 	m[RPL_TOPIC] = "<server> <code> <client> <channel> :<topic>";
+	m[RPL_NOTOPIC] = "<server> <code> <client> <channel> :No topic is set";
 	m[RPL_ENDOFNAMES] = "<server> <code> <client> <channel> :End of /NAMES list";
 	m[RPL_NAMREPLY] = "<server> <code> <client> <symbol> <channel> :<nick>";
+	m[ERR_PASSWDMISMATCH] = "<server> <code> <client> :Password incorrect";
+	m[ERR_ALREADYREGISTERED] = "<server> <code> <client> :You may not reregister";
+	m[ERR_NONICKNAMEGIVEN] = "<server> <code> <client> :No nickname given";
+	m[ERR_ERRONEUSNICKNAME] = "<server> <code> <client> <nick> :Erroneus nickname";
+	m[ERR_NICKNAMEINUSE] = "<server> <code> <client> <nick> :Nickname already in use";
+	m[ERR_NOTEXTTOSEND] = "<server> <code> <client> :No text to send";
+	m[ERR_CANNOTSENDTOCHAN] = "<server> <code> <client> <channel> :Cannot send to channel";
+	m[ERR_NOSUCHNICK] = "<server> <code> <client> <nickname> :No such nick/channel";
+	m[ERR_CHANOPRIVSNEEDED] = "<server> <code> <client> <channel> :You're not channel operator";
+	m[ERR_USERNOTINCHANNEL] = "<server> <code> <client> <nick> <channel> :They aren't on that channel";
+
 	msgFormats = m;
 }
 
@@ -209,17 +221,6 @@ Channel *IrcServer::getChannelWithName(const std::string &channelName)
 		Channel *channel = *it;
 		if (channel->name == channelName)
 			return channel;
-	}
-	return NULL;
-}
-
-Client *IrcServer::getClientWithUsername(const std::string &name)
-{
-	for (std::set<Client *>::iterator it = clients.begin(); clients.end() != it; ++it)
-	{
-		Client *client = *it;
-		if (client->username == name)
-			return client;
 	}
 	return NULL;
 }
