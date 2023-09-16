@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 18:04:59 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/15 19:04:53 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/16 19:07:21 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void cmdInvite(strVec_t &args, Client &origin, IrcServer &server)
 			channel = server.getChannelWithName(args[1]);
 			if (!channel || !channel->isUserInside(origin))
 				origin.msg(ERR_NOSUCHCHANNEL, args[1]);
-			else if (channel->isMod(origin))
+			else if (!channel->isMod(origin))
 				origin.msg(ERR_CHANOPRIVSNEEDED, channel->name);
 			else if (channel->isUserInside(*target))
 				origin.msg(ERR_USERONCHANNEL, target->nickname, channel->name);

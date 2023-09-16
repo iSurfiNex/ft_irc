@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 17:20:30 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/15 18:40:10 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/16 18:39:52 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,8 @@ void cmdPart(strVec_t &args, Client &origin, IrcServer &server)
 			origin.msg(ERR_NOSUCHCHANNEL, args[0]);
 		else
 		{
-			std::string messageToChannel = ":" + origin.nickname + " PART " + channel->name + " :has left the channel.\r\n";
-			std::cout << origin << " left channel: " << channel->name << std::endl;
 			channel->removeMod(origin);
 			channel->removeUser(origin);
-			channel->sendMessage(messageToChannel);
 		}
 	}
 }
