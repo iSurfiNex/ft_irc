@@ -120,52 +120,58 @@ void IrcServer::_handleIOOperation()
 {
 	char buffer[BUFFER_SIZE];
 
-	foreach(clientSet_t, clients) {
+	clientSet_t::iterator it = clients.begin();
+	while (it != clients.end()) {
 		Client *client = *it;
 		int sd = client->socketId;
 
 		if (!FD_ISSET(sd, &readfds))
+		{
+			++it;
 			continue; // TODO error msg ?
+		}
 
 		int socketContentSize = read(sd, buffer, BUFFER_SIZE);
 
 		if (socketContentSize == 0)
 		{
 			std::cout << "Client disconnected, " << _connectionToString(sd, address) << std::endl;
+			it++; // Increment before erasing from the set we are currently iterating
 			clients.erase(client);
 			delete client;
 			close (sd);
+			continue;
 		}
-		else
+
+		int skipCount = 2;
+		buffer[socketContentSize] = '\0';
+		std::string str_msg = client->partialMsg + buffer;
+		long unsigned int start_pos = 0;
+		long unsigned int end_pos = 0;
+
+		while (true)
 		{
-			int skipCount = 2;
-			buffer[socketContentSize] = '\0';
-			std::string str_msg = client->partialMsg + buffer;
-			long unsigned int start_pos = 0;
-			long unsigned int end_pos = 0;
-			while (true)
+			end_pos = str_msg.find("\r\n", start_pos);
+			if (end_pos == std::string::npos)
 			{
-				end_pos = str_msg.find("\r\n", start_pos);
-				if (end_pos == std::string::npos)
-				{
-					end_pos = str_msg.find("\n", start_pos);
-					skipCount = 1;
-				}
-
-				if (end_pos == std::string::npos)
-				{
-					client->partialMsg = str_msg.substr(start_pos, std::string::npos);
-					if (!client->partialMsg.empty())
-						std::cout <<  GRAY " >> Partial message \"" NC << client->partialMsg << GRAY "\" from " NC << *client << std::endl;
-					break;
-				}
-				std::string cmd_str = str_msg.substr(start_pos, end_pos - start_pos);
-
-				parsing(*client, *this, cmd_str);
-
-				start_pos = end_pos + skipCount;
+				end_pos = str_msg.find("\n", start_pos);
+				skipCount = 1;
 			}
+
+			if (end_pos == std::string::npos)
+			{
+				client->partialMsg = str_msg.substr(start_pos, std::string::npos);
+				if (!client->partialMsg.empty())
+					std::cout <<  GRAY " >> Partial message \"" NC << client->partialMsg << GRAY "\" from " NC << *client << std::endl;
+				break;
+			}
+			std::string cmd_str = str_msg.substr(start_pos, end_pos - start_pos);
+
+			parsing(*client, *this, cmd_str);
+
+			start_pos = end_pos + skipCount;
 		}
+		++it;
 	}
 }
 
