@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:31:25 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/15 15:50:49 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/16 15:47:13 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void _printCmd(Client &origin, std::string fullStr, std::string cmd, strV
 		if(args.end() != it)
 			std::cout << ", ";
 	}
-	std::cout << "] " GRAY "<= \"" NC << fullStr << GRAY "\"" NC " " << origin << std::endl;
+	std::cout << "] " GRAY "<= \"" << fullStr << "\"" NC " " << origin << std::endl;
 }
 
 void parsing(Client &origin, IrcServer &server, std::string buffer)
