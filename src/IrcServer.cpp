@@ -305,7 +305,6 @@ std::string IrcServer::formatMsg(const std::string &format, std::map<std::string
 			repl_str = std::string(va_arg(args, const char *));
 		else
 		{
-			std::cout << "====" << key<<std::endl;
 			repl_str = va_arg(args, std::string);
 		}
 
