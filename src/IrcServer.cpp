@@ -45,6 +45,8 @@ void IrcServer::_initializeMsgFormats(void) {
 	m[MSG_JOIN] = "<client> JOIN <channel>";
 	m[MSG_ADDINVITELIST] = "<server> <code> <client> MSG_ADDINVITELIST <nick> <channel> :invite you";
 	m[MSG_NEWTOPIC] = "<server> <code> MSG_NEWTOPIC <channel> :\"<topic>\" is the new topic of this channel";
+	m[MSG_RULECHANGED] = "<server> <code> MSG_RULECHANGED <channel> :<rule>: Rule has been updated for this channel";
+	m[ERR_NOTVALIDENTRY] = "<server> <code> ERR_NOTVALIDENTRY <channel> :\"<entry>\" is not a valid entry";
 	msgFormats = m;
 }
 
