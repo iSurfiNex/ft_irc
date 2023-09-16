@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:14:22 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/14 14:59:21 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/16 16:35:08 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ Client::Client(int socketId, struct sockaddr_in _address, const IrcServer &serve
 	nickname = "";
 	username = "";
 	partialMsg = "";
-	msg(RPL_WELCOME);
+	sendMessage("Please enter the password of the server using: PASS <password>.\r\n");
 }
 
 Client::~Client(void)
@@ -43,7 +43,7 @@ void Client::changeNickName(const std::string newNickname)
 	{
 		isReady = true;
 		std::cout << "New user authentificate: " << *this << std::endl;
-		//sendMessage("You are now authentificate.\r\n");
+		msg(RPL_WELCOME);
 	}
 }
 
@@ -55,7 +55,7 @@ void Client::changeUserName(const std::string newUsername)
 	{
 		isReady = true;
 		std::cout << "New user authentificate: " << *this << std::endl;
-		//sendMessage("You are now authentificate.\r\n");
+		msg(RPL_WELCOME);
 	}
 }
 
