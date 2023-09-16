@@ -34,17 +34,41 @@
 # include "Client.hpp"
 # include "utils.hpp"
 # include "macros.hpp"
+# include "parsing.hpp"
 
 # define MAX_CLIENTS 30
 
 class IrcServer
 {
 	public:
+
+		/* TYPING  */
+
 		typedef std::map<msgCode_e, std::string> msgMap_t;
+
+		/* LIFECYCLE */
+
 		IrcServer(const int port, const std::string &_name, std::string &password);
 		~IrcServer(void);
-		void runServer(void);
 
+		/* ACTIONS */
+
+		void runServer(void);
+		Channel *createChannel(Client &mod, const std::string &channelName, const std::string& key);
+
+		/* SELECTORS */
+
+		Channel *getChannelWithName(const std::string &name);
+		Client *getClientWithNickname(const std::string &name);
+		Client *getClientWithUsername(const std::string &name);
+		Client *getClientFromSocket(int sd);
+		chanSet_t getUserChans(const Client &client) const;
+
+		/* CHECKS */
+
+		bool checkPassword(const std::string &pw);
+
+		/* ATTRIBUTES */
 
 		fd_set readfds;
 		int master_socket;
@@ -54,20 +78,18 @@ class IrcServer
 		clientSet_t clients;
 		chanSet_t channels;
 
-		Channel *getChannelWithName(const std::string &name);
-		Client *getClientWithNickname(const std::string &name);
-		Client *getClientWithUsername(const std::string &name);
-		Channel *createChannel(Client &mod, const std::string &channelName, const std::string& key);
-		bool checkPassword(const std::string &pw);
-		Client *getClientFromSocket(int sd);
+		std::string name;
 
-		chanSet_t getUserChans(const Client &client) const;
+		/* STATIC ATTRIBUTES */
 
 		static msgMap_t msgFormats;
 		static std::string formatCode(msgCode_e code, std::map<std::string, std::string> presets, va_list args);
 		static std::string formatMsg(const std::string &format, std::map<std::string, std::string> presets, va_list args);
-		std::string name;
+
 	private:
+
+		/* ATTRIBUTES */
+
 		int	_port;
 		std::string &_password;
 		void _initializeMsgFormats(void);
@@ -75,19 +97,3 @@ class IrcServer
 
 std::ostream	&operator <<(std::ostream &o, const IrcServer &irc);
 
-int parsePort(char *av);
-std::string parsePassword(char *av);
-void getCmdArgs(std::string buffer, std::string &cmd, strVec_t &args);
-
-void cmdPass(strVec_t &args, Client &origin, IrcServer &server);
-void cmdUser(strVec_t &args, Client &origin, IrcServer &server);
-void cmdNick(strVec_t &args, Client &origin, IrcServer &server);
-void cmdPrivMsg(strVec_t &args, Client &origin, IrcServer &server);
-void cmdPart(strVec_t &args, Client &origin, IrcServer &server);
-void cmdInvite(strVec_t &args, Client &origin, IrcServer &server);
-void cmdTopic(strVec_t &args, Client &origin, IrcServer &server);
-void cmdKick(strVec_t &args, Client &origin, IrcServer &server);
-void cmdMode(strVec_t &args, Client &origin, IrcServer &server);
-void cmdJoin(strVec_t args, Client &client, IrcServer &server);
-
-void parsing(Client &origin, IrcServer &server, std::string buffer);

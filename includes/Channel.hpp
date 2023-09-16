@@ -14,9 +14,6 @@
 
 # include "IrcServer.hpp"
 
-class Client;
-class IrcServer;
-
 class Channel
 {
 	public:

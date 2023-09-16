@@ -2,6 +2,7 @@
 
 class Channel;
 class Client;
+class IrcServer;
 
 typedef std::vector<std::string> strVec_t;
 typedef std::set<Channel *> chanSet_t;

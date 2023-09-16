@@ -15,8 +15,6 @@
 # include "IrcServer.hpp"
 # include <cstdarg>
 
-class IrcServer;
-
 class Client
 {
 	public:
