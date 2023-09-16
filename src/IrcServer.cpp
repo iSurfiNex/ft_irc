@@ -87,7 +87,7 @@ void IrcServer::_initializeServer()
 	if (listen(master_socket, 3) < 0)
 		throw (std::runtime_error("IRC: listen failure"));
 
-	std::cout << "  Waiting for connections on port " << _port << "..." << std::endl << std::endl;
+	std::cout << std::endl << "  Waiting for connections on port " << _port << " using \"" << _password << "\" as password..." << std::endl << std::endl;
 }
 
 /* Handle incomming connection and create associated client */
