@@ -27,8 +27,8 @@ Channel::Channel(const std::string &_name, const std::string &key, Client &mod, 
 	_password = key;
 	topic = "";
 	_symbol = "=";
-	_addUser(mod);
 	addMod(mod);
+	_addUser(mod);
 }
 
 Channel::~Channel(void)
@@ -65,6 +65,8 @@ std::string Channel::_getUserListStr(void) const
         if (!result.empty()) {
             result += " ";
         }
+		if (isMod(*client))
+			result += "@";
         result += client->nickname;
     }
 
