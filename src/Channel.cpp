@@ -42,7 +42,8 @@ void Channel::_addUser(const Client &client)
 {
 	_userList.insert(&client);
 	msg(MSG_JOIN, client.nickname);
-	client.msg(RPL_TOPIC, name, topic);
+	if (!topic.empty())
+		client.msg(RPL_TOPIC, name, topic);
 	client.msg(RPL_NAMREPLY, _symbol, name, _getUserListStr());
 	client.msg(RPL_ENDOFNAMES, name);
 }
@@ -189,16 +190,12 @@ void Channel::changeUserLimit(const int userlimit)
 
 bool Channel::isMod(const Client &client)
 {
-	if (_modList.find(&client) != _modList.end())
-		return (true);
-	return (false);
+	return _modList.find(&client) != _modList.end();
 }
 
 bool Channel::isUserInside(const Client &client)
 {
-	if (_userList.find(&client) != _userList.end())
-		return (true);
-	return (false);
+	return _userList.find(&client) != _userList.end();
 }
 
 bool Channel::isUserOnInviteList(const Client &client)
@@ -213,10 +210,10 @@ bool Channel::checkPassword(const std::string &pw)
 
 void Channel::sendMessage(const std::string message) const
 {
-	for (std::set<const Client *>::iterator it = _userList.begin(); _userList.end() != it; ++it)
+	foreach(clientSet_t, _userList)
 	{
 		const Client *client = *it;
-		send(client->socketId, message.c_str(), message.size(), 0);
+		client->sendMessage(message);
 	}
 }
 
@@ -232,7 +229,7 @@ void Channel::msg(msgCode_e code, ...) const
 
 	std::string msgStr = IrcServer::formatCode(code, presets, args);
 	std::cout << msgStr << std::endl;
-	sendMessage(msgStr); //TODO rename sendStr after rebase
+	sendMessage(msgStr);
 	va_end(args);
 }
 
