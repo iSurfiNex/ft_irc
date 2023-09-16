@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:29 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/16 15:58:03 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/16 17:41:50 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,16 @@ void Channel::sendMessage(const std::string message) const
 	}
 }
 
+void Channel::sendMessageIgnore(const std::string message, const Client &origin) const
+{
+	foreach(constClientSet_t, _userList)
+	{
+		const Client *client = *it;
+		if (*it != &origin)
+			client->sendMessage(message);
+	}
+}
+
 void Channel::msg(msgCode_e code, ...) const
 {
 	std::map<std::string, std::string> presets;
@@ -200,7 +210,7 @@ void Channel::msg(msgCode_e code, ...) const
 
 	std::string msgStr = IrcServer::formatCode(code, presets, args);
 	std::cout << msgStr << std::endl;
-	sendMessage(msgStr);
+	sendMessage(":" + msgStr + "\r\n");
 	va_end(args);
 }
 

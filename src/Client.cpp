@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:14:22 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/16 16:35:08 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/16 17:42:06 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void Client::msg(msgCode_e code, ...) const
 
 	std::string msgStr = IrcServer::formatCode(code, presets, args);
 	std::cout << msgStr << std::endl;
-	sendMessage(msgStr + "\r\n");
+	sendMessage(":" + msgStr + "\r\n");
 	va_end(args);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:58:52 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/16 15:34:52 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/16 17:27:04 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void cmdPrivMsg(strVec_t &args, Client &origin, IrcServer &server)
 			std::string messageToChannel = ":" + origin.nickname + " PRIVMSG " + channel->name + " :" + args[1];
 			std::cout << origin << " send: \"" << messageToChannel << "\" to " << channel->name << std::endl;
 			messageToChannel += "\r\n";
-			channel->sendMessage(messageToChannel);
+			channel->sendMessageIgnore(messageToChannel, origin);
 		}
 	}
 	else

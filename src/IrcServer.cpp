@@ -26,7 +26,7 @@ void IrcServer::_initializeMsgFormats(void) {
 	m[ERR_NEEDMOREPARAMS] = "<server> <code> <client> ERR_NEEDMOREPARAMS <command_cstr> :Not enough parameters";
 	m[RPL_TOPIC] = "<server> <code> <client> RPL_TOPIC <channel> :<topic>";
 	m[RPL_NOTOPIC] = "<server> <code> <client> RPL_NOTOPIC <channel> :No topic is set";
-	m[RPL_ENDOFNAMES] = "<server> <code> <client> RPL_ENDOFNAMES <channel> :End of /NAMES list";
+	m[RPL_ENDOFNAMES] = "<server> <code> <client> <channel> :End of /NAMES list";
 	m[RPL_NAMREPLY] = "<server> <code> <client> RPL_NAMREPLY <symbol> <channel> :<nick>";
 	m[ERR_PASSWDMISMATCH] = "<server> <code> <client> ERR_PASSWDMISMATCH :Password incorrect";
 	m[ERR_ALREADYREGISTERED] = "<server> <code> <client> ERR_ALREADYREGISTERED :You may not reregister";
@@ -41,8 +41,8 @@ void IrcServer::_initializeMsgFormats(void) {
 	m[ERR_NOTONCHANNEL] = "<server> <code> <client> ERR_NOTONCHANNEL <channel> :They aren't on that channel";
 	m[ERR_USERONCHANNEL] = "<server> <code> <client> ERR_USERONCHANNEL <nick> <channel> :is already on channel";
 	m[RPL_INVITING] = "<server> <code> <client> RPL_INVITING <nick> <channel>";
-	m[RPL_WELCOME] = "<server> <code> <client> RPL_WELCOME :Welcome to the <networkname> Network, <client>";
-	m[MSG_JOIN] = "<client> JOIN <channel>";
+	m[RPL_WELCOME] = "<server> <code> <client> :Welcome to the <networkname> Network, <client>";
+	m[MSG_JOIN] = "<client> JOIN :<channel>";
 	m[MSG_ADDINVITELIST] = "<server> <code> <client> MSG_ADDINVITELIST <nick> <channel> :invite you";
 	m[MSG_NEWTOPIC] = "<server> <code> MSG_NEWTOPIC <channel> :\"<topic>\" is the new topic of this channel";
 	m[MSG_RULECHANGED] = "<server> <code> MSG_RULECHANGED <channel> :<rule>: Rule has been updated for this channel";
