@@ -97,47 +97,20 @@ void Channel::addMod(const Client &client)
 
 void Channel::removeUser(const Client &client)
 {
-	if (_userList.find(&client) != _userList.end())
-	{
-		_userList.erase(&client);
-
-		std::string msg = "You have been remove of: ";
-		msg += name;
-		msg += ".\r\n";
-
-		client.sendMessage(msg);
-		std::cout << "User: " << client.getUsername() << ", has been removed of: " << name << std::endl;
-	}
+	msg(MSG_PART, client.nickname);
+	_userList.erase(&client);
 }
 
 void Channel::removeUserFromInviteList(const Client &client)
 {
 	if (_inviteList.find(&client) != _userList.end())
-	{
 		_inviteList.erase(&client);
-
-		std::string msg = "You have been remove of: ";
-		msg += name;
-		msg += ".\r\n";
-
-		client.sendMessage(msg);
-		std::cout << "User: " << client.getUsername() << ", has been removed of: " << name << std::endl;
-	}
 }
 
 void Channel::removeMod(const Client &client)
 {
 	if (_modList.find(&client) != _modList.end())
-	{
 		_modList.erase(&client);
-
-		std::string msg = "You have been remove of: ";
-		msg += name;
-		msg += " mod list.\r\n";
-
-		client.sendMessage(msg);
-		std::cout << "User: " << client.getUsername() << ", has been removed of: " << name << " mod list." << std::endl;
-	}
 }
 
 void Channel::changeTopic(const std::string tmpTopic)

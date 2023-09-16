@@ -25,6 +25,11 @@ Client::Client(int socketId, struct sockaddr_in _address, const IrcServer &serve
 
 Client::~Client(void)
 {
+	quit();
+}
+
+void Client::quit(void)
+{
 	chanSet_t userChans = _server.getUserChans(*this);
 	foreach(chanSet_t, userChans)
 	{

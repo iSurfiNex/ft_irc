@@ -43,6 +43,7 @@ void IrcServer::_initializeMsgFormats(void) {
 	m[RPL_INVITING] = "<server> <code> <client> RPL_INVITING <nick> <channel>";
 	m[RPL_WELCOME] = "<server> <code> <client> :Welcome to the <networkname> Network, <client>";
 	m[MSG_JOIN] = "<client> JOIN :<channel>";
+	m[MSG_PART] = "<client> PART :<channel>";
 	m[MSG_ADDINVITELIST] = "<server> <code> <client> MSG_ADDINVITELIST <nick> <channel> :invite you";
 	m[MSG_NEWTOPIC] = "<server> <code> MSG_NEWTOPIC <channel> :\"<topic>\" is the new topic of this channel";
 	m[MSG_RULECHANGED] = "<server> <code> MSG_RULECHANGED <channel> :<rule>: Rule has been updated for this channel";

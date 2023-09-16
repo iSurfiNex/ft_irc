@@ -28,6 +28,7 @@ class Client
 
 		void sendMessage(const std::string &message) const;
 		void msg(msgCode_e code, ...) const;
+		void quit(void);
 
 		/* GET SET */
 
