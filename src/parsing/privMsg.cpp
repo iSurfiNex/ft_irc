@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:58:52 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/15 19:15:12 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/16 15:34:52 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void cmdPrivMsg(strVec_t &args, Client &origin, IrcServer &server)
 	if (args.size() == 1)
 		origin.msg(ERR_NOTEXTTOSEND);
 	else if (args.size() != 2)
-		origin.sendMessage("Wrong number of arguments.\r\n");
+		origin.msg(ERR_NEEDMOREPARAMS, "PRIVMSG");
 	else if (args[0][0] == '#')
 	{
 		Channel *channel;
