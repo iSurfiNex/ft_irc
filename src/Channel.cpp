@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:29 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/15 18:49:13 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/16 15:58:03 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,34 +137,6 @@ void Channel::removeMod(const Client &client)
 
 		client.sendMessage(msg);
 		std::cout << "User: " << client.getUsername() << ", has been removed of: " << name << " mod list." << std::endl;
-	}
-}
-
-void Channel::changeRule(const char mode)
-{
-	switch (mode)
-	{
-		case 'i':
-		{
-			isInviteOnly = !isInviteOnly;
-			std::cout << "Channel: " << name << ", invite-only is now set to " << isInviteOnly << std::endl;
-			break;
-		}
-		case 't':
-		{
-			isTopicChangeable = !isTopicChangeable;
-			std::cout << "Channel: " << name << ", topic-changeable is now set to " << isInviteOnly << std::endl;
-			break;
-		}
-		case 'k':
-		{
-			isRestricted = !isRestricted;
-			std::cout << "Channel: " << name << ", restricted-mode is now set to " << isInviteOnly << std::endl;
-			break;
-		}
-
-		default:
-			break;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:19 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/15 18:46:20 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/16 15:58:17 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ class Channel
 		void removeMod(const Client &client);
 		void removeUserFromInviteList(const Client &client);
 
-		void changeRule(const char mode);
 		void changeTopic(const std::string topic);
 		void changePassword(const std::string password);
 		void changeUserLimit(const int userlimit);
