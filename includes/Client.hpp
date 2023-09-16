@@ -21,28 +21,36 @@ class Client
 {
 	public:
 
+		/* LIFECYCLE */
+
 		Client(int socketId, const IrcServer &server);
 		~Client(void);
 
-		void changeUserName(const std::string newUsername);
-		void changeNickName(const std::string newNickname);
+		/* ACTIONS */
 
 		void sendMessage(const std::string &message) const;
+		void msg(msgCode_e code, ...) const;
+
+		/* GET SET */
 
 		std::string getUsername(void) const;
+		void changeUserName(const std::string newUsername);
+
 		std::string getNickname(void) const;
+		void changeNickName(const std::string newNickname);
+
 		int getSocketId(void) const;
-		void msg(msgCode_e code, ...) const;
+
+		/* ATTRIBUTES */
 
 		bool isAuth;
 		bool isReady;
-
 		std::string username;
 		std::string nickname;
 		const int socketId;
-		std::string serverName;
 		std::string partialMsg;
 		const IrcServer &server;
+		int maxChans;
 };
 
 std::ostream &operator<<(std::ostream &os, const Client &client);

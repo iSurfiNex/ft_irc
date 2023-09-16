@@ -19,8 +19,19 @@ class Client;
 class Channel
 {
 	public:
+
+		/* LIFECYCLE */
+
 		Channel(const std::string &_name, const std::string &key, Client &mod);
 		~Channel(void);
+
+		/* ACTIONS */
+
+		void sendMessage(const std::string message) const;
+		void msg(msgCode_e code, ...) const;
+		void tryEnter(Client &client, const std::string& password);
+
+		/* GET SET */
 
 		void _addUser(const Client &client);
 		void addUserInviteList(const Client &client);
@@ -35,13 +46,21 @@ class Channel
 		void changePassword(const std::string password);
 		void changeUserLimit(const int userlimit);
 
-		bool isMod(const Client &client);
-		bool isUserInside(const Client &client);
+		const std::string _getClientPrefix(const Client &client) const;
 
-		bool isUserOnInviteList(const Client &client);
-		bool checkPassword(const std::string &pw);
+		/* CHECK */
 
-		void sendMessage(const std::string message) const;
+		bool isMod(const Client &client) const;
+		bool isUserInside(const Client &client) const;
+		bool isUserOnInviteList(const Client &client) const;
+		bool checkPassword(const std::string &pw) const;
+
+		/* STATIC CHECK */
+
+		static bool isValidKey(const std::string &key);
+		static bool isValidName(const std::string &name);
+
+		/* ATTRIBUTES */
 
 		std::string name;
 		std::string topic;
@@ -49,28 +68,34 @@ class Channel
 		bool isInviteOnly;
 		bool isTopicChangeable;
 		bool isRestricted;
-		static bool isValidKey(const std::string &key);
-		static bool isValidName(const std::string &name);
+
 		std::string serverName;
-		void msg(msgCode_e code, ...) const;
-		void tryEnter(Client &client, const std::string& password);
+
 	private:
+
+		/* CHECK */
 
 		static bool _isValidBaseName(const std::string &name);
 		static bool _isValidNamePrefix(char c);
+
+		/* GET SET */
+
+		std::string _getUserListStr(void) const;
+
+		/* STATIC ATTRIBUTES */
 
 		static const std::string _allowedNamePrefix;
 		static const std::string _forbiddenNameChars;
 		static const int _nameMaxLen;
 
-		std::string _getUserListStr(void) const;
+		/* ATTRIBUTES */
 
-		std::set<const Client *> _userList;
-		std::set<const Client *> _inviteList;
-		std::set<const Client *> _modList;
+		constClientSet_t _userList;
+		constClientSet_t _inviteList;
+		constClientSet_t _modList;
 
 		int _userLimit;
+
 		std::string _password;
 		std::string _symbol;
-
 };

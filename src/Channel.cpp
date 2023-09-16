@@ -188,29 +188,29 @@ void Channel::changeUserLimit(const int userlimit)
 	std::cout << "Channel: " << name << ", has a new user-limit: " << _userLimit << std::endl;
 }
 
-bool Channel::isMod(const Client &client)
+bool Channel::isMod(const Client &client) const
 {
 	return _modList.find(&client) != _modList.end();
 }
 
-bool Channel::isUserInside(const Client &client)
+bool Channel::isUserInside(const Client &client) const
 {
 	return _userList.find(&client) != _userList.end();
 }
 
-bool Channel::isUserOnInviteList(const Client &client)
+bool Channel::isUserOnInviteList(const Client &client) const
 {
 	return _inviteList.find(&client) != _inviteList.end();
 }
 
-bool Channel::checkPassword(const std::string &pw)
+bool Channel::checkPassword(const std::string &pw) const
 {
 	return pw == _password;
 }
 
 void Channel::sendMessage(const std::string message) const
 {
-	foreach(clientSet_t, _userList)
+	foreach(constClientSet_t, _userList)
 	{
 		const Client *client = *it;
 		client->sendMessage(message);
