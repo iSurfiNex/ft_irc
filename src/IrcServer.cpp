@@ -71,7 +71,6 @@ void IrcServer::_initializeServer()
 	if (!(master_socket = socket(AF_INET , SOCK_STREAM , 0)))
 		throw (std::runtime_error("IRC: socket failure"));
 
-
 	int opt = 1;
 	if (setsockopt(master_socket, SOL_SOCKET, SO_REUSEADDR, (char *)&opt, sizeof(opt)) < 0)
 		throw (std::runtime_error("IRC: socket failure"));
@@ -80,7 +79,7 @@ void IrcServer::_initializeServer()
 	address.sin_addr.s_addr = INADDR_ANY;
 	address.sin_port = htons(_port);
 
-	if (bind(master_socket, (struct sockaddr *)&address, sizeof(address)) < 0)
+	if (bind(master_socket, reinterpret_cast<struct sockaddr *>(&address), sizeof(address)) < 0)
 		throw (std::runtime_error("IRC: bind failure"));
 
 	if (listen(master_socket, 3) < 0)
@@ -89,53 +88,33 @@ void IrcServer::_initializeServer()
 	std::cout << "  Waiting for connections on port " << _port << "..." << std::endl << std::endl;
 }
 
-
-/* Get the channels list which client is part of. */
-chanSet_t IrcServer::getUserChans(const Client &client) const
-{
-	chanSet_t userChans;
-	foreach(chanSet_t, channels)
-	{
-		Channel *chan = *it;
-		if (chan->isUserInside(client))
-			userChans.insert(chan);
-	}
-	return userChans;
-}
-
-std::string IrcServer::_connectionToString(int sd, struct sockaddr_in &address)
-{
-	std::stringstream ss;
-	ss << "socket fd: " << sd << ", ip: " << inet_ntoa(address.sin_addr) << ", port: " << ntohs(address.sin_port)  << "." << std::endl;
-	return ss.str();
-}
-
 /* Handle incomming connection and create associated client */
 void IrcServer::_handleIncomingConnection()
 {
 	int newSd;
     socklen_t addrlen = sizeof(address); // TODO address local ?
 
-	// If something happened on the master socket, its an incoming connection
-	if (FD_ISSET(master_socket, &readfds))
+	// Return if no incomming connection
+	if (!FD_ISSET(master_socket, &readfds))
+		return;
+
+	newSd = accept(master_socket, reinterpret_cast<struct sockaddr *>(&address), &addrlen);
+
+	if (newSd < 0)
+		throw (std::runtime_error("IRC: accept failure")); // TODO free
+
+	if (clients.size() >= static_cast<size_t>(_maxClient))
 	{
-		newSd = accept(master_socket, (struct sockaddr *)&address, &addrlen);
-
-		if (newSd < 0)
-			throw (std::runtime_error("IRC: accept failure")); // TODO free
-
-		if (clients.size() >= static_cast<size_t>(_maxClient))
-		{
-			std::cout << "Rejected connection, max client reach (" << _maxClient << ")" << _connectionToString(newSd, address) << std::endl;
-			return;
-		}
-
-		std::cout << "New connection, " << _connectionToString(newSd, address) << std::endl;
-
-		Client *newClient = new Client(newSd, address, *this);
-		clients.insert(newClient);
+		std::cout << "Rejected connection, max client reach (" << _maxClient << ")" << _connectionToString(newSd, address) << std::endl;
+		return;
 	}
+
+	std::cout << "New connection, " << _connectionToString(newSd, address) << std::endl;
+
+	Client *newClient = new Client(newSd, address, *this);
+	clients.insert(newClient);
 }
+
 
 void IrcServer::_handleIOOperation()
 {
@@ -223,6 +202,26 @@ void IrcServer::runServer(void)
 		_handleIncomingConnection();
 		_handleIOOperation();
 	}
+}
+
+/* Get the channels list which client is part of. */
+chanSet_t IrcServer::getUserChans(const Client &client) const
+{
+	chanSet_t userChans;
+	foreach(chanSet_t, channels)
+	{
+		Channel *chan = *it;
+		if (chan->isUserInside(client))
+			userChans.insert(chan);
+	}
+	return userChans;
+}
+
+std::string IrcServer::_connectionToString(int sd, struct sockaddr_in &address)
+{
+	std::stringstream ss;
+	ss << "socket fd: " << sd << ", ip: " << inet_ntoa(address.sin_addr) << ", port: " << ntohs(address.sin_port)  << "." << std::endl;
+	return ss.str();
 }
 
 Channel *IrcServer::getChannelWithName(const std::string &channelName)
