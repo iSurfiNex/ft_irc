@@ -17,14 +17,13 @@ const std::string Channel::_allowedNamePrefix = "&#+!";
 const std::string Channel::_forbiddenNameChars = " \a,";
 const int Channel::_nameMaxLen = 50;
 
-Channel::Channel(const std::string &_name, const std::string &key, Client &mod, const IrcServer &server): _server(server)
+Channel::Channel(const std::string &_name, const std::string &key, Client &mod, const IrcServer &server): _server(server), _userLimit(server.defaultMaxClientPerChan)
 {
 	name = _name;
 
 	isInviteOnly = false;
 	isTopicChangeable = false;
 	isRestricted = false;
-	_userLimit = -1;
 	_password = key;
 	topic = "";
 	_symbol = "=";
@@ -222,6 +221,7 @@ void Channel::msg(msgCode_e code, ...) const
 	presets["<code>"] = itoa(code);
 	presets["<channel>"] = name;
 	presets["<server>"] = _server.name;
+	presets["<networkname>"] = _server.networkName;
 
 	va_list args;
     va_start(args, code);

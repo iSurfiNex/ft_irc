@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "IrcServer.hpp"
+
 IrcServer::msgMap_t IrcServer::msgFormats;
 
 void IrcServer::_initializeMsgFormats(void) {
@@ -40,22 +41,33 @@ void IrcServer::_initializeMsgFormats(void) {
 	m[ERR_NOTONCHANNEL] = "<server> <code> ERR_NOTONCHANNEL <client> <channel> :They aren't on that channel";
 	m[ERR_USERONCHANNEL] = "<server> <code> ERR_USERONCHANNEL <client> <nick> <channel> :is already on channel";
 	m[RPL_INVITING] = "<server> <code> RPL_INVITING <client> <nick> <channel>";
+	m[RPL_WELCOME] = "<server> <code> RPL_WELCOME <client> :Welcome to the <networkname> Network, <client>";
 	m[MSG_JOIN] = "<client> JOIN <channel>";
 	m[MSG_ADDINVITELIST] = "<server> <code> MSG_ADDINVITELIST <client> <nick> <channel> :invite you";
 	m[MSG_NEWTOPIC] = "<server> <code> MSG_NEWTOPIC <channel> :\"<topic>\" is the new topic of this channel";
 	msgFormats = m;
 }
 
-IrcServer::IrcServer(const int port, const std::string &_name, std::string &password): name(_name), _password(password)
+
+IrcServer::IrcServer(const int port, const std::string &_name, const std::string &_networkName, std::string &password, int maxClient, int maxChan, int _defaultMaxClientPerChan, int _defaultMaxChanPerClient): name(_name), networkName(_networkName), defaultMaxClientPerChan(_defaultMaxClientPerChan), defaultMaxChanPerClient(_defaultMaxChanPerClient), _port(port), _password(password), _maxClient(maxClient), _maxChan(maxChan)
 {
 	_initializeMsgFormats();
-	_port = port;
+	_initializeServer();
+}
 
-	std::cout << "PORT: " << port << " | PASSWORD: " << password << std::endl << std::endl;
+IrcServer::~IrcServer(void)
+{
+	foreach(clientSet_t, clients)
+		delete *it;
+	clients.clear();
 
-	for (int i = 0; i < MAX_CLIENTS; i++)
-		client_socket[i] = 0;
+	foreach(clientSet_t, clients)
+		delete *it;
+	channels.clear();
+}
 
+void IrcServer::_initializeServer()
+{
 	if (!(master_socket = socket(AF_INET , SOCK_STREAM , 0)))
 		throw (std::runtime_error("IRC: socket failure"));
 
@@ -74,22 +86,11 @@ IrcServer::IrcServer(const int port, const std::string &_name, std::string &pass
 	if (listen(master_socket, 3) < 0)
 		throw (std::runtime_error("IRC: listen failure"));
 
-	std::cout << "  Waiting for connections..." << std::endl << std::endl;
-}
-
-IrcServer::~IrcServer(void)
-{
-	for (std::set<Client *>::iterator it = clients.begin(); clients.end() != it; ++it)
-		delete *it;
-	clients.clear();
-
-	for (chanSet_t::iterator it = channels.begin(); channels.end() != it; ++it)
-		delete *it;
-	channels.clear();
+	std::cout << "  Waiting for connections on port " << _port << "..." << std::endl << std::endl;
 }
 
 
-/* Returns the channels list which client is part of. */
+/* Get the channels list which client is part of. */
 chanSet_t IrcServer::getUserChans(const Client &client) const
 {
 	chanSet_t userChans;
@@ -102,13 +103,98 @@ chanSet_t IrcServer::getUserChans(const Client &client) const
 	return userChans;
 }
 
+std::string IrcServer::_connectionToString(int sd, struct sockaddr_in &address)
+{
+	std::stringstream ss;
+	ss << "socket fd: " << sd << ", ip: " << inet_ntoa(address.sin_addr) << ", port: " << ntohs(address.sin_port)  << "." << std::endl;
+	return ss.str();
+}
+
+/* Handle incomming connection and create associated client */
+void IrcServer::_handleIncomingConnection()
+{
+	int newSd;
+    socklen_t addrlen = sizeof(address); // TODO address local ?
+
+	// If something happened on the master socket, its an incoming connection
+	if (FD_ISSET(master_socket, &readfds))
+	{
+		newSd = accept(master_socket, (struct sockaddr *)&address, &addrlen);
+
+		if (newSd < 0)
+			throw (std::runtime_error("IRC: accept failure")); // TODO free
+
+		if (clients.size() >= static_cast<size_t>(_maxClient))
+		{
+			std::cout << "Rejected connection, max client reach (" << _maxClient << ")" << _connectionToString(newSd, address) << std::endl;
+			return;
+		}
+
+		std::cout << "New connection, " << _connectionToString(newSd, address) << std::endl;
+
+		Client *newClient = new Client(newSd, address, *this);
+		clients.insert(newClient);
+	}
+}
+
+void IrcServer::_handleIOOperation()
+{
+	char buffer[BUFFER_SIZE];
+
+	foreach(clientSet_t, clients) {
+		Client *client = *it;
+		int sd = client->socketId;
+
+		if (!FD_ISSET(sd, &readfds))
+			continue; // TODO error msg ?
+
+		int socketContentSize = read(sd, buffer, BUFFER_SIZE);
+
+		if (socketContentSize == 0)
+		{
+			std::cout << "Client disconnected, " << _connectionToString(sd, address) << std::endl;
+			clients.erase(client);
+			delete client;
+			close (sd);
+		}
+		else
+		{
+			int skipCount = 2;
+			buffer[socketContentSize] = '\0';
+			std::string str_msg = client->partialMsg + buffer;
+			long unsigned int start_pos = 0;
+			long unsigned int end_pos = 0;
+			while (true)
+			{
+				end_pos = str_msg.find("\r\n", start_pos);
+				if (end_pos == std::string::npos)
+				{
+					end_pos = str_msg.find("\n", start_pos);
+					skipCount = 1;
+				}
+
+				if (end_pos == std::string::npos)
+				{
+					client->partialMsg = str_msg.substr(start_pos, std::string::npos);
+					if (!client->partialMsg.empty())
+						std::cout <<  GRAY " >> Partial message \"" NC << client->partialMsg << GRAY "\" from " NC << *client << std::endl;
+					break;
+				}
+				std::string cmd_str = str_msg.substr(start_pos, end_pos - start_pos);
+
+				parsing(*client, *this, cmd_str);
+
+				start_pos = end_pos + skipCount;
+			}
+		}
+	}
+}
+
 void IrcServer::runServer(void)
 {
-	int max_sd, sd, activity, valread, addrlen, new_socket;
-    const char *welcome_message = "You are now connected. Please enter the password using: PASS <password>.\r\n";
-
-    char buffer[1025];
-    addrlen = sizeof(address);
+	//highest file descriptor number, need it for the select function
+	int max_sd;
+	int activity;
 
 	while(true)
 	{
@@ -119,17 +205,10 @@ void IrcServer::runServer(void)
 		FD_SET(master_socket, &readfds);
 		max_sd = master_socket;
 
-		//add child sockets to set
-		for (int i = 0; i < MAX_CLIENTS; i++)
+		foreach(clientSet_t, clients)
 		{
-			//socket descriptor
-			sd = client_socket[i];
-
-			//if valid socket descriptor then add to read list
-			if (sd > 0)
-				FD_SET(sd, &readfds);
-
-			//highest file descriptor number, need it for the select function
+			int sd = (*it)->socketId;
+			FD_SET(sd, &readfds);
 			if(sd > max_sd)
 				max_sd = sd;
 		}
@@ -141,99 +220,8 @@ void IrcServer::runServer(void)
 		if ((activity < 0) && (errno!=EINTR))
 			throw (std::runtime_error("IRC: select failure"));
 
-		//If something happened on the master socket ,
-		//then its an incoming connection
-		if (FD_ISSET(master_socket, &readfds))
-		{
-			if ((new_socket = accept(master_socket,	(struct sockaddr *)&address, (socklen_t*)&addrlen)) < 0)
-				throw (std::runtime_error("IRC: accept failure"));
-
-			//inform user of socket number - used in send and receive commands
-			std::cout << "New connection, socket fd: " << new_socket << ", ip: " << inet_ntoa(address.sin_addr) << ", port: " << ntohs(address.sin_port)  << "." << std::endl;
-			Client *tmp = new Client(new_socket, *this);
-			clients.insert(tmp);
-
-			//send new connection greeting message
-			if (send(new_socket, welcome_message, strlen(welcome_message), 0) != static_cast<ssize_t>(strlen(welcome_message)) )
-				throw (std::runtime_error("IRC: send failure"));
-
-			//add new socket to array of sockets
-			for (int i = 0; i < MAX_CLIENTS; i++)
-			{
-				//if position is empty
-				if (client_socket[i] == 0 )
-				{
-					client_socket[i] = new_socket;
-					std::cout << "Adding to list of sockets as " << i << "." << std::endl;
-
-					break ;
-				}
-			}
-		}
-
-		//else its some IO operation on some other socket
-		for (int i = 0; i < MAX_CLIENTS; i++)
-		{
-			sd = client_socket[i];
-			if (!sd)
-				continue;
-
-			Client *client= getClientFromSocket(sd);
-			if (!client)
-			{
-				std::cerr << "No client for socket " << sd << std::endl;
-				break;
-			}
-			if (FD_ISSET(sd, &readfds))
-			{
-				//Check if it was for closing , and also read the
-				//incoming message
-				if ((valread = read(sd, buffer, 1024)) == 0)
-				{
-					//Somebody disconnected , get his details and print
-					getpeername(sd, (struct sockaddr*)&address, (socklen_t*)&addrlen);
-					std::cout << "Client disconnected, ip: " << inet_ntoa(address.sin_addr) << ", port: " << ntohs(address.sin_port) << "." << std::endl;
-					clients.erase(client);
-					delete client;
-
-					//Close the socket and mark as 0 in list for reuse
-					close (sd);
-					client_socket[i] = 0;
-				}
-
-				//Echo back the message that came in
-				else
-				{
-					int skipCount = 2;
-					buffer[valread] = '\0';
-					std::string str_msg = client->partialMsg + buffer;
-					long unsigned int start_pos = 0;
-					long unsigned int end_pos = 0;
-					while (true)
-					{
-						end_pos = str_msg.find("\r\n", start_pos);
-						if (end_pos == std::string::npos)
-						{
-							end_pos = str_msg.find("\n", start_pos);
-							skipCount = 1;
-						}
-
-						if (end_pos == std::string::npos)
-						{
-							client->partialMsg = str_msg.substr(start_pos, std::string::npos);
-							if (!client->partialMsg.empty())
-								std::cout <<  GRAY " >> Partial message \"" NC << client->partialMsg << GRAY "\" from " NC << *client << std::endl;
-							break;
-						}
-						std::string cmd_str = str_msg.substr(start_pos, end_pos - start_pos);
-
-						parsing(*client, *this, cmd_str);
-
-						start_pos = end_pos + skipCount;
-					}
-				}
-			}
-		}
+		_handleIncomingConnection();
+		_handleIOOperation();
 	}
 }
 
@@ -289,17 +277,6 @@ std::ostream	&operator <<(std::ostream &o, const IrcServer &irc)
 	return (o);
 }
 
-Client *IrcServer::getClientFromSocket(int sd)
-{
-	for (std::set<Client *>::iterator it = clients.begin(); clients.end() != it; ++it)
-	{
-		Client *client = *it;
-		if (client->socketId == sd)
-			return client;
-	}
-	return NULL;
-}
-
 
 std::string IrcServer::formatCode(msgCode_e code, std::map<std::string, std::string> presets, va_list args)
 {
@@ -328,7 +305,10 @@ std::string IrcServer::formatMsg(const std::string &format, std::map<std::string
 		else if (key.find("cstr") != std::string::npos)
 			repl_str = std::string(va_arg(args, const char *));
 		else
+		{
+			std::cout << "====" << key<<std::endl;
 			repl_str = va_arg(args, std::string);
+		}
 
 		eval.replace(repl_start, repl_len, repl_str);
 		repl_start = repl_end;

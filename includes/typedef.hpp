@@ -5,12 +5,14 @@ class Client;
 class IrcServer;
 
 typedef std::vector<std::string> strVec_t;
+typedef std::vector<int> intVec_t;
 typedef std::set<Channel *> chanSet_t;
 typedef std::set<Client *> clientSet_t;
 typedef std::set<const Client *> constClientSet_t;
 typedef std::string str_t;
 
 enum msgCode_e {
+  RPL_WELCOME = 001,
   RPL_NOTOPIC = 331,
   RPL_TOPIC = 332,
   RPL_INVITING = 341,

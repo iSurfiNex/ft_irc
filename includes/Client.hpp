@@ -21,7 +21,7 @@ class Client
 
 		/* LIFECYCLE */
 
-		Client(int socketId, const IrcServer &server);
+		Client(int socketId, struct sockaddr_in address, const IrcServer &server);
 		~Client(void);
 
 		/* ACTIONS */
@@ -47,6 +47,8 @@ class Client
 		std::string nickname;
 		const int socketId;
 		std::string partialMsg;
+		struct sockaddr_in address;
+		socklen_t addrlen;
 		const IrcServer &_server;
 		int maxChans;
 };

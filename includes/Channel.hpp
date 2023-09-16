@@ -92,9 +92,9 @@ class Channel
 		constClientSet_t _inviteList;
 		constClientSet_t _modList;
 
-		int _userLimit;
-
 		std::string _password;
 		std::string _symbol;
 		const IrcServer &_server;
+
+		int _userLimit;
 };

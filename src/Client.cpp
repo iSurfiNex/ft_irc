@@ -12,7 +12,7 @@
 
 #include "IrcServer.hpp"
 
-Client::Client(int socketId, const IrcServer &server): socketId(socketId), _server(server), maxChans(MAX_CLIENT_CHANS)
+Client::Client(int socketId, struct sockaddr_in _address, const IrcServer &server): socketId(socketId), address(_address), _server(server), maxChans(server.defaultMaxChanPerClient)
 {
 	isReady = false;
 	isAuth = false;
@@ -20,6 +20,7 @@ Client::Client(int socketId, const IrcServer &server): socketId(socketId), _serv
 	nickname = "";
 	username = "";
 	partialMsg = "";
+	msg(RPL_WELCOME);
 }
 
 Client::~Client(void)
@@ -42,7 +43,7 @@ void Client::changeNickName(const std::string newNickname)
 	{
 		isReady = true;
 		std::cout << "New user authentificate: " << *this << std::endl;
-		sendMessage("You are now authentificate.\r\n");
+		//sendMessage("You are now authentificate.\r\n");
 	}
 }
 
@@ -54,7 +55,7 @@ void Client::changeUserName(const std::string newUsername)
 	{
 		isReady = true;
 		std::cout << "New user authentificate: " << *this << std::endl;
-		sendMessage("You are now authentificate.\r\n");
+		//sendMessage("You are now authentificate.\r\n");
 	}
 }
 
@@ -62,7 +63,9 @@ void Client::changeUserName(const std::string newUsername)
 void Client::sendMessage(const std::string &message) const
 {
 	std::string msgStr = message; // TODO truncate 512 char
-	send(socketId, msgStr.c_str(), msgStr.size(), 0);
+	const char *msgCStr = msgStr.c_str();
+	if (send(socketId, msgCStr, msgStr.size(), 0) != static_cast<ssize_t>(strlen(msgCStr)))
+		std::cout << "Error: Send failure: " << *this << ", message: " << msgStr;
 }
 
 std::string Client::getUsername(void) const
@@ -86,6 +89,7 @@ void Client::msg(msgCode_e code, ...) const
 	presets["<code>"] = itoa(code);
 	presets["<client>"] = nickname;
 	presets["<server>"] = _server.name;
+	presets["<networkname>"] = _server.networkName;
 
 	va_list args;
     va_start(args, code);

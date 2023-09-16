@@ -36,7 +36,7 @@
 # include "macros.hpp"
 # include "parsing.hpp"
 
-# define MAX_CLIENTS 30
+#define BUFFER_SIZE 1024
 
 class IrcServer
 {
@@ -48,7 +48,7 @@ class IrcServer
 
 		/* LIFECYCLE */
 
-		IrcServer(const int port, const std::string &_name, std::string &password);
+		IrcServer(const int port, const std::string &name, const std::string &networkName, std::string &password, int maxClient, int maxChan, int maxClientPerChan, int maxChanPerClient);
 		~IrcServer(void);
 
 		/* ACTIONS */
@@ -61,8 +61,11 @@ class IrcServer
 		Channel *getChannelWithName(const std::string &name);
 		Client *getClientWithNickname(const std::string &name);
 		Client *getClientWithUsername(const std::string &name);
-		Client *getClientFromSocket(int sd);
 		chanSet_t getUserChans(const Client &client) const;
+
+		/* TO STRING */
+
+		std::string _connectionToString(int sd, struct sockaddr_in &address);
 
 		/* CHECKS */
 
@@ -72,13 +75,17 @@ class IrcServer
 
 		fd_set readfds;
 		int master_socket;
-		int client_socket[MAX_CLIENTS];
+		intVec_t clientSockets;
 		struct sockaddr_in address;
 
 		clientSet_t clients;
 		chanSet_t channels;
 
 		std::string name;
+		std::string networkName;
+
+		int defaultMaxClientPerChan;
+		int defaultMaxChanPerClient;
 
 		/* STATIC ATTRIBUTES */
 
@@ -88,11 +95,19 @@ class IrcServer
 
 	private:
 
+		/* ACTIONS  */
+
+		void _initializeServer();
+		void _handleIncomingConnection();
+		void _handleIOOperation();
+
 		/* ATTRIBUTES */
 
 		int	_port;
 		std::string &_password;
 		void _initializeMsgFormats(void);
+		int _maxClient;
+		int _maxChan;
 };
 
 std::ostream	&operator <<(std::ostream &o, const IrcServer &irc);

@@ -31,7 +31,7 @@ int main(int ac, char **av)
 
 	try
 	{
-		IrcServer irc(port, ":irkserver", password);
+		IrcServer irc(port, ":irkserver", "Oustanding project", password, 10, 10, 10, 5);
 		irc.runServer();
 	}
 	catch (std::exception &e)
