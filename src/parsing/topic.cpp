@@ -34,7 +34,7 @@ void cmdTopic(strVec_t &args, Client &origin, IrcServer &server)
 		else if (channel->isMod(origin) || channel->isTopicChangeable)
 		{
 			channel->changeTopic(args[1]);
-			channel->msg(MSG_NEWTOPIC, channel->topic);
+			origin.msg(RPL_TOPIC, args[0], channel->topic);
 		}
 		else
 			origin.msg(ERR_CHANOPRIVSNEEDED, channel->name);
