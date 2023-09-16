@@ -23,7 +23,7 @@ Channel::Channel(const std::string &_name, const std::string &key, Client &mod, 
 
 	isInviteOnly = false;
 	isTopicChangeable = false;
-	isRestricted = false;
+	isRestricted = !key.empty();
 	_password = key;
 	topic = "";
 	_symbol = "=";
