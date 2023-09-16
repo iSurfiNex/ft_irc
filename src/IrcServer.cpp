@@ -17,33 +17,33 @@ IrcServer::msgMap_t IrcServer::msgFormats;
 void IrcServer::_initializeMsgFormats(void) {
 
 	msgMap_t m;
-	m[ERR_NOSUCHCHANNEL] = "<server> <code> ERR_NOSUCHCHANNEL <client> <channel> :No such channel";
-	m[ERR_TOOMANYCHANNELS] = "<server> <code> ERR_TOOMANYCHANNELS <client> <channel> :You have joined too many channels";
-	m[ERR_BADCHANNELKEY] = "<server> <code> ERR_BADCHANNELKEY <client> <channel> :Cannot join channel (+k)";
-	m[ERR_BADCHANNELMASK] = "<server> <code> ERR_BADCHANNELMASK <channel> :<reason_cstr>";
-	m[ERR_CHANNELISFULL] = "<server> <code> ERR_CHANNELISFULL <client> <channel> :Cannot join channel (+l)";
-	m[ERR_INVITEONLYCHAN] = "<server> <code> ERR_INVITEONLYCHAN <client> <channel> :Cannot join channel (+i)";
-	m[ERR_NEEDMOREPARAMS] = "<server> <code> ERR_NEEDMOREPARAMS <client> <command_cstr> :Not enough parameters";
-	m[RPL_TOPIC] = "<server> <code> RPL_TOPIC <client> <channel> :<topic>";
-	m[RPL_NOTOPIC] = "<server> <code> RPL_NOTOPIC <client> <channel> :No topic is set";
-	m[RPL_ENDOFNAMES] = "<server> <code> RPL_ENDOFNAMES <client> <channel> :End of /NAMES list";
-	m[RPL_NAMREPLY] = "<server> <code> RPL_NAMREPLY <client> <symbol> <channel> :<nick>";
-	m[ERR_PASSWDMISMATCH] = "<server> <code> ERR_PASSWDMISMATCH <client> :Password incorrect";
-	m[ERR_ALREADYREGISTERED] = "<server> <code> ERR_ALREADYREGISTERED <client> :You may not reregister";
-	m[ERR_NONICKNAMEGIVEN] = "<server> <code> ERR_NONICKNAMEGIVEN <client> :No nickname given";
-	m[ERR_ERRONEUSNICKNAME] = "<server> <code> ERR_ERRONEUSNICKNAME <client> <nick> :Erroneus nickname";
-	m[ERR_NICKNAMEINUSE] = "<server> <code> ERR_NICKNAMEINUSE <client> <nick> :Nickname already in use";
-	m[ERR_NOTEXTTOSEND] = "<server> <code> ERR_NOTEXTTOSEND <client> :No text to send";
-	m[ERR_CANNOTSENDTOCHAN] = "<server> <code> ERR_CANNOTSENDTOCHAN <client> <channel> :Cannot send to channel";
-	m[ERR_NOSUCHNICK] = "<server> <code> ERR_NOSUCHNICK <client> <nickname> :No such nick/channel";
-	m[ERR_CHANOPRIVSNEEDED] = "<server> <code> ERR_CHANOPRIVSNEEDED <client> <channel> :You're not channel operator";
-	m[ERR_USERNOTINCHANNEL] = "<server> <code> ERR_USERNOTINCHANNEL <client> <nick> <channel> :They aren't on that channel";
-	m[ERR_NOTONCHANNEL] = "<server> <code> ERR_NOTONCHANNEL <client> <channel> :They aren't on that channel";
-	m[ERR_USERONCHANNEL] = "<server> <code> ERR_USERONCHANNEL <client> <nick> <channel> :is already on channel";
-	m[RPL_INVITING] = "<server> <code> RPL_INVITING <client> <nick> <channel>";
-	m[RPL_WELCOME] = "<server> <code> RPL_WELCOME <client> :Welcome to the <networkname> Network, <client>";
+	m[ERR_NOSUCHCHANNEL] = "<server> <code> <client> ERR_NOSUCHCHANNEL <channel> :No such channel";
+	m[ERR_TOOMANYCHANNELS] = "<server> <code> <client> ERR_TOOMANYCHANNELS <channel> :You have joined too many channels";
+	m[ERR_BADCHANNELKEY] = "<server> <code> <client> ERR_BADCHANNELKEY <channel> :Cannot join channel (+k)";
+	m[ERR_BADCHANNELMASK] = "<server> <code> <channel> ERR_BADCHANNELMASK :<reason_cstr>";
+	m[ERR_CHANNELISFULL] = "<server> <code> <client> ERR_CHANNELISFULL <channel> :Cannot join channel (+l)";
+	m[ERR_INVITEONLYCHAN] = "<server> <code> <client> ERR_INVITEONLYCHAN <channel> :Cannot join channel (+i)";
+	m[ERR_NEEDMOREPARAMS] = "<server> <code> <client> ERR_NEEDMOREPARAMS <command_cstr> :Not enough parameters";
+	m[RPL_TOPIC] = "<server> <code> <client> RPL_TOPIC <channel> :<topic>";
+	m[RPL_NOTOPIC] = "<server> <code> <client> RPL_NOTOPIC <channel> :No topic is set";
+	m[RPL_ENDOFNAMES] = "<server> <code> <client> RPL_ENDOFNAMES <channel> :End of /NAMES list";
+	m[RPL_NAMREPLY] = "<server> <code> <client> RPL_NAMREPLY <symbol> <channel> :<nick>";
+	m[ERR_PASSWDMISMATCH] = "<server> <code> <client> ERR_PASSWDMISMATCH :Password incorrect";
+	m[ERR_ALREADYREGISTERED] = "<server> <code> <client> ERR_ALREADYREGISTERED :You may not reregister";
+	m[ERR_NONICKNAMEGIVEN] = "<server> <code> <client> ERR_NONICKNAMEGIVEN :No nickname given";
+	m[ERR_ERRONEUSNICKNAME] = "<server> <code> <client> ERR_ERRONEUSNICKNAME <nick> :Erroneus nickname";
+	m[ERR_NICKNAMEINUSE] = "<server> <code> <client> ERR_NICKNAMEINUSE <nick> :Nickname already in use";
+	m[ERR_NOTEXTTOSEND] = "<server> <code> <client> ERR_NOTEXTTOSEND :No text to send";
+	m[ERR_CANNOTSENDTOCHAN] = "<server> <code> <client> ERR_CANNOTSENDTOCHAN <channel> :Cannot send to channel";
+	m[ERR_NOSUCHNICK] = "<server> <code> <client> ERR_NOSUCHNICK <nickname> :No such nick/channel";
+	m[ERR_CHANOPRIVSNEEDED] = "<server> <code> <client> ERR_CHANOPRIVSNEEDED <channel> :You're not channel operator";
+	m[ERR_USERNOTINCHANNEL] = "<server> <code> <client> ERR_USERNOTINCHANNEL <nick> <channel> :They aren't on that channel";
+	m[ERR_NOTONCHANNEL] = "<server> <code> <client> ERR_NOTONCHANNEL <channel> :They aren't on that channel";
+	m[ERR_USERONCHANNEL] = "<server> <code> <client> ERR_USERONCHANNEL <nick> <channel> :is already on channel";
+	m[RPL_INVITING] = "<server> <code> <client> RPL_INVITING <nick> <channel>";
+	m[RPL_WELCOME] = "<server> <code> <client> RPL_WELCOME :Welcome to the <networkname> Network, <client>";
 	m[MSG_JOIN] = "<client> JOIN <channel>";
-	m[MSG_ADDINVITELIST] = "<server> <code> MSG_ADDINVITELIST <client> <nick> <channel> :invite you";
+	m[MSG_ADDINVITELIST] = "<server> <code> <client> MSG_ADDINVITELIST <nick> <channel> :invite you";
 	m[MSG_NEWTOPIC] = "<server> <code> MSG_NEWTOPIC <channel> :\"<topic>\" is the new topic of this channel";
 	msgFormats = m;
 }
@@ -101,7 +101,7 @@ void IrcServer::_handleIncomingConnection()
 	newSd = accept(master_socket, reinterpret_cast<struct sockaddr *>(&address), &addrlen);
 
 	if (newSd < 0)
-		throw (std::runtime_error("IRC: accept failure")); // TODO free
+		throw (std::runtime_error("IRC: accept failure"));
 
 	if (clients.size() >= static_cast<size_t>(_maxClient))
 	{
