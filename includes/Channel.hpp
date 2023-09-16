@@ -15,6 +15,7 @@
 # include "IrcServer.hpp"
 
 class Client;
+class IrcServer;
 
 class Channel
 {
@@ -22,7 +23,7 @@ class Channel
 
 		/* LIFECYCLE */
 
-		Channel(const std::string &_name, const std::string &key, Client &mod);
+		Channel(const std::string &_name, const std::string &key, Client &mod, const IrcServer &server);
 		~Channel(void);
 
 		/* ACTIONS */
@@ -98,4 +99,5 @@ class Channel
 
 		std::string _password;
 		std::string _symbol;
+		const IrcServer &_server;
 };

@@ -17,7 +17,7 @@ const std::string Channel::_allowedNamePrefix = "&#+!";
 const std::string Channel::_forbiddenNameChars = " \a,";
 const int Channel::_nameMaxLen = 50;
 
-Channel::Channel(const std::string &_name, const std::string &key, Client &mod)
+Channel::Channel(const std::string &_name, const std::string &key, Client &mod, const IrcServer &server): _server(server)
 {
 	name = _name;
 
@@ -28,7 +28,6 @@ Channel::Channel(const std::string &_name, const std::string &key, Client &mod)
 	_password = key;
 	topic = "";
 	_symbol = "=";
-	serverName = ":myserver";
 	_addUser(mod);
 	addMod(mod);
 }
@@ -222,7 +221,7 @@ void Channel::msg(msgCode_e code, ...) const
 	std::map<std::string, std::string> presets;
 	presets["<code>"] = itoa(code);
 	presets["<channel>"] = name;
-	presets["<server>"] = serverName;
+	presets["<server>"] = _server.name;
 
 	va_list args;
     va_start(args, code);

@@ -41,7 +41,7 @@ class IrcServer
 {
 	public:
 		typedef std::map<msgCode_e, std::string> msgMap_t;
-		IrcServer(const int port, std::string &password);
+		IrcServer(const int port, const std::string &_name, std::string &password);
 		~IrcServer(void);
 		void runServer(void);
 
@@ -66,6 +66,7 @@ class IrcServer
 		static msgMap_t msgFormats;
 		static std::string formatCode(msgCode_e code, std::map<std::string, std::string> presets, va_list args);
 		static std::string formatMsg(const std::string &format, std::map<std::string, std::string> presets, va_list args);
+		std::string name;
 	private:
 		int	_port;
 		std::string &_password;

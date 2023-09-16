@@ -49,7 +49,7 @@ class Client
 		std::string nickname;
 		const int socketId;
 		std::string partialMsg;
-		const IrcServer &server;
+		const IrcServer &_server;
 		int maxChans;
 };
 

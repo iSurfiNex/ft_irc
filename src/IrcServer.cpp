@@ -46,7 +46,7 @@ void IrcServer::_initializeMsgFormats(void) {
 	msgFormats = m;
 }
 
-IrcServer::IrcServer(const int port, std::string &password): _password(password)
+IrcServer::IrcServer(const int port, const std::string &_name, std::string &password): name(_name), _password(password)
 {
 	_initializeMsgFormats();
 	_port = port;
@@ -273,7 +273,7 @@ Client *IrcServer::getClientWithNickname(const std::string &name)
 
 Channel *IrcServer::createChannel(Client &mod, const std::string &channelName, const std::string& key)
 {
-	Channel *channel = new Channel(channelName, key, mod);
+	Channel *channel = new Channel(channelName, key, mod, *this);
 	channels.insert(channel);
 	return channel;
 }

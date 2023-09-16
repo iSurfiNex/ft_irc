@@ -12,12 +12,11 @@
 
 #include "IrcServer.hpp"
 
-Client::Client(int socketId, const IrcServer &_server): socketId(socketId), server(_server)
+Client::Client(int socketId, const IrcServer &server): socketId(socketId), _server(server), maxChans(MAX_CLIENT_CHANS)
 {
 	isReady = false;
 	isAuth = false;
 
-	serverName = ":myserver";
 	nickname = "";
 	username = "";
 	partialMsg = "";
@@ -25,7 +24,7 @@ Client::Client(int socketId, const IrcServer &_server): socketId(socketId), serv
 
 Client::~Client(void)
 {
-	chanSet_t userChans = server.getUserChans(*this);
+	chanSet_t userChans = _server.getUserChans(*this);
 	foreach(chanSet_t, userChans)
 	{
 		Channel *chan = *it;
@@ -86,7 +85,7 @@ void Client::msg(msgCode_e code, ...) const
 	std::map<std::string, std::string> presets;
 	presets["<code>"] = itoa(code);
 	presets["<client>"] = nickname;
-	presets["<server>"] = serverName;
+	presets["<server>"] = _server.name;
 
 	va_list args;
     va_start(args, code);
