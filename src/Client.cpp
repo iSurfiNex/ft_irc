@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:14:22 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/16 19:30:11 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/17 18:15:04 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void Client::changeNickName(const std::string newNickname)
 	if (!(username.empty()) && !(nickname.empty()) && !isReady)
 	{
 		isReady = true;
-		std::cout << "New user authentificate: " << *this << std::endl;
+		std::cout << GREEN "New user authentificate: " NC << *this << std::endl;
 		msg(RPL_WELCOME);
 	}
 }
@@ -59,7 +59,7 @@ void Client::changeUserName(const std::string newUsername)
 	if (!(username.empty()) && !(nickname.empty()) && !isReady)
 	{
 		isReady = true;
-		std::cout << "New user authentificate: " << *this << std::endl;
+		std::cout << GREEN "New user authentificate: " NC << *this << std::endl;
 		msg(RPL_WELCOME);
 	}
 }
@@ -71,6 +71,8 @@ void Client::sendMessage(const std::string &message) const
 	const char *msgCStr = msgStr.c_str();
 	if (send(socketId, msgCStr, msgStr.size(), 0) != static_cast<ssize_t>(strlen(msgCStr)))
 		std::cout << "Error: Send failure: " << *this << ", message: " << msgStr;
+	else
+		std::cout << "Message sent to: " << *this << GRAY " <= "  << msgStr << NC;
 }
 
 std::string Client::getUsername(void) const
@@ -100,7 +102,6 @@ void Client::msg(msgCode_e code, ...) const
     va_start(args, code);
 
 	std::string msgStr = IrcServer::formatCode(code, presets, args);
-	std::cout << msgStr << std::endl;
 	sendMessage(":" + msgStr + "\r\n");
 	va_end(args);
 }

@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:35:26 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/15 18:49:43 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/17 18:12:47 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void cmdPass(strVec_t &args, Client &origin, IrcServer &server)
 	else
 	{
 		origin.isAuth = true;
-		std::cout << origin << ": PASS: Now logged in" << std::endl;
+		std::cout << GREEN "New user logged in: " NC << origin << std::endl;
 		origin.sendMessage("You are now login, please use: USER <username> and NICK <nickname> to authentificate.\r\n");
 	}
 }

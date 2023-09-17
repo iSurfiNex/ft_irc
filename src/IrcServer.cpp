@@ -107,11 +107,11 @@ void IrcServer::_handleIncomingConnection()
 
 	if (clients.size() >= static_cast<size_t>(_maxClient))
 	{
-		std::cout << "Rejected connection, max client reach (" << _maxClient << ")" << _connectionToString(newSd, address) << std::endl;
+		std::cout << RED "Rejected connection, max client reach (" << _maxClient << ")" << NC << _connectionToString(newSd, address);
 		return;
 	}
 
-	std::cout << "New connection, " << _connectionToString(newSd, address) << std::endl;
+	std::cout << " " FGREEN "New connection:" NC " " << _connectionToString(newSd, address);
 
 	Client *newClient = new Client(newSd, address, *this);
 	clients.insert(newClient);
@@ -137,7 +137,7 @@ void IrcServer::_handleIOOperation()
 
 		if (socketContentSize == 0)
 		{
-			std::cout << "Client disconnected, " << _connectionToString(sd, address) << std::endl;
+			std::cout << " " FRED "Client disconnected:" NC " " << _connectionToString(sd, address);
 			it++; // Increment before erasing from the set we are currently iterating
 			clients.erase(client);
 			delete client;
@@ -228,7 +228,7 @@ chanSet_t IrcServer::getUserChans(const Client &client) const
 std::string IrcServer::_connectionToString(int sd, struct sockaddr_in &address)
 {
 	std::stringstream ss;
-	ss << "socket fd: " << sd << ", ip: " << inet_ntoa(address.sin_addr) << ", port: " << ntohs(address.sin_port)  << "." << std::endl;
+	ss << "socket FD: " GRAY << sd << NC " ─ IP: " GRAY << inet_ntoa(address.sin_addr) << NC " ─ PORT: " GRAY << ntohs(address.sin_port) << NC "." << std::endl;
 	return ss.str();
 }
 
