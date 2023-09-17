@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:29 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/16 19:29:25 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/17 23:06:55 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,19 @@ void Channel::tryEnter(Client &client, const std::string& key)
       client.msg(ERR_INVITEONLYCHAN, name);
     else if (isRestricted && !checkPassword(key))
       client.msg(ERR_BADCHANNELKEY, name);
+    else if (_userLimit > 0 && _userLimit < getNbUser() + 1)
+      client.msg(ERR_USERLIMIT, name);
 	else
 	  _addUser(client);
+	std::cout << getNbUser() << " | " << _userLimit << std::endl;
+}
+
+int Channel::getNbUser(void)
+{
+	int result = 0;
+	 foreach(std::set<const Client *>, _userList)
+		result++;
+	return (result);
 }
 
 std::string Channel::_getUserListStr(void) const
