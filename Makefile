@@ -6,7 +6,7 @@
 #    By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/11 18:09:46 by rsterin           #+#    #+#              #
-#    Updated: 2023/09/17 18:32:31 by rsterin          ###   ########.fr        #
+#    Updated: 2023/09/17 18:47:20 by rsterin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,20 +17,16 @@ _GREEN = "\033[0;32m"
 NAME = ircserv
 
 SRC = src/main.cpp \
+	src/parsing/channelJoinLeave.cpp \
+	src/parsing/channelManagement.cpp \
+	src/parsing/parseInput.cpp \
+	src/parsing/parsing.cpp \
+	src/parsing/serverLogin.cpp \
+	src/parsing/serverMsg.cpp \
+	src/utils.cpp \
 	src/IrcServer.cpp \
 	src/Client.cpp \
 	src/Channel.cpp \
-	src/parsing/parsing.cpp \
-	src/parsing/parseInput.cpp \
-	src/parsing/login.cpp \
-	src/parsing/join.cpp \
-	src/parsing/part.cpp \
-	src/parsing/privMsg.cpp \
-	src/parsing/topic.cpp \
-	src/parsing/kick.cpp \
-	src/parsing/invite.cpp \
-	src/parsing/mode.cpp \
-	src/utils.cpp \
 
 HEADERS = includes/IrcServer.hpp \
 
