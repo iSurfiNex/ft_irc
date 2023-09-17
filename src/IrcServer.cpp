@@ -164,7 +164,7 @@ void IrcServer::_handleIOOperation()
 			{
 				client->partialMsg = str_msg.substr(start_pos, std::string::npos);
 				if (!client->partialMsg.empty())
-					std::cout <<  GRAY " >> Partial message \"" NC << client->partialMsg << GRAY "\" from " NC << *client << std::endl;
+					std::cout << " >> Partial message \"" GRAY << client->partialMsg << NC "\" from " << *client << std::endl;
 				break;
 			}
 			std::string cmd_str = str_msg.substr(start_pos, end_pos - start_pos);
