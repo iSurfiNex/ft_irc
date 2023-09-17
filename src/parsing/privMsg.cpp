@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:58:52 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/16 17:27:04 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/17 17:02:14 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ void cmdPrivMsg(strVec_t &args, Client &origin, IrcServer &server)
 			origin.msg(ERR_NOSUCHNICK, args[0]);
 		else
 		{
-			std::string messageToChannel = ":" + origin.nickname + " PRIVMSG " + channel->name + " :" + args[1];
-			std::cout << origin << " send: \"" << messageToChannel << "\" to " << channel->name << std::endl;
-			messageToChannel += "\r\n";
+			std::string messageToChannel = ":" + origin.nickname + " PRIVMSG " + channel->name + " :" + args[1] + "\r\n";
 			channel->sendMessageIgnore(messageToChannel, origin);
 		}
 	}
@@ -40,9 +38,7 @@ void cmdPrivMsg(strVec_t &args, Client &origin, IrcServer &server)
 			origin.msg(ERR_NOSUCHNICK, args[0]);
 		else
 		{
-			std::string messageToTarget = ":" + origin.nickname + " PRIVMSG " + target->nickname + " :" + args[1];
-			std::cout << origin << " send: \"" << messageToTarget << "\" to " << *target << std::endl;
-			messageToTarget += "\r\n";
+			std::string messageToTarget = ":" + origin.nickname + " PRIVMSG " + target->nickname + " :" + args[1] + "\r\n";
 			target->sendMessage(messageToTarget);
 		}
 	}
