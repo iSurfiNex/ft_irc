@@ -29,8 +29,10 @@ SRC = src/main.cpp \
 	src/Client.cpp \
 	src/Channel.cpp \
 
-SRC_BOT  = bot/GptBot.cpp \
-           bot/main_test.cpp \
+SRC_BOT  = \
+    bot/Gpt.cpp \
+	bot/GptBot.cpp \
+    bot/main_test.cpp \
 
 HEADERS = includes/IrcServer.hpp \
 
