@@ -15,6 +15,7 @@ _CYAN = "\033[0;36m"
 _GREEN = "\033[0;32m"
 
 NAME = ircserv
+NAME_BOT = gptbot
 
 SRC = src/main.cpp \
 	src/parsing/channelJoinLeave.cpp \
@@ -28,6 +29,9 @@ SRC = src/main.cpp \
 	src/Client.cpp \
 	src/Channel.cpp \
 
+SRC_BOT  = bot/GptBot.cpp \
+           bot/main_test.cpp \
+
 HEADERS = includes/IrcServer.hpp \
 
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -g
@@ -40,11 +44,11 @@ endif
 CXX = c++
 RM = rm
 
-
 OBJS = $(SRC:.cpp=.o)
+OBJS_BOT = $(SRC_BOT:.cpp=.o)
 DEP = $(OBJS:.o=.d)
 
-all: $(NAME)
+all: $(NAME) $(BOT)
 
 -include $(DEP)
 
@@ -64,10 +68,16 @@ $(NAME): $(OBJS) $(HEADERS)
 	@echo $(_END)
 	@echo
 
+bot: $(NAME_BOT)
+
+$(NAME_BOT): $(OBJS_BOT)
+	$(CXX) $(CPPFLAGS) $(OBJS_BOT) -o $@
+
 clean:
 	@echo $(_CYAN)
 	@echo "Deleting objs..."
 	@$(RM) -rf $(OBJS) $(DEP)
+	@$(RM) -rf $(OBJS_BOT) $(DEP)
 	@echo -n "Done ✓"
 	@echo $(_END)
 	@echo
@@ -76,6 +86,7 @@ fclean: clean
 	@echo -n $(_CYAN)
 	@echo "Removing executable..."
 	@$(RM) -f $(NAME)
+	@$(RM) -f $(NAME_BOT)
 	@echo -n "Done ✓"
 	@echo $(_END)
 	@echo
@@ -85,7 +96,4 @@ re: fclean all
 run: all
 	./$(NAME)
 
-# vrun: all
-	valgrind ./$(NAME)
-
-.PHONY: clean fclean re all run vrun
+.PHONY: clean fclean re all run bot
