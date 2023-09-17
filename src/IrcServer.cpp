@@ -135,7 +135,7 @@ void IrcServer::_handleIOOperation()
 
 		int socketContentSize = read(sd, buffer, BUFFER_SIZE);
 
-		if (socketContentSize == 0)
+		if (socketContentSize < 1)
 		{
 			std::cout << " " FRED "Client disconnected:" NC " " << _connectionToString(sd, address);
 			it++; // Increment before erasing from the set we are currently iterating
