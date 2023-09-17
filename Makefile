@@ -6,9 +6,13 @@
 #    By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/11 18:09:46 by rsterin           #+#    #+#              #
-#    Updated: 2023/09/14 19:42:33 by rsterin          ###   ########.fr        #
+#    Updated: 2023/09/17 18:32:31 by rsterin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+_END = "\033[0m"
+_CYAN = "\033[0;36m"
+_GREEN = "\033[0;32m"
 
 NAME = ircserv
 
@@ -49,16 +53,36 @@ all: $(NAME)
 -include $(DEP)
 
 %.o: %.cpp
-	$(CXX) $(CPPFLAGS) -c -MMD -MP $< -o $@ -I includes/
+	@echo -n $(_GREEN)
+	@echo -n "Compiling: $<..."
+	@$(CXX) $(CPPFLAGS) -c -MMD -MP $< -o $@ -I includes/
+	@echo -n $(_END)
+	@echo
 
 $(NAME): $(OBJS) $(HEADERS)
-	$(CXX) $(CPPFLAGS) $(OBJS) -o $@
+	@echo -n $(_GREEN)
+	@echo -n "Creating executable..."
+	@$(CXX) $(CPPFLAGS) $(OBJS) -o $@
+	@echo $(_GREEN)
+	@echo -n "Done ✓"
+	@echo $(_END)
+	@echo
 
 clean:
-	$(RM) -rf $(OBJS) $(DEP)
+	@echo $(_CYAN)
+	@echo "Deleting objs..."
+	@$(RM) -rf $(OBJS) $(DEP)
+	@echo -n "Done ✓"
+	@echo $(_END)
+	@echo
 
 fclean: clean
-	$(RM) -f $(NAME)
+	@echo -n $(_CYAN)
+	@echo "Removing executable..."
+	@$(RM) -f $(NAME)
+	@echo -n "Done ✓"
+	@echo $(_END)
+	@echo
 
 re: fclean all
 
