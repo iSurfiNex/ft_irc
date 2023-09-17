@@ -31,7 +31,7 @@ PASS/USER/NICK: R <!-- done -->
 	changer isAuth a true;
 __________________________________________
 
-JOIN: F
+JOIN: F <!-- done -->
 	verifier qu'il n'y ai pas plus de 1/2 args;
 	creer un channel si existe pas;
 	si existe -> verifier si isRestricted ||&& isInviteOnly ||&& nbuser + 1 <= userLimit;
@@ -83,7 +83,7 @@ TOPIC: F <!-- done -->
 	changer
 __________________________________________
 
-MODE: F
+MODE: F <!-- done -->
 	verifier si le channel existe;
 	verifier que l'utilisateur soit mod;
 	verifier que le parametre existe;
