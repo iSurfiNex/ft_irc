@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 18:44:58 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/17 18:45:32 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/17 23:12:33 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void cmdKick(strVec_t &args, Client &origin, IrcServer &server)
 					origin.msg(ERR_USERNOTINCHANNEL, args[i], channel->name);
 				else
 				{
+					target->msg(MSG_PART, channel->name);
+					channel->removeMod(*target);
 					channel->removeUser(*target);
 					std::string messageToOrigin = "You have successfully kicked " + target->nickname + " from the channel: " + channel->name + ".\r\n";
 					std::cout << origin << " has kicked " << target << " from " << channel->name << std::endl;
@@ -100,7 +102,7 @@ void cmdMode(strVec_t &args, Client &origin, IrcServer &server)
 				channel->isInviteOnly = true;
 			else if (args[1][0] == '-')
 				channel->isInviteOnly = false;
-			origin.msg(MSG_MODE, "MODE", args[1]);
+			origin.msg(MSG_MODE, channel->name, args[1]);
 		}
 		else if (!args[1].compare("+k") || !args[1].compare("-k"))
 		{

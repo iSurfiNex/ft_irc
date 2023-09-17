@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 18:49:40 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/17 18:49:40 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/17 22:54:59 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,5 @@ enum msgCode_e {
   MSG_MODE = 1003,
   ERR_NOTVALIDENTRY = 1004,
   MSG_PART = 1005,
+  ERR_USERLIMIT = 1006,
 };

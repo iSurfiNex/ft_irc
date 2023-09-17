@@ -23,6 +23,7 @@ void IrcServer::_initializeMsgFormats(void) {
 	m[ERR_BADCHANNELMASK] = "<server> <code> <channel> :<reason_cstr>";
 	m[ERR_CHANNELISFULL] = "<server> <code> <client> <channel> :Cannot join channel (+l)";
 	m[ERR_INVITEONLYCHAN] = "<server> <code> <client> <channel> :Cannot join channel (+i)";
+	m[ERR_USERLIMIT] = "<server> <code> <client> <channel> :Cannot join channel (+l)";
 	m[ERR_NEEDMOREPARAMS] = "<server> <code> <client> <command_cstr> :Not enough parameters";
 	m[RPL_TOPIC] = "<server> <code> <client> <channel> :<topic>";
 	m[RPL_NOTOPIC] = "<server> <code> <client> <channel> :No topic is set";
