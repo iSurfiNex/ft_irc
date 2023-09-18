@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:25:52 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/16 18:10:23 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/18 16:40:51 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int main(int ac, char **av)
 		return (1);
 	}
 
-	// TODO better checker for error (argc, correct password...)
 	int port = parsePort(av[1]);
 	std::string password = parsePassword(av[2]);
 	if (port == -1 || password.empty())
@@ -31,7 +30,7 @@ int main(int ac, char **av)
 
 	try
 	{
-		IrcServer irc(port, "irckserver", "Oustanding project", password, 10, 10, 10, 5);
+		IrcServer irc(port, "irckserver", "Oustanding project", password, 2, 2, 2, 2);
 		irc.runServer();
 	}
 	catch (std::exception &e)

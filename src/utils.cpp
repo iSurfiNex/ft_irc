@@ -1,6 +1,5 @@
 #include "utils.hpp"
 
-// TODO add namespace
 bool str_alnum(std::string &str)
 {
     for (std::string::iterator it = str.begin(); it != str.end(); it++)

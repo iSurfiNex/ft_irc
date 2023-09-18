@@ -95,7 +95,7 @@ void IrcServer::_initializeServer()
 void IrcServer::_handleIncomingConnection()
 {
 	int newSd;
-    socklen_t addrlen = sizeof(address); // TODO address local ?
+    socklen_t addrlen = sizeof(address);
 
 	// Return if no incomming connection
 	if (!FD_ISSET(master_socket, &readfds))
@@ -108,7 +108,7 @@ void IrcServer::_handleIncomingConnection()
 
 	if (clients.size() >= static_cast<size_t>(_maxClient))
 	{
-		std::cout << RED "Rejected connection, max client reach (" << _maxClient << ")" << NC << _connectionToString(newSd, address);
+		std::cout << RED "Rejected connection, max client reach (" << _maxClient << ") " << NC << _connectionToString(newSd, address);
 		return;
 	}
 
@@ -124,14 +124,15 @@ void IrcServer::_handleIOOperation()
 	char buffer[BUFFER_SIZE];
 
 	clientSet_t::iterator it = clients.begin();
-	while (it != clients.end()) {
+	while (it != clients.end())
+	{
 		Client *client = *it;
 		int sd = client->socketId;
 
 		if (!FD_ISSET(sd, &readfds))
 		{
 			++it;
-			continue; // TODO error msg ?
+			continue ;
 		}
 
 		int socketContentSize = read(sd, buffer, BUFFER_SIZE);
@@ -143,7 +144,7 @@ void IrcServer::_handleIOOperation()
 			clients.erase(client);
 			delete client;
 			close (sd);
-			continue;
+			continue ;
 		}
 
 		int skipCount = 2;
@@ -203,7 +204,7 @@ void IrcServer::runServer(void)
 
 		//wait for an activity on one of the sockets , timeout is NULL ,
 		//so wait indefinitely
-		activity = select( max_sd + 1 , &readfds , NULL , NULL , NULL);
+		activity = select(max_sd + 1 , &readfds , NULL , NULL , NULL);
 
 		if ((activity < 0) && (errno!=EINTR))
 			throw (std::runtime_error("IRC: select failure"));

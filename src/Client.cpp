@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:14:22 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/17 18:15:04 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/18 16:40:52 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,9 @@ void Client::changeUserName(const std::string newUsername)
 	}
 }
 
-// TODO private
 void Client::sendMessage(const std::string &message) const
 {
-	std::string msgStr = message; // TODO truncate 512 char
+	std::string msgStr = message;
 	const char *msgCStr = msgStr.c_str();
 	if (send(socketId, msgCStr, msgStr.size(), 0) != static_cast<ssize_t>(strlen(msgCStr)))
 		std::cout << "Error: Send failure: " << *this << ", message: " << msgStr;
