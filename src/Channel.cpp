@@ -58,15 +58,11 @@ void Channel::tryEnter(Client &client, const std::string& key)
 		client.msg(ERR_TOOMANYCHANNELS , name);
 	else
 	  _addUser(client);
-	std::cout << getNbUser() << " | " << _userLimit << std::endl;
 }
 
 int Channel::getNbUser(void)
 {
-	int result = 0;
-	 foreach(std::set<const Client *>, _userList)
-		result++;
-	return (result);
+	return _getUserListStr().size();
 }
 
 std::string Channel::_getUserListStr(void) const
