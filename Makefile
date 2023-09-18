@@ -6,7 +6,7 @@
 #    By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/11 18:09:46 by rsterin           #+#    #+#              #
-#    Updated: 2023/09/18 16:29:54 by rsterin          ###   ########.fr        #
+#    Updated: 2023/09/18 18:50:11 by fjullien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ OBJS = $(SRC:.cpp=.o)
 OBJS_BOT = $(SRC_BOT:.cpp=.o)
 DEP = $(OBJS:.o=.d)
 
-all: $(NAME) $(NAME_BOT)
+all: $(NAME)
 
 -include $(DEP)
 
