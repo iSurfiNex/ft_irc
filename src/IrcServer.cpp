@@ -320,7 +320,7 @@ std::string IrcServer::formatMsg(const std::string &format, std::map<std::string
 			repl_str = std::string(va_arg(args, const char *));
 		else
 		{
-			repl_str = va_arg(args, std::string);
+			repl_str = *va_arg(args, std::string *);
 		}
 
 		eval.replace(repl_start, repl_len, repl_str);

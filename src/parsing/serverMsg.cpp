@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   privMsg.cpp                                        :+:      :+:    :+:   */
+/*   serverMsg.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:58:52 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/17 17:02:14 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/18 18:15:07 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void cmdPrivMsg(strVec_t &args, Client &origin, IrcServer &server)
 		Channel *channel;
 		channel = server.getChannelWithName(args[0]);
 		if (!channel || !channel->isUserInside(origin))
-			origin.msg(ERR_NOSUCHNICK, args[0]);
+			origin.msg(ERR_NOSUCHNICK, &args[0]);
 		else
 		{
 			std::string messageToChannel = ":" + origin.nickname + " PRIVMSG " + channel->name + " :" + args[1] + "\r\n";
@@ -35,7 +35,7 @@ void cmdPrivMsg(strVec_t &args, Client &origin, IrcServer &server)
 		Client *target;
 		target = server.getClientWithNickname(args[0]);
 		if (!target)
-			origin.msg(ERR_NOSUCHNICK, args[0]);
+			origin.msg(ERR_NOSUCHNICK, &args[0]);
 		else
 		{
 			std::string messageToTarget = ":" + origin.nickname + " PRIVMSG " + target->nickname + " :" + args[1] + "\r\n";

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   login.cpp                                          :+:      :+:    :+:   */
+/*   serverLogin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:35:26 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/17 18:12:47 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/18 18:14:57 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ void cmdNick(strVec_t &args, Client &origin, IrcServer &server)
 	if (args.size() < 1)
 		origin.msg(ERR_NONICKNAMEGIVEN);
 	else if (args[0].find_first_of("\a: ") != std::string::npos)
-		origin.msg(ERR_ERRONEUSNICKNAME, args[0]);
+		origin.msg(ERR_ERRONEUSNICKNAME, &args[0]);
 	else
 	{
 		Client *tmp = server.getClientWithNickname(args[0]);
 		if (tmp != NULL)
-			origin.msg(ERR_NICKNAMEINUSE, args[0]);
+			origin.msg(ERR_NICKNAMEINUSE, &args[0]);
 		else
 			origin.changeNickName(args[0]);
 	}

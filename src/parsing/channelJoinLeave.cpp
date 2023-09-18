@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 18:41:01 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/17 23:11:08 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/18 18:17:36 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,22 @@ void cmdInvite(strVec_t &args, Client &origin, IrcServer &server)
 		Client *target;
 		target = server.getClientWithNickname(args[0]);
 		if (!target)
-			origin.msg(ERR_NOSUCHNICK, args[0]);
+			origin.msg(ERR_NOSUCHNICK, &args[0]);
 		else
 		{
 			Channel *channel;
 			channel = server.getChannelWithName(args[1]);
 			if (!channel || !channel->isUserInside(origin))
-				origin.msg(ERR_NOSUCHCHANNEL, args[1]);
+				origin.msg(ERR_NOSUCHCHANNEL, &args[1]);
 			else if (!channel->isMod(origin))
-				origin.msg(ERR_CHANOPRIVSNEEDED, channel->name);
+				origin.msg(ERR_CHANOPRIVSNEEDED, &channel->name);
 			else if (channel->isUserInside(*target))
-				origin.msg(ERR_USERONCHANNEL, target->nickname, channel->name);
+				origin.msg(ERR_USERONCHANNEL, &target->nickname, &channel->name);
 			else
 			{
 				channel->addUserInviteList(*target);
-				origin.msg(RPL_INVITING, target->nickname, channel->name);
-				target->msg(MSG_ADDINVITELIST, origin.nickname, channel->name);
+				origin.msg(RPL_INVITING, &target->nickname, &channel->name);
+				target->msg(MSG_ADDINVITELIST, &origin.nickname, &channel->name);
 			}
 		}
 	}
@@ -51,7 +51,7 @@ void cmdPart(strVec_t &args, Client &origin, IrcServer &server)
 		Channel *channel;
 		channel = server.getChannelWithName(args[0]);
 		if (!channel || !channel->isUserInside(origin))
-			origin.msg(ERR_NOSUCHCHANNEL, args[0]);
+			origin.msg(ERR_NOSUCHCHANNEL, &args[0]);
 		else
 		{
 			origin.msg(MSG_PART, channel->name);
@@ -77,7 +77,7 @@ void cmdJoin(strVec_t args, Client &client, IrcServer &server)
 			std::string entryLower = tolowerStr(entry);
 			if (std::find(chans.begin(), chans.end(), entryLower) != chans.end())
 			{
-				client.msg(ERR_BADCHANNELMASK, entry, "Bad Channel Mask, same channel name provided multiple times");
+				client.msg(ERR_BADCHANNELMASK, &entry, "Bad Channel Mask, same channel name provided multiple times");
 				return;
 			}
 			chans.push_back(entryLower);
@@ -85,12 +85,12 @@ void cmdJoin(strVec_t args, Client &client, IrcServer &server)
 		else if (Channel::isValidKey(entry))
 			keys.push_back(entry);
 		else
-			client.msg(ERR_BADCHANNELMASK, entry, "Bad Channel Mask");
+			client.msg(ERR_BADCHANNELMASK, &entry, "Bad Channel Mask");
 	}
 	if (chans.size() < keys.size())
 	{
 		std::string erroredEntry = keys[chans.size()];
-		client.msg(ERR_BADCHANNELMASK, erroredEntry, "Bad Channel Mask");
+		client.msg(ERR_BADCHANNELMASK, &erroredEntry, "Bad Channel Mask");
 	}
 	size_t i = 0;
 	foreach(strVec_t, chans)
