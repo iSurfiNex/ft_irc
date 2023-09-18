@@ -4,21 +4,19 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 #include "Gpt.hpp"
+#include "IrcClient.hpp"
 
-class GptBot : public Gpt {
+class GptBot : public IrcClient, public Gpt {
 
 public:
   /* LIFECYCLE */
 
-  GptBot(const std::string &address, const std::string &port);
+  GptBot();
   ~GptBot();
 
-private:
-  /* ATTRIBUTES */
-
-  std::string _address;
-  std::string _port;
+  void _handleMsg(const std::string &msg);
 };

@@ -15,7 +15,7 @@ _CYAN = "\033[0;36m"
 _GREEN = "\033[0;32m"
 
 NAME = ircserv
-NAME_BOT = gptbot
+NAME_BOT = bot
 
 SRC = src/main.cpp \
 	src/parsing/channelJoinLeave.cpp \
@@ -32,7 +32,8 @@ SRC = src/main.cpp \
 SRC_BOT  = \
     bot/Gpt.cpp \
 	bot/GptBot.cpp \
-    bot/main_test.cpp \
+	bot/IrcClient.cpp \
+    bot/main.cpp \
 
 HEADERS = includes/IrcServer.hpp \
 
