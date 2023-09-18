@@ -89,6 +89,7 @@ std::string Gpt::_executeCommand(const std::string &command) {
 
 std::string Gpt::getReply(const std::string msg) {
   if (requestCount > maxRequestCount) {
+    sleep(10);
     return "Too many requests, restart me to continue";
   }
   std::time_t currentTime, threshold;
