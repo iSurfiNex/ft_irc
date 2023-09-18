@@ -39,6 +39,7 @@ class Client
 		void changeNickName(const std::string newNickname);
 
 		int getSocketId(void) const;
+		int getChanCount() const;
 
 		/* ATTRIBUTES */
 

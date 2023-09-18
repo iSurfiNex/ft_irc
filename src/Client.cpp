@@ -40,6 +40,11 @@ void Client::quit(void)
 	}
 }
 
+int Client::getChanCount() const
+{
+	return _server.getUserChans(*this).size();
+}
+
 void Client::changeNickName(const std::string newNickname)
 {
 	nickname = newNickname;

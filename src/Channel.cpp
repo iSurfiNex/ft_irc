@@ -54,6 +54,8 @@ void Channel::tryEnter(Client &client, const std::string& key)
       client.msg(ERR_BADCHANNELKEY, name);
     else if (_userLimit > 0 && _userLimit < getNbUser() + 1)
       client.msg(ERR_USERLIMIT, name);
+	else if (client.getChanCount() > client.maxChans)
+		client.msg(ERR_TOOMANYCHANNELS , name);
 	else
 	  _addUser(client);
 	std::cout << getNbUser() << " | " << _userLimit << std::endl;
