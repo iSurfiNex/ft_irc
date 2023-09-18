@@ -272,7 +272,7 @@ Channel *IrcServer::createChannel(Client &mod, const std::string &channelName, c
 {
 	if (mod.getChanCount() >= mod.maxChans)
 	{
-		mod.msg(ERR_TOOMANYCHANNELS , name);
+		mod.msg(ERR_TOOMANYCHANNELS, &name);
 		return NULL;
 	}
 	Channel *channel = new Channel(channelName, key, mod, *this);

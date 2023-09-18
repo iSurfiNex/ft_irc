@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 18:41:01 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/18 18:17:36 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/18 18:21:35 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void cmdPart(strVec_t &args, Client &origin, IrcServer &server)
 			origin.msg(ERR_NOSUCHCHANNEL, &args[0]);
 		else
 		{
-			origin.msg(MSG_PART, channel->name);
+			origin.msg(MSG_PART, &channel->name);
 			channel->removeMod(origin);
 			channel->removeUser(origin);
 		}
