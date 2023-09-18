@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:46:41 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/12 19:00:51 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/18 18:28:41 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class Client
 		/* ACTIONS */
 
 		void sendMessage(const std::string &message) const;
-		void msg(msgCode_e code, ...) const;
+		void msg(int code, ...) const;
 		void quit(void);
 
 		/* GET SET */

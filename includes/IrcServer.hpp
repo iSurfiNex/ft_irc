@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:32:13 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/15 15:58:00 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/18 18:29:43 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ class IrcServer
 
 		/* LIFECYCLE */
 
-		IrcServer(const int port, const std::string &name, const std::string &networkName, std::string &password, int maxClient, int maxChan, int maxClientPerChan, int maxChanPerClient);
+		IrcServer(const int port, const std::string &name, const std::string &networkName, std::string &password, int maxClient, int maxClientPerChan, int maxChanPerClient);
 		~IrcServer(void);
 
 		/* ACTIONS */
@@ -90,7 +90,7 @@ class IrcServer
 		/* STATIC ATTRIBUTES */
 
 		static msgMap_t msgFormats;
-		static std::string formatCode(msgCode_e code, std::map<std::string, std::string> presets, va_list args);
+		static std::string formatCode(int code, std::map<std::string, std::string> presets, va_list args);
 		static std::string formatMsg(const std::string &format, std::map<std::string, std::string> presets, va_list args);
 
 	private:
@@ -107,7 +107,6 @@ class IrcServer
 		std::string &_password;
 		void _initializeMsgFormats(void);
 		int _maxClient;
-		int _maxChan;
 };
 
 std::ostream	&operator <<(std::ostream &o, const IrcServer &irc);

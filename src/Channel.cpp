@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:29 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/18 16:43:21 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/18 18:34:39 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,24 @@ Channel::~Channel(void)
 void Channel::_addUser(const Client &client)
 {
 	_userList.insert(&client);
-	msg(MSG_JOIN, client.nickname);
+	msg(MSG_JOIN, &client.nickname);
 	if (!topic.empty())
-		client.msg(RPL_TOPIC, name, topic);
-	client.msg(RPL_NAMREPLY, _symbol, name, _getUserListStr());
-	client.msg(RPL_ENDOFNAMES, name);
+		client.msg(RPL_TOPIC, &name, &topic);
+	std::string tmp = _getUserListStr();
+	client.msg(RPL_NAMREPLY, &_symbol, &name, &tmp);
+	client.msg(RPL_ENDOFNAMES, &name);
 }
 
 void Channel::tryEnter(Client &client, const std::string& key)
 {
     if (isInviteOnly && !isUserOnInviteList(client))
-      client.msg(ERR_INVITEONLYCHAN, name);
+      client.msg(ERR_INVITEONLYCHAN, &name);
     else if (isRestricted && !checkPassword(key))
-      client.msg(ERR_BADCHANNELKEY, name);
+      client.msg(ERR_BADCHANNELKEY, &name);
     else if (_userLimit > 0 && _userLimit < getNbUser() + 1)
-      client.msg(ERR_USERLIMIT, name);
+      client.msg(ERR_USERLIMIT, &name);
 	else if (client.getChanCount() > client.maxChans)
-		client.msg(ERR_TOOMANYCHANNELS , name);
+		client.msg(ERR_TOOMANYCHANNELS, &name);
 	else
 	  _addUser(client);
 }
@@ -111,7 +112,7 @@ void Channel::addMod(const Client &client)
 
 void Channel::removeUser(const Client &client)
 {
-	msgIgnore(client, MSG_PART, client.nickname);
+	msgIgnore(client, MSG_PART, &client.nickname);
 	_userList.erase(&client);
 }
 
@@ -184,7 +185,7 @@ void Channel::sendMessageIgnore(const std::string message, const Client &origin)
 	}
 }
 
-void Channel::msg(msgCode_e code, ...) const
+void Channel::msg(int code, ...) const
 {
 	std::map<std::string, std::string> presets;
 	presets["<code>"] = itoa(code);
@@ -201,7 +202,7 @@ void Channel::msg(msgCode_e code, ...) const
 	va_end(args);
 }
 
-void Channel::msgIgnore(const Client &to_ignore, msgCode_e code, ...) const
+void Channel::msgIgnore(const Client &to_ignore, int code, ...) const
 {
 	std::map<std::string, std::string> presets;
 	presets["<code>"] = itoa(code);

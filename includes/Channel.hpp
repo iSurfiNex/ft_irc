@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:19 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/17 22:57:03 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/18 18:34:05 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ class Channel
 
 		void sendMessage(const std::string message) const;
 		void sendMessageIgnore(const std::string message, const Client &origin) const;
-		void msg(msgCode_e code, ...) const;
-		void msgIgnore(const Client &to_ignore, msgCode_e code, ...) const;
+		void msg(int code, ...) const;
+		void msgIgnore(const Client &to_ignore, int code, ...) const;
 		void tryEnter(Client &client, const std::string& password);
 
 		/* GET SET */

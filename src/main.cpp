@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:25:52 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/18 16:40:51 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/18 18:25:09 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main(int ac, char **av)
 
 	try
 	{
-		IrcServer irc(port, "irckserver", "Oustanding project", password, 5, 3, 4, 4);
+		IrcServer irc(port, "irckserver", "Oustanding project", password, 5, 4, 4);
 		irc.runServer();
 	}
 	catch (std::exception &e)

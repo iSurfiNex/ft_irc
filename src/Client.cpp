@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:14:22 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/18 16:40:52 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/18 18:28:24 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int Client::getSocketId(void) const
 	return (socketId);
 }
 
-void Client::msg(msgCode_e code, ...) const
+void Client::msg(int code, ...) const
 {
 	std::map<std::string, std::string> presets;
 	presets["<code>"] = itoa(code);

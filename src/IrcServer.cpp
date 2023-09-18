@@ -52,7 +52,7 @@ void IrcServer::_initializeMsgFormats(void) {
 }
 
 
-IrcServer::IrcServer(const int port, const std::string &_name, const std::string &_networkName, std::string &password, int maxClient, int maxChan, int _defaultMaxClientPerChan, int _defaultMaxChanPerClient): name(_name), networkName(_networkName), defaultMaxClientPerChan(_defaultMaxClientPerChan), defaultMaxChanPerClient(_defaultMaxChanPerClient), _port(port), _password(password), _maxClient(maxClient), _maxChan(maxChan)
+IrcServer::IrcServer(const int port, const std::string &_name, const std::string &_networkName, std::string &password, int maxClient, int _defaultMaxClientPerChan, int _defaultMaxChanPerClient): name(_name), networkName(_networkName), defaultMaxClientPerChan(_defaultMaxClientPerChan), defaultMaxChanPerClient(_defaultMaxChanPerClient), _port(port), _password(password), _maxClient(maxClient)
 {
 	_initializeMsgFormats();
 	_initializeServer();
@@ -292,9 +292,9 @@ std::ostream	&operator <<(std::ostream &o, const IrcServer &irc)
 }
 
 
-std::string IrcServer::formatCode(msgCode_e code, std::map<std::string, std::string> presets, va_list args)
+std::string IrcServer::formatCode(int code, std::map<std::string, std::string> presets, va_list args)
 {
-	const std::string& format = IrcServer::msgFormats[code];
+	const std::string& format = IrcServer::msgFormats[(msgCode_e)code];
 	return IrcServer::formatMsg(format, presets, args);
 }
 

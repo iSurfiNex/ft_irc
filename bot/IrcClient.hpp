@@ -56,5 +56,4 @@ private:
   std::string _chan;
   int _sd;
   int _connectAttempt;
-  struct sockaddr_in _serverAddress;
 };
