@@ -2,7 +2,7 @@
 
 int Gpt::delayBetweenRequest = 5;
 std::time_t Gpt::lastRequestTs = std::time(NULL);
-int Gpt::maxRequestCount = 100;
+int Gpt::maxRequestCount = 25;
 int Gpt::requestCount = 0;
 std::string Gpt::_apiKey;
 
