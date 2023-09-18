@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 18:44:58 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/17 23:12:33 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/18 15:51:02 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,18 @@ void cmdKick(strVec_t &args, Client &origin, IrcServer &server)
 			origin.msg(ERR_CHANOPRIVSNEEDED, channel->name);
 		else
 		{
-			for (size_t i = 1; args.size() > i; i++)
+			Client *target;
+			target = server.getClientWithNickname(args[1]);
+			if (!target || !channel->isUserInside(*target))
+				origin.msg(ERR_USERNOTINCHANNEL, args[1], channel->name);
+			else
 			{
-				Client *target;
-				target = server.getClientWithNickname(args[i]);
-				if (!target || !channel->isUserInside(*target))
-					origin.msg(ERR_USERNOTINCHANNEL, args[i], channel->name);
-				else
-				{
-					target->msg(MSG_PART, channel->name);
-					channel->removeMod(*target);
-					channel->removeUser(*target);
-					std::string messageToOrigin = "You have successfully kicked " + target->nickname + " from the channel: " + channel->name + ".\r\n";
-					std::cout << origin << " has kicked " << target << " from " << channel->name << std::endl;
-					origin.sendMessage(messageToOrigin);
-				}
+				target->msg(MSG_PART, channel->name);
+				channel->removeMod(*target);
+				channel->removeUser(*target);
+				std::string messageToOrigin = "You have successfully kicked " + target->nickname + " from the channel: " + channel->name + ".\r\n";
+				std::cout << origin << " has kicked " << target << " from " << channel->name << std::endl;
+				origin.sendMessage(messageToOrigin);
 			}
 		}
 	}
