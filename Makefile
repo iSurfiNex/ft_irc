@@ -6,7 +6,7 @@
 #    By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/11 18:09:46 by rsterin           #+#    #+#              #
-#    Updated: 2023/09/17 18:47:20 by rsterin          ###   ########.fr        #
+#    Updated: 2023/09/18 16:17:47 by rsterin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,10 +71,16 @@ $(NAME): $(OBJS) $(HEADERS)
 	@echo $(_END)
 	@echo
 
-bot: $(NAME_BOT)
+bonus: $(NAME_BOT)
 
 $(NAME_BOT): $(OBJS_BOT)
-	$(CXX) $(CPPFLAGS) $(OBJS_BOT) -o $@
+	@echo -n $(_GREEN)
+	@echo -n "Creating executable..."
+	@$(CXX) $(CPPFLAGS) $(OBJS_BOT) -o $@
+	@echo $(_GREEN)
+	@echo -n "Done ✓"
+	@echo $(_END)
+	@echo
 
 clean:
 	@echo $(_CYAN)
