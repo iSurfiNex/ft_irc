@@ -1,4 +1,4 @@
-./ircserv
-./bot
+ircserv
+gptbot
 *.d
 *.o
