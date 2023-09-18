@@ -45,7 +45,7 @@ void IrcServer::_initializeMsgFormats(void) {
 	m[RPL_WELCOME] = "<server> <code> <client> :Welcome to the <networkname> Network, <client>";
 	m[MSG_JOIN] = "<client> JOIN :<channel>";
 	m[MSG_PART] = "<client> PART :<channel>";
-	m[MSG_MODE] = "<client> MODE <modestring_cstr> <modeargs>";
+	m[MSG_MODE] = "<client> MODE :<channel> <modeargs>";
 	m[MSG_ADDINVITELIST] = "<server> <code> <client> <nick> <channel> :invite you";
 	m[ERR_NOTVALIDENTRY] = "<server> <code> <channel> :\"<entry>\" is not a valid entry";
 	msgFormats = m;

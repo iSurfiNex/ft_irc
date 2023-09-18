@@ -62,7 +62,10 @@ void Channel::tryEnter(Client &client, const std::string& key)
 
 int Channel::getNbUser(void)
 {
-	return _getUserListStr().size();
+	int result = 0;
+	foreach(std::set<const Client *>, _userList)
+		result++;
+	return (result);
 }
 
 std::string Channel::_getUserListStr(void) const

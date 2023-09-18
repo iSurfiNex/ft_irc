@@ -91,7 +91,7 @@ void cmdMode(strVec_t &args, Client &origin, IrcServer &server)
 				channel->isTopicChangeable = false;
 			else if (args[1][0] == '-')
 				channel->isTopicChangeable = true;
-			origin.msg(MSG_MODE, "MODE", args[1]);
+			origin.msg(MSG_MODE, channel->name, args[1]);
 		}
 		else if (!args[1].compare("+i") || !args[1].compare("-i"))
 		{
@@ -106,7 +106,7 @@ void cmdMode(strVec_t &args, Client &origin, IrcServer &server)
 			if (args[1][0] == '-')
 			{
 				channel->isRestricted = false;
-				origin.msg(MSG_MODE, "MODE", args[1]);
+				origin.msg(MSG_MODE, channel->name, args[1]);
 			}
 			else if (args.size() >= 3)
 			{
@@ -116,7 +116,7 @@ void cmdMode(strVec_t &args, Client &origin, IrcServer &server)
 				{
 					channel->isRestricted = true;
 					channel->changePassword(args[2]);
-					origin.msg(MSG_MODE, "MODE", args[1]);
+					origin.msg(MSG_MODE, channel->name, args[1] + " " + args[2]);
 				}
 			}
 			else
@@ -127,7 +127,7 @@ void cmdMode(strVec_t &args, Client &origin, IrcServer &server)
 			if (args[1][0] == '-')
 			{
 				channel->changeUserLimit(-1);
-				origin.msg(MSG_MODE, "MODE", args[1]);
+				origin.msg(MSG_MODE, channel->name, args[1]);
 			}
 			else if (args.size() >= 3)
 			{
@@ -141,7 +141,7 @@ void cmdMode(strVec_t &args, Client &origin, IrcServer &server)
 				else
 				{
 					channel->changeUserLimit(userLimit);
-					origin.msg(MSG_MODE, "MODE", args[1]);
+					origin.msg(MSG_MODE, channel->name, args[1] + " " + args[2]);
 				}
 			}
 			else
@@ -164,7 +164,7 @@ void cmdMode(strVec_t &args, Client &origin, IrcServer &server)
 						channel->addMod(*target);
 					else if (args[1][0] == '-')
 						channel->removeMod(*target);
-					origin.msg(MSG_MODE, "MODE", args[1]);
+					origin.msg(MSG_MODE, channel->name, args[1] + " " + args[2]);
 				}
 			}
 			else
