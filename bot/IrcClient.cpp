@@ -18,7 +18,6 @@ bool IrcClient::authenticate(const std::string &serverPw,
 void IrcClient::setChannel(const std::string &chan) { this->_chan = chan; }
 
 void IrcClient::joinChanIfNeeded() {
-  std::cout << "CHAN!!!" << this->_chan << std::endl;
   if (!_chan.empty())
     sendMessage("JOIN " + _chan + "\r\n");
 }
@@ -49,7 +48,6 @@ void IrcClient::receiveRespondLoop() {
  * privMsg. */
 bool IrcClient::_parsePrivMsg(const std::string &msg, std::string &sender,
                               std::string &privMsg) const {
-  std::cout << msg << "!!!";
   std::istringstream iss(msg);
   if (msg.size() > 0 && msg[0] == ':')
     iss.ignore(1);
@@ -75,8 +73,6 @@ bool IrcClient::_parsePrivMsg(const std::string &msg, std::string &sender,
     sender = tokens[2];    // respond to channel
   else
     sender = tokens[0]; // respond to client
-
-  std::cout << "SENDER: " << sender << std::endl;
 
   return true;
 }
