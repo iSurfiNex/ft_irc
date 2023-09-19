@@ -6,7 +6,7 @@
 /*   By: rsterin <rsterin@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:55:29 by rsterin           #+#    #+#             */
-/*   Updated: 2023/09/18 18:34:39 by rsterin          ###   ########.fr       */
+/*   Updated: 2023/09/19 03:52:43 by rsterin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ Channel::~Channel(void)
 void Channel::_addUser(const Client &client)
 {
 	_userList.insert(&client);
+	removeUserFromInviteList(client);
 	msg(MSG_JOIN, &client.nickname);
 	if (!topic.empty())
 		client.msg(RPL_TOPIC, &name, &topic);
