@@ -35,7 +35,7 @@ This project has a bonus part and we had done it, this is the required features 
 - Handle file transfer.
 - A bot.
 
-  # Installation
+# Installation
 
 In order to compile the project, please use this command :
 
